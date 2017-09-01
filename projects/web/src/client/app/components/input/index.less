@@ -1,0 +1,24 @@
+@import '../../assets/stylesheets/common';
+
+.input-component {
+  display: block;
+  padding: 6px 8px;
+  border: 1px solid #d1d1d1;
+  height: 34px;
+  background-color: @white;
+  resize: none;
+
+  &:focus {
+    border-color: @primary;
+    box-shadow: 0 0 10px lighten(@primary, 45%);
+  }
+
+  &.simple {
+    height: 30px;
+
+    &:focus {
+      border-color: #d1d1d1;
+      box-shadow: none;
+    }
+  }
+}

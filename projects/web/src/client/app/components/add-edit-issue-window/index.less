@@ -1,0 +1,78 @@
+.add-edit-issue-window-component {
+  .form {
+    display: table;
+    width: 100%;
+
+    .field {
+      display: table-row;
+
+      .label {
+        display: table-cell;
+        padding-top: 8px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        text-align: right;
+      }
+
+      .value {
+        display: table-cell;
+        width: 100%;
+        padding-bottom: 10px;
+
+        .input-component {
+          width: 100%;
+        }
+
+        .parent {
+          white-space: normal;
+
+          .sid {
+            font-weight: bold;
+            margin-right: 5px;
+          }
+        }
+
+        .description {
+          height: 100px;
+        }
+      }
+    }
+
+    .field:last-child {
+      .label {
+        padding-bottom: 0;
+      }
+
+      .value {
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+.rtl {
+  .add-edit-issue-window-component {
+    .form {
+      .field {
+        .value {
+          > .parent {
+            direction: rtl;
+
+            .sid {
+              margin-right: 0;
+              margin-left: 5px;
+            }
+          }
+
+          > .title {
+            direction: rtl;
+          }
+
+          > .description {
+            direction: rtl;
+          }
+        }
+      }
+    }
+  }
+}

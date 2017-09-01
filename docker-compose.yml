@@ -1,0 +1,33 @@
+version: '3'
+
+volumes:
+  db-data:
+  api-config:
+  web-config:
+
+services:
+  db:
+    build: ./projects/db
+    volumes:
+      - db-data:/usr/app/data
+    restart: always
+
+  api:
+    build: ./projects/api
+    volumes:
+      - api-config:/usr/app/config
+    ports:
+      - "${NAUTILUS_API_DOCKER_PORT_HOST-3000}:3000"
+    depends_on:
+      - db
+    restart: always
+
+  web:
+    build: ./projects/web
+    volumes:
+      - web-config:/usr/app/config
+    ports:
+      - "${NAUTILUS_WEB_DOCKER_PORT_HOST-3100}:3100"
+    depends_on:
+      - api
+    restart: always

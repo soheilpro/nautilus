@@ -1,0 +1,41 @@
+@import '../../assets/stylesheets/common';
+
+.search-window-component {
+  .container {
+    padding: 10px;
+
+    .search-input {
+      min-width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .search-result-list {
+      .search-result {
+        display: block;
+        padding: 4px 6px;
+        text-decoration: none;
+        color: @text;
+
+        &.selected {
+          background-color: @primary;
+          color: @white;
+        }
+
+        .issue {
+          .sid {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    .no-search-results-found {
+      padding: 4px;
+      color: @darkdarkgray;
+    }
+
+    .search-help {
+      padding: 4px;
+    }
+  }
+}

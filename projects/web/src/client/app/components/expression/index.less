@@ -1,0 +1,35 @@
+@import '../../assets/stylesheets/common';
+
+.expression-component {
+  .expression-and .expression-and-operator {
+    color: #ccc;
+    font-weight: bold;
+    font-size: 11px;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  .expression-local {
+    font-weight: bold;
+  }
+
+  .expression-constant {
+    font-weight: bold;
+  }
+
+  .expression-comparison {
+    &.expression-comparison-operator-eq,
+    &.expression-comparison-operator-in {
+      .expression-constant {
+        color: @green;
+      }
+    }
+
+    &.expression-comparison-operator-neq,
+    &.expression-comparison-operator-nin {
+      .expression-constant {
+        color: @red;
+      }
+    }
+  }
+}

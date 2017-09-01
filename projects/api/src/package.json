@@ -1,0 +1,48 @@
+{
+  "name": "nautilus-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "buno tsc",
+    "clean": "rm -rf ./out",
+    "config": "node ./out/config.js",
+    "lint": "tslint \"app/**/*.ts\"",
+    "start": "node ./out/www.js",
+    "test": "buno jest",
+    "update": "node ./out/update.js",
+    "watch:app": "tsc --watch",
+    "watch": "nodemon ./out/www.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "debug": "^2.0.0",
+    "mongodb": "^2.2.29",
+    "morgan": "^1.8.2",
+    "nconf": "^0.7.2",
+    "restify": "^5.2.0",
+    "restify-cors-middleware": "^1.0.1",
+    "restify-errors": "^5.0.0",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.0",
+    "@types/debug": "0.0.29",
+    "@types/jest": "^21.1.0",
+    "@types/mongodb": "^2.2.6",
+    "@types/morgan": "^1.7.32",
+    "@types/nconf": "0.0.34",
+    "@types/node": "^7.0.32",
+    "@types/restify": "^5.0.1",
+    "@types/restify-cors-middleware": "^1.0.0",
+    "@types/restify-errors": "^4.3.2",
+    "@types/supertest": "^2.0.3",
+    "@types/underscore": "^1.8.1",
+    "buno": "^1.0.0",
+    "jest": "^21.1.0",
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0",
+    "ts-jest": "^21.0.1",
+    "tslint": "^5.4.3",
+    "typescript": "^2.4.0"
+  }
+}

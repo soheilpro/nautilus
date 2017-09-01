@@ -1,0 +1,46 @@
+@import '../../assets/stylesheets/common';
+
+.select-component {
+  .item-list-component {
+    padding: 10px;
+
+    .search-input {
+      min-width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .item-list {
+      .item {
+        display: flex;
+
+        .title {
+          flex: 1;
+          padding: 2px 6px;
+          text-decoration: none;
+          color: @text;
+
+          .icon {
+            margin-right: 8px;
+            visibility: hidden;
+
+            &.selected {
+              visibility: visible;
+            }
+          }
+
+          &.empty {
+            color: @darkdarkgray;
+            text-transform: lowercase;
+          }
+        }
+
+        &.active {
+          .title {
+            background-color: @primary;
+            color: @white;
+          }
+        }
+      }
+    }
+  }
+}

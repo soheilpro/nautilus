@@ -1,0 +1,35 @@
+@import '../../assets/stylesheets/common';
+
+.issue-table-component {
+  .table-header-component {
+    cursor: default;
+
+    .table-cell {
+      padding: 5px 10px;
+      font-weight: bold;
+      white-space: nowrap;
+
+      &.sid {
+        text-align: center;
+      }
+
+      &.title {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+.rtl {
+  .issue-table-component {
+    .table-header-component {
+      .table-cell {
+        &.title {
+          direction: rtl;
+        }
+      }
+    }
+  }
+}

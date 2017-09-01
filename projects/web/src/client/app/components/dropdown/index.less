@@ -1,0 +1,46 @@
+@import '../../assets/stylesheets/common';
+
+.dropdown-component {
+  display: inline-block;
+
+  .button {
+    display: inline-block;
+    padding: 6px 10px;
+    border: 1px solid @darkgray;
+    cursor: pointer;
+    user-select: none;
+
+    .caret {
+      margin-left: 10px;
+      color: @darkdarkgray;
+    }
+
+    &:hover {
+      color: @primary;
+
+      .caret {
+        color: @primary;
+      }
+    }
+
+    &:focus {
+      border-color: @primary;
+      box-shadow: 0 0 10px lighten(@primary, 45%);
+    }
+  }
+
+  .window {
+    margin-top: -1px;
+    margin-bottom: 20px;
+  }
+
+  &.open {
+    .button {
+      color: @primary;
+
+      .caret {
+        color: @primary;
+      }
+    }
+  }
+}

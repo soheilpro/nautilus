@@ -1,0 +1,23 @@
+@import '../../assets/stylesheets/common';
+
+.navigation-component {
+  padding: 5px 10px 0 10px;
+  border-bottom: 2px solid @gray;
+
+  a {
+    margin-right: 5px;
+    padding: 5px 10px;
+    display: inline-block;
+    text-decoration: none;
+    color: @text;
+
+    &:hover {
+      background-color: lighten(@gray, 3%);
+      background-color: @gray;
+    }
+
+    &.active {
+      background-color: @gray;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmitOnError": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "rootDir": "app",
+    "outDir": "out"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

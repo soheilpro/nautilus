@@ -1,0 +1,54 @@
+@import '../../assets/stylesheets/common';
+
+.issue-table-component {
+  .table-row-component {
+    cursor: default;
+
+    .table-cell {
+      padding: 5px 10px;
+      vertical-align: baseline;
+
+      &.sid {
+        text-align: center;
+      }
+
+      &.title {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+
+        .arrow:after {
+          content: '\21b3'; /* downwards arrow with tip leftwards */
+          color: #bbb;
+          margin-right: 5px;
+        }
+
+        .priority-indicator {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
+
+.rtl {
+  .issue-table-component {
+    .table-row-component {
+      .table-cell {
+        &.title {
+          direction: rtl;
+
+          .arrow:after {
+            content: '\21b2'; /* downwards arrow with tip leftwards */
+            margin-right: 0;
+            margin-left: 5px;
+          }
+
+          .priority-indicator {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}

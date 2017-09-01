@@ -1,0 +1,6 @@
+.git
+config
+src/client/node_modules
+src/client/out
+src/server/node_modules
+src/server/out

@@ -1,0 +1,47 @@
+@import '../../assets/stylesheets/common';
+
+.table-component {
+  .table-header {
+    .table-row {
+      .table-cell {
+        border-bottom: 1px solid @darkgray;
+      }
+    }
+  }
+
+  .table-body {
+    .table-row {
+      .table-cell {
+        border-bottom: 1px solid @gray;
+      }
+
+      &.selected {
+        .table-cell {
+          background-color: #f6f6f6;
+        }
+      }
+
+      &:last-child {
+        .table-cell {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  .table-footer {
+    .table-row {
+      .table-cell {
+        border-top: 1px solid @darkgray;
+      }
+    }
+  }
+
+  .table-row {
+    &.selected:focus {
+      .table-cell {
+        background-color: #e9e9e9;
+      }
+    }
+  }
+}

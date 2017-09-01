@@ -1,0 +1,32 @@
+{
+  "name": "nautilus-web-server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "buno tsc",
+    "clean": "rm -rf ./out",
+    "config": "node ./out/config.js",
+    "lint": "tslint \"app/**/*.ts\"",
+    "start": "node ./out/www.js",
+    "watch:app": "tsc --watch",
+    "watch": "nodemon www.js"
+  },
+  "dependencies": {
+    "compression": "^1.6.2",
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "morgan": "^1.8.2",
+    "nconf": "^0.8.4"
+  },
+  "devDependencies": {
+    "@types/compression": "0.0.34",
+    "@types/debug": "0.0.29",
+    "@types/morgan": "^1.7.32",
+    "@types/nconf": "0.0.34",
+    "@types/node": "^7.0.32",
+    "buno": "^1.0.0",
+    "nodemon": "^1.11.0",
+    "tslint": "^4.5.1",
+    "typescript": "^2.4.0"
+  }
+}

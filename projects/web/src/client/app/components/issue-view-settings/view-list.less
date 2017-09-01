@@ -1,0 +1,50 @@
+@import '../../assets/stylesheets/common';
+
+.issue-view-settings-component {
+  .view-list-component {
+    padding: 10px;
+
+    .search-input {
+      min-width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .view-list {
+      .view {
+        display: flex;
+
+        .remove {
+          padding: 2px 6px 2px 3px;
+          color: @darkgray;
+
+          &:hover {
+            color: lighten(@red, 5%);
+          }
+
+          &.active {
+            color: @red;
+          }
+        }
+
+        .name {
+          flex: 1;
+          padding: 2px 6px;
+          text-decoration: none;
+          color: @text;
+        }
+
+        &.active {
+          .name {
+            background-color: @primary;
+            color: @white;
+          }
+        }
+      }
+    }
+
+    .no-views-found {
+      padding: 4px;
+      color: @darkdarkgray;
+    }
+  }
+}
