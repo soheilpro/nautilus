@@ -61,6 +61,15 @@ export class ServerFactory {
     server.use(cors.actual);
     server.use(authenticator(sessionManager, permissionProvider));
 
+    server.get('/', (request, response) => {
+      const pkg = require('../package.json');
+
+      response.json({
+        name: pkg.name,
+        version: pkg.version,
+      });
+    });
+
     for (const router of routers)
       router.register(server);
 
