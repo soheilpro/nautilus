@@ -3,12 +3,16 @@ import { IItem } from './iitem';
 import { IItemChange } from './iitem-change';
 import { IItemFilter } from './iitem-filter';
 import { IItemGetResult } from './iitem-get-result';
-
 import { IItemService } from './iitem-service';
+import { Item } from './item';
 
 export class ItemService extends ServiceBase<IItem, IItemFilter, IItemChange, IItemGetResult> implements IItemService {
   basePath(): string {
     return '/items';
+  }
+
+  deserializeEntity(data: any): IItem {
+    return new Item(data);
   }
 
   serializeFilter(filter: IItemFilter): Object {
@@ -42,12 +46,10 @@ export class ItemService extends ServiceBase<IItem, IItemFilter, IItemChange, II
     };
   }
 
-  protected deserializeGetResult(data: any): IItemGetResult {
-    const result: IItemGetResult = {
-      ...super.deserializeGetResult(data),
-      relationships: data.supplements.relationships,
+  protected deserializeGetResult(result: any): IItemGetResult {
+    return {
+      ...super.deserializeGetResult(result),
+      relationships: result.supplements.relationships,
     };
-
-    return result;
   }
 }

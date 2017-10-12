@@ -4,10 +4,15 @@ import { IItemRelationshipChange } from './iitem-relationship-change';
 import { IItemRelationshipFilter } from './iitem-relationship-filter';
 import { IItemRelationshipGetResult } from './iitem-relationship-get-result';
 import { IItemRelationshipService } from './iitem-relationship-service';
+import { ItemRelationship } from './item-relationship';
 
 export class ItemRelationshipService extends ServiceBase<IItemRelationship, IItemRelationshipFilter, IItemRelationshipChange, IItemRelationshipGetResult> implements IItemRelationshipService {
   basePath(): string {
     return '/item-relationships';
+  }
+
+  deserializeEntity(data: any): IItemRelationship {
+    return new ItemRelationship(data);
   }
 
   serializeFilter(filter: IItemRelationshipFilter): Object {

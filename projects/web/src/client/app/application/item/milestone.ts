@@ -47,6 +47,10 @@ export default class Milestone implements IMilestone {
     return this.application.users.get(this.item.modifiedBy);
   }
 
+  get meta() {
+    return this.item.meta;
+  }
+
   toJSON() {
     return {
       id: this.id,

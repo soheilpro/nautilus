@@ -58,6 +58,10 @@ export default class Issue implements IIssue {
     return this.application.items.getIssueMilestone(this.item);
   }
 
+  get meta() {
+    return this.item.meta;
+  }
+
   toJSON() {
     return {
       id: this.id,

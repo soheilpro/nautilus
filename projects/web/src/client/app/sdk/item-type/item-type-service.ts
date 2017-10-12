@@ -4,10 +4,15 @@ import { IItemTypeChange } from './iitem-type-change';
 import { IItemTypeFilter } from './iitem-type-filter';
 import { IItemTypeGetResult } from './iitem-type-get-result';
 import { IItemTypeService } from './iitem-type-service';
+import { ItemType } from './item-type';
 
 export class ItemTypeService extends ServiceBase<IItemType, IItemTypeFilter, IItemTypeChange, IItemTypeGetResult> implements IItemTypeService {
   basePath(): string {
     return '/item-types';
+  }
+
+  deserializeEntity(data: any): IItemType {
+    return new ItemType(data);
   }
 
   serializeFilter(filter: IItemTypeFilter): Object {

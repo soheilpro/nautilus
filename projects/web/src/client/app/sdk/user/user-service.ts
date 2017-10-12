@@ -5,10 +5,15 @@ import { IUserFilter } from './iuser-filter';
 import { IUserGetResult } from './iuser-get-result';
 import { IUserPermission } from './iuser-permission';
 import { IUserService } from './iuser-service';
+import { User } from './user';
 
 export class UserService extends ServiceBase<IUser, IUserFilter, IUserChange, IUserGetResult> implements IUserService {
   basePath(): string {
     return '/users';
+  }
+
+  deserializeEntity(data: any): IUser {
+    return new User(data);
   }
 
   serializeFilter(filter: IUserFilter): Object {

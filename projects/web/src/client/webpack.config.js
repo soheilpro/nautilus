@@ -7,7 +7,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     app: './app/main.ts',
-    vendor: ['react', 'react-dom', 'react-router', 'axios', 'underscore', 'wolfy87-eventemitter', 'blueimp-md5', 'classnames', 'uuid', 'jquery', 'jquery-sticky'],
+    vendor: [
+      'axios',
+      'blueimp-md5',
+      'classnames',
+      'jquery-sticky',
+      'jquery',
+      'moment',
+      'react-dom',
+      'react-router',
+      'react',
+      'underscore',
+      'uuid',
+      'wolfy87-eventemitter',
+    ],
   },
   output: {
     path: path.resolve(__dirname, './out/assets'),

@@ -4,10 +4,15 @@ import { IProjectChange } from './iproject-change';
 import { IProjectFilter } from './iproject-filter';
 import { IProjectGetResult } from './iproject-get-result';
 import { IProjectService } from './iproject-service';
+import { Project } from './project';
 
 export class ProjectService extends ServiceBase<IProject, IProjectFilter, IProjectChange, IProjectGetResult> implements IProjectService {
   basePath(): string {
     return '/projects';
+  }
+
+  deserializeEntity(data: any): IProject {
+    return new Project(data);
   }
 
   serializeFilter(filter: IProjectFilter): Object {

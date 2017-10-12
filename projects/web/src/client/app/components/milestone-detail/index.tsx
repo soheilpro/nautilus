@@ -2,6 +2,7 @@ import * as React from 'react';
 import { IMilestone } from '../../application';
 import DescriptionField from '../description-field';
 import UserField from '../user-field';
+import DateTimeField from '../date-time-field';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -25,6 +26,9 @@ export default class MilestoneDetail extends React.PureComponent<IMilestoneDetai
           <div className="label">Created by:</div>
           <div className="user">
             <UserField user={this.props.milestone.createdBy} />
+          </div>
+          <div className="date-time">
+            <DateTimeField dateTime={this.props.milestone.meta.insertDateTime} />
           </div>
         </div>
       </div>

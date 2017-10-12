@@ -19,10 +19,13 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
 
   constructor(client: IClient) {
     this.client = client;
+    this.deserializeEntity = this.deserializeEntity.bind(this);
     this.toId = this.toId.bind(this);
   }
 
   abstract basePath(): string;
+
+  abstract deserializeEntity(data: any): TEntity;
 
   abstract serializeFilter(filter: TFilter): Object;
 
@@ -30,12 +33,10 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
 
   abstract serializeChange(change: TChange): Object;
 
-  protected deserializeGetResult(data: any): TGetResult {
-    const result: IGetResult<TEntity> = {
-      entities: data.data as TEntity[],
-    };
-
-    return result as TGetResult;
+  protected deserializeGetResult(result: any): TGetResult {
+    return {
+      entities: result.data.map(this.deserializeEntity),
+    } as TGetResult;
   }
 
   async get(filter: TFilter, supplement?: string[]) {
@@ -48,9 +49,9 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
       },
     };
 
-    const data = (await this.invoke(invokeOptions)).data;
+    const result = (await this.invoke(invokeOptions)).data;
 
-    return this.deserializeGetResult(data);
+    return this.deserializeGetResult(result);
   }
 
   async insert(entity: TEntity) {
@@ -60,7 +61,9 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
       data: this.serializeEntity(entity),
     };
 
-    return (await this.invoke(invokeOptions)).data.data;
+    const result = (await this.invoke(invokeOptions)).data;
+
+    return this.deserializeEntity(result.data);
   }
 
   async update(id: string, change: TChange) {
@@ -70,7 +73,9 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
       data: this.serializeChange(change),
     };
 
-    return (await this.invoke(invokeOptions)).data.data;
+    const result = (await this.invoke(invokeOptions)).data;
+
+    return this.deserializeEntity(result.data);
   }
 
   delete(id: string) {

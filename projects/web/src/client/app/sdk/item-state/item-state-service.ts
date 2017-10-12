@@ -4,10 +4,15 @@ import { IItemStateChange } from './iitem-state-change';
 import { IItemStateFilter } from './iitem-state-filter';
 import { IItemStateGetResult } from './iitem-state-get-result';
 import { IItemStateService } from './iitem-state-service';
+import { ItemState } from './item-state';
 
 export class ItemStateService extends ServiceBase<IItemState, IItemStateFilter, IItemStateChange, IItemStateGetResult> implements IItemStateService {
   basePath(): string {
     return '/item-states';
+  }
+
+  deserializeEntity(data: any): IItemState {
+    return new ItemState(data);
   }
 
   serializeFilter(filter: IItemStateFilter): Object {
