@@ -40,9 +40,9 @@ export default class DialogWindow extends React.PureComponent<IDialogWindowProps
         </WindowContent>
         <WindowActionBar>
           {
-            this.props.dialog.buttons.map(button => {
+            this.props.dialog.buttons.map((button, index) => {
               return (
-                <Button type={this.getButtonType(button)} autoFocus={true} onClick={_.partial(this.props.onButtonClick, button)} key={button.key}>{button.title}</Button>
+                <Button type={this.getButtonType(button)} autoFocus={index === 0} onClick={_.partial(this.props.onButtonClick, button)} key={button.key}>{button.title}</Button>
               );
             })
           }

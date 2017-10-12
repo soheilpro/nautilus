@@ -60,8 +60,8 @@ export default class DialogController extends React.PureComponent<IDialogControl
       title: options.title,
       content: options.message,
       buttons: [
-        { key: 'cancel', title: 'Cancel', type: 'cancel' },
         { key: 'ok', title: options.buttonTitle || 'OK', type: options.destructive ? 'destructive' : 'default' },
+        { key: 'cancel', title: 'Cancel', type: 'cancel' },
       ],
       onButtonClick: button => {
         this.windowController.closeWindow(this.dialogWindow, () => {

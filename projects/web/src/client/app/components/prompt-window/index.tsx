@@ -57,8 +57,8 @@ export default class PromptWindow extends React.PureComponent<IPromptWindowProps
           </form>
         </WindowContent>
         <WindowActionBar>
-          <Button type="secondary" onClick={this.props.onClose}>Cancel</Button>
           <Button type="submit" form="promptForm">{this.props.confirmButtonText}</Button>
+          <Button type="secondary" onClick={this.props.onClose}>Cancel</Button>
         </WindowActionBar>
       </Window>
     );

@@ -259,7 +259,6 @@ export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssu
           </form>
         </WindowContent>
         <WindowActionBar>
-          <Button type="secondary" onClick={this.props.onClose}>Cancel</Button>
           {
             this.props.mode === 'add' &&
               <Button type="submit" form="addEditIssueForm">Add Issue</Button>
@@ -268,6 +267,7 @@ export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssu
             this.props.mode === 'edit' &&
               <Button type="submit" form="addEditIssueForm">Update Issue</Button>
           }
+          <Button type="secondary" onClick={this.props.onClose}>Cancel</Button>
         </WindowActionBar>
       </Window>
     );

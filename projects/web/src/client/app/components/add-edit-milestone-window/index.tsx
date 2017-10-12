@@ -159,7 +159,6 @@ export default class AddEditMilestoneWindow extends React.PureComponent<IAddEdit
           </form>
         </WindowContent>
         <WindowActionBar>
-          <Button type="secondary" onClick={this.props.onClose}>Cancel</Button>
           {
             this.props.mode === 'add' &&
               <Button type="submit" form="addEditMilestoneForm">Add Milestone</Button>
@@ -168,6 +167,7 @@ export default class AddEditMilestoneWindow extends React.PureComponent<IAddEdit
             this.props.mode === 'edit' &&
               <Button type="submit" form="addEditMilestoneForm">Update Milestone</Button>
           }
+          <Button type="secondary" onClick={this.props.onClose}>Cancel</Button>
         </WindowActionBar>
       </Window>
     );
