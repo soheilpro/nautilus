@@ -31,6 +31,18 @@ export default class IssueDetail extends React.PureComponent<IIssueDetailProps, 
             <DateTimeField dateTime={this.props.issue.meta.insertDateTime} />
           </div>
         </div>
+        {
+          this.props.issue.modifiedBy &&
+            <div className="modified">
+              <div className="label">Modified by:</div>
+              <div className="user">
+                <UserField user={this.props.issue.modifiedBy} />
+              </div>
+              <div className="date-time">
+                <DateTimeField dateTime={this.props.issue.meta.updateDateTime} />
+              </div>
+            </div>
+        }
       </div>
     );
   }

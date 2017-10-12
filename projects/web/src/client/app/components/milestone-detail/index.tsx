@@ -31,6 +31,18 @@ export default class MilestoneDetail extends React.PureComponent<IMilestoneDetai
             <DateTimeField dateTime={this.props.milestone.meta.insertDateTime} />
           </div>
         </div>
+        {
+          this.props.milestone.modifiedBy &&
+            <div className="modified">
+              <div className="label">Modified by:</div>
+              <div className="user">
+                <UserField user={this.props.milestone.modifiedBy} />
+              </div>
+              <div className="date-time">
+                <DateTimeField dateTime={this.props.milestone.meta.updateDateTime} />
+              </div>
+            </div>
+        }
       </div>
     );
   }
