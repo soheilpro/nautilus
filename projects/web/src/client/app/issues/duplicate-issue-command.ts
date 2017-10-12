@@ -28,6 +28,8 @@ export default class DuplicateIssueCommand extends BaseCommand {
 
   execute() {
     const issue: IIssue = {
+      title: this.templateIssue.title,
+      description: this.templateIssue.description,
       type: this.templateIssue.type,
       state: this.templateIssue.state,
       project: this.templateIssue.project,
@@ -35,6 +37,6 @@ export default class DuplicateIssueCommand extends BaseCommand {
       milestone: this.templateIssue.milestone,
     };
 
-    this.issueController.addIssue(issue);
+    this.issueController.addIssue(issue, this.templateIssue.parent);
   }
 }
