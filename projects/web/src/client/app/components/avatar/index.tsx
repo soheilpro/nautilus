@@ -25,7 +25,7 @@ export default class Avatar extends React.PureComponent<IAvatarProps, IAvatarSta
 
     return (
       <div className="avatar-component">
-        <img className="image" src={`http://www.gravatar.com/avatar/${emailHash}?s=${size}&d=identicon`} width={this.props.size} height={this.props.size} />
+        <img className="image" src={`https://www.gravatar.com/avatar/${emailHash}?s=${size}&d=identicon`} width={this.props.size} height={this.props.size} />
       </div>
     );
   }
