@@ -4,6 +4,7 @@ import { IMilestone, entityComparer } from '../../application';
 import { ICommandProvider } from '../../commands';
 import { ServiceManager } from '../../services';
 import ArrayHelper from '../../utilities/array-helper';
+import CopyMilestoneSidCommand from '../../milestones/copy-milestone-sid-command';
 import NewMilestoneCommand from '../../milestones/new-milestone-command';
 import EditMilestoneCommand from '../../milestones/edit-milestone-command';
 import DeleteMilestoneCommand from '../../milestones/delete-milestone-command';
@@ -81,6 +82,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
   getCommands() {
     return [
       new NewMilestoneCommand(),
+      new CopyMilestoneSidCommand(this.state.selectedMilestone),
       new EditMilestoneCommand(this.state.selectedMilestone),
       new DeleteMilestoneCommand(this.state.selectedMilestone),
     ];

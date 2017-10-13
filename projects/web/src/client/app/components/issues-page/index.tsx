@@ -5,6 +5,7 @@ import { IIssue, entityComparer } from '../../application';
 import { ICommandProvider } from '../../commands';
 import { ServiceManager } from '../../services';
 import ArrayHelper from '../../utilities/array-helper';
+import CopyIssueSidCommand from '../../issues/copy-issue-sid-command';
 import DeleteIssueCommand from '../../issues/delete-issue-command';
 import DuplicateIssueCommand from '../../issues/duplicate-issue-command';
 import EditIssueCommand from '../../issues/edit-issue-command';
@@ -96,6 +97,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
   getCommands() {
     return [
       new NewIssueCommand(),
+      new CopyIssueSidCommand(this.state.selectedIssue),
       new NewSubIssueCommand(this.state.selectedIssue),
       new DuplicateIssueCommand(this.state.selectedIssue),
       new EditIssueCommand(this.state.selectedIssue),

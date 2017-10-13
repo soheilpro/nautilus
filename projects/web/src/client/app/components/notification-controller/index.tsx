@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ServiceManager } from '../../services';
-import { INotification, INotificationController } from '../../notifications';
+import { INotification, INotificationController, INotificationOptions } from '../../notifications';
 import { Notification } from './notification';
 
 require('../../assets/stylesheets/base.less');
@@ -40,13 +40,19 @@ export default class NotificationController extends React.PureComponent<INotific
     ServiceManager.Instance.setNotificationController(undefined);
   }
 
-  showNotification(notification: INotification) {
+  showNotification(notification: INotification, options: INotificationOptions = {}) {
+    if (!notification.type)
+      notification.type = 'info';
+
     const extendedNotification: IExtendedNotification = notification;
     extendedNotification.key = this.notificationKeyCounter++;
 
     this.setState(state => ({
       notifications: [...state.notifications, extendedNotification],
     }));
+
+    if (options.hideAfter)
+      setTimeout(() => { this.hideNotification(notification); }, options.hideAfter);
   }
 
   hideNotification(notification: IExtendedNotification) {
@@ -62,7 +68,7 @@ export default class NotificationController extends React.PureComponent<INotific
         {
           this.state.notifications.map((notification, index) => {
             return (
-              <Notification title={notification.title} key={notification.key} />
+              <Notification notification={notification} key={notification.key} />
             );
           })
         }
