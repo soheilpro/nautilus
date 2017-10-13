@@ -1,3 +1,4 @@
+import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
 import { IIssue, entityComparer } from '../../application';
@@ -109,7 +110,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
 
     this.setState({
       issues,
-      selectedIssue: issues[0],
+      selectedIssue: _.find(issues, issue => !issue.parent),
     });
   }
 
