@@ -3,6 +3,8 @@ import { ServiceManager } from '../../services';
 import Login from '../login';
 import Main from '../main';
 import Splash from '../splash';
+import { IApplication, ISession } from '../../application';
+import { ILocalStorage } from '../../framework/storage';
 
 interface IAppProps {
 }
@@ -11,7 +13,8 @@ interface IAppState {
 }
 
 export default class App extends React.PureComponent<IAppProps, IAppState> {
-  private application = ServiceManager.Instance.getApplication();
+  private application = ServiceManager.Instance.getService<IApplication>('IApplication');
+  private localStorage = ServiceManager.Instance.getService<ILocalStorage>('ILocalStorage');
 
   constructor() {
     super();
@@ -39,7 +42,9 @@ export default class App extends React.PureComponent<IAppProps, IAppState> {
     this.forceUpdate();
   }
 
-  private handleApplicationLogIn() {
+  private handleApplicationLogIn(session: ISession) {
+    this.localStorage.set('session', session);
+
     this.forceUpdate();
   }
 

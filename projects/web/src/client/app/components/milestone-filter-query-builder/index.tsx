@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { IProject, IItemState, IUser } from '../../application';
+import { IProject, IItemState, IUser, IApplication } from '../../application';
 import { ServiceManager } from '../../services';
 import AndQueryBuilder, { IQueryBuilder } from '../and-query-builder';
 import ProjectQueryBuilder from '../project-query-builder';
@@ -19,7 +19,7 @@ interface IMilestoneFilterQueryBuilderState {
 }
 
 export default class MilestoneFilterQueryBuilder extends React.PureComponent<IMilestoneFilterQueryBuilderProps, IMilestoneFilterQueryBuilderState> {
-  private application = ServiceManager.Instance.getApplication();
+  private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private andQueryBuilderComponent: AndQueryBuilder;
 
   constructor() {

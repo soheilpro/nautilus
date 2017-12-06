@@ -1,7 +1,7 @@
 import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { IProject, IItemType, IItemState, IUser, IMilestone } from '../../application';
+import { IProject, IItemType, IItemState, IUser, IMilestone, IApplication } from '../../application';
 import { ServiceManager } from '../../services';
 import AndQueryBuilder, { IQueryBuilder } from '../and-query-builder';
 import MilestoneQueryBuilder from '../milestone-query-builder';
@@ -24,7 +24,7 @@ interface IIssueFilterQueryBuilderState {
 }
 
 export default class IssueFilterQueryBuilder extends React.PureComponent<IIssueFilterQueryBuilderProps, IIssueFilterQueryBuilderState> {
-  private application = ServiceManager.Instance.getApplication();
+  private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private andQueryBuilderComponent: AndQueryBuilder;
 
   constructor() {

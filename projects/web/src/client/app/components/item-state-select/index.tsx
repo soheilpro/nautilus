@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { IItemState } from '../../application';
-import Select from '../select';
+import Select from '../../framework/components/select';
 
 interface IItemStateSelectProps {
   itemStates?: IItemState[];

@@ -1,11 +1,11 @@
 import * as _ from 'underscore';
 import * as React from 'react';
 import * as classNames from 'classnames';
-import { IIssue } from '../../application';
-import { KeyCode } from '../../keyboard';
+import { IIssue, IApplication } from '../../application';
+import { KeyCode } from '../../framework/keyboard';
 import { ServiceManager } from '../../services';
-import Window from '../window';
-import Input from '../input';
+import Window from '../../framework/components/window';
+import Input from '../../framework/components/input';
 
 require('../../assets/stylesheets/base.less');
 require ('./index.less');
@@ -27,7 +27,7 @@ interface ISearchWindowState {
 }
 
 export default class SearchWindow extends React.PureComponent<ISearchWindowProps, ISearchWindowState> {
-  private application = ServiceManager.Instance.getApplication();
+  private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private searchCounter = 0;
 
   constructor() {

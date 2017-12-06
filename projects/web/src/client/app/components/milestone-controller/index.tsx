@@ -1,13 +1,18 @@
 import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { IMilestone, IMilestoneChange } from '../../application';
-import { IMilestoneController } from '../../milestones';
+import { IMilestone, IMilestoneChange, IApplication } from '../../application';
+import { IMilestoneController, MilestoneType } from '../../modules/milestones';
 import { ServiceManager } from '../../services';
 import AddEditMilestoneWindow from '../add-edit-milestone-window';
-import AddMilestoneAction from './add-milestone-action';
-import UpdateMilestoneAction from './update-milestone-action';
-import DeleteMilestoneAction from './delete-milestone-action';
+import { AddMilestoneAction, UpdateMilestoneAction, DeleteMilestoneAction } from '../../actions/milestones';
+import { IActionManager } from '../../framework/actions';
+import { IDialogController } from '../../framework/dialog';
+import { INotificationController } from '../../framework/notifications';
+import { IWindowController } from '../../framework/windows';
+import { NewMilestoneCommand } from './commands';
+import { ICommandProvider, ICommandManager } from '../../framework/commands';
+import { IItemControllerManager } from '../../framework/items';
 
 interface IMilestoneControllerProps {
 }
@@ -15,12 +20,14 @@ interface IMilestoneControllerProps {
 interface IMilestoneControllerState {
 }
 
-export default class MilestoneController extends React.PureComponent<IMilestoneControllerProps, IMilestoneControllerState> implements IMilestoneController {
-  private application = ServiceManager.Instance.getApplication();
-  private actionManager = ServiceManager.Instance.getActionManager();
-  private windowController = ServiceManager.Instance.getWindowController();
-  private dialogController = ServiceManager.Instance.getDialogController();
-  private notificationController = ServiceManager.Instance.getNotificationController();
+export default class MilestoneController extends React.PureComponent<IMilestoneControllerProps, IMilestoneControllerState> implements IMilestoneController, ICommandProvider {
+  private application = ServiceManager.Instance.getService<IApplication>('IApplication');
+  private actionManager = ServiceManager.Instance.getService<IActionManager>('IActionManager');
+  private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
+  private dialogController = ServiceManager.Instance.getService<IDialogController>('IDialogController');
+  private notificationController = ServiceManager.Instance.getService<INotificationController>('INotificationController');
+  private itemControllerManager = ServiceManager.Instance.getService<IItemControllerManager>('IItemControllerManager');
+  private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
 
   constructor() {
     super();
@@ -29,14 +36,24 @@ export default class MilestoneController extends React.PureComponent<IMilestoneC
   }
 
   componentWillMount() {
-    ServiceManager.Instance.setMilestoneController(this);
+    ServiceManager.Instance.registerService('IMilestoneController', this);
+    this.itemControllerManager.registerItemController(MilestoneType, this);
+    this.commandManager.registerCommandProvider(this);
   }
 
   componentWillUnmount() {
-    ServiceManager.Instance.setMilestoneController(undefined);
+    this.commandManager.unregisterCommandProvider(this);
+    this.itemControllerManager.unregisterItemController(MilestoneType, this);
+    ServiceManager.Instance.unregisterService('IMilestoneController', this);
   }
 
-  addMilestone() {
+  getCommands() {
+    return [
+      new NewMilestoneCommand(),
+    ];
+  }
+
+  createNew() {
     const handleAddMilestoneWindowAdd = async (milestone: IMilestone) => {
       this.windowController.closeWindow(addMilestoneWindow);
 
@@ -65,7 +82,7 @@ export default class MilestoneController extends React.PureComponent<IMilestoneC
     this.windowController.showWindow(addMilestoneWindow);
   }
 
-  editMilestone(milestone: IMilestone) {
+  editItem(milestone: IMilestone) {
     const handleEditMilestoneWindowUpdate = async (milestone: IMilestone, milestoneChange: IMilestoneChange) => {
       this.windowController.closeWindow(editMilestoneWindow);
 
@@ -94,7 +111,7 @@ export default class MilestoneController extends React.PureComponent<IMilestoneC
     this.windowController.showWindow(editMilestoneWindow);
   }
 
-  async deleteMilestone(milestone: IMilestone) {
+  async deleteItem(milestone: IMilestone) {
     const filter = new NQL.ComparisonExpression(
       new NQL.LocalExpression('milestone'),
       new NQL.ConstantExpression(milestone, 'Milestone'),
@@ -131,6 +148,10 @@ export default class MilestoneController extends React.PureComponent<IMilestoneC
       destructive: true,
       onConfirm: handleConfirm,
     });
+  }
+
+  getItemId(milestone: IMilestone) {
+    return milestone.sid;
   }
 
   render() {

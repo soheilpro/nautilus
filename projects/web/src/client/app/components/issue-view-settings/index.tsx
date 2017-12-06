@@ -1,26 +1,18 @@
 import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { ICommandProvider } from '../../commands';
+import { ICommandProvider, ICommandManager } from '../../framework/commands';
 import { ServiceManager } from '../../services';
-import { IWindow } from '../../windows';
-import Button from '../button';
-import Dropdown from '../dropdown';
-import PromptWindow from '../prompt-window';
+import { IWindow, IWindowController } from '../../framework/windows';
+import Button from '../../framework/components/button';
+import Dropdown from '../../framework/components/dropdown';
+import PromptWindow from '../../framework/components/prompt-window';
 import IssueFilterQueryBuilder from '../issue-filter-query-builder';
 import Expression from '../expression';
 import ViewList from './view-list';
 import { IView } from './iview';
 import { View } from './view';
-import FilterByMilestoneCommand from './filter-by-milestone-command';
-import FilterByProjectCommand from './filter-by-project-command';
-import FilterByTypeCommand from './filter-by-type-command';
-import FilterByStateCommand from './filter-by-state-command';
-import FilterByAssignedToCommand from './filter-by-assigned-to-command';
-import FilterByCreatedByCommand from './filter-by-created-by-command';
-import ResetViewCommand from './reset-view-command';
-import SaveViewCommand from './save-view-command';
-import LoadViewCommand from './load-view-command';
+import { FilterIssuesByMilestoneCommand, FilterIssuesByProjectCommand, FilterIssuesByTypeCommand, FilterIssuesByStateCommand, FilterIssuesByAssignedToCommand, FilterIssuesByCreatedByCommand, ResetViewCommand, SaveViewCommand, LoadViewCommand } from './commands';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -38,8 +30,8 @@ interface IIssueViewSettingsState {
 }
 
 export default class IssueViewSettings extends React.PureComponent<IIssueViewSettingsProps, IIssueViewSettingsState> implements ICommandProvider {
-  private commandManager = ServiceManager.Instance.getCommandManager();
-  private windowController = ServiceManager.Instance.getWindowController();
+  private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
+  private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
   private queryBuilderComponent: IssueFilterQueryBuilder;
   private savedViewListDropdownComponent: Dropdown;
   private promptWindow: IWindow;
@@ -93,12 +85,12 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     });
 
     return [
-      new FilterByMilestoneCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'milestone')),
-      new FilterByProjectCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'project')),
-      new FilterByTypeCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'type')),
-      new FilterByStateCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'state')),
-      new FilterByAssignedToCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'assignedTo')),
-      new FilterByCreatedByCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'createdBy')),
+      new FilterIssuesByMilestoneCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'milestone')),
+      new FilterIssuesByProjectCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'project')),
+      new FilterIssuesByTypeCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'type')),
+      new FilterIssuesByStateCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'state')),
+      new FilterIssuesByAssignedToCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'assignedTo')),
+      new FilterIssuesByCreatedByCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'createdBy')),
       new ResetViewCommand(view, this.handleResetViewCommandExecute),
       new SaveViewCommand(view, this.handleSaveViewCommandExecute),
       new LoadViewCommand(this.handleLoadViewCommandExecute),

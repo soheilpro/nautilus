@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { IIssue } from '../../application';
-import { ICommandProvider, ICommand } from '../../commands';
-import { ISearchController } from '../../search';
+import { ICommandProvider, ICommand, ICommandManager } from '../../framework/commands';
+import { ISearchController } from '../../modules/search';
 import { ServiceManager } from '../../services';
-import { IWindow } from '../../windows';
+import { IWindow, IWindowController } from '../../framework/windows';
 import SearchWindow from '../search-window';
 
 interface ISearchControllerProps {
@@ -13,8 +13,8 @@ interface ISearchControllerState {
 }
 
 export default class SearchController extends React.PureComponent<ISearchControllerProps, ISearchControllerState> implements ISearchController, ICommandProvider {
-  private commandManager = ServiceManager.Instance.getCommandManager();
-  private windowController = ServiceManager.Instance.getWindowController();
+  private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
+  private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
   private searchWindow: IWindow;
 
   constructor() {
@@ -26,13 +26,13 @@ export default class SearchController extends React.PureComponent<ISearchControl
   }
 
   componentWillMount() {
-    ServiceManager.Instance.setSearchController(this);
+    ServiceManager.Instance.registerService('ISearchController', this);
     this.commandManager.registerCommandProvider(this);
   }
 
   componentWillUnmount() {
     this.commandManager.unregisterCommandProvider(this);
-    ServiceManager.Instance.setSearchController(undefined);
+    ServiceManager.Instance.unregisterService('ISearchController', this);
   }
 
   showSearchWindow() {

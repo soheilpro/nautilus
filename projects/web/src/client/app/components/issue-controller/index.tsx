@@ -1,12 +1,17 @@
 import * as _ from 'underscore';
 import * as React from 'react';
-import { IIssue, IIssueChange } from '../../application';
-import { IIssueController } from '../../issues';
+import { IIssue, IIssueChange, IApplication } from '../../application';
+import { IIssueController, IssueType } from '../../modules/issues';
 import { ServiceManager } from '../../services';
+import { AddIssueAction, UpdateIssueAction, DeleteIssueAction } from '../../actions/issues';
+import { IActionManager } from '../../framework/actions';
+import { IDialogController } from '../../framework/dialog';
+import { INotificationController } from '../../framework/notifications';
+import { IWindowController } from '../../framework/windows';
+import { ICommandProvider, ICommandManager } from '../../framework/commands';
+import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, UpdateIssueCommand } from './commands';
+import { IItemControllerManager } from '../../framework/items';
 import AddEditIssueWindow from '../add-edit-issue-window';
-import AddIssueAction from './add-issue-action';
-import UpdateIssueAction from './update-issue-action';
-import DeleteIssueAction from './delete-issue-action';
 
 interface IIssueControllerProps {
 }
@@ -14,13 +19,15 @@ interface IIssueControllerProps {
 interface IIssueControllerState {
 }
 
-export default class IssueController extends React.PureComponent<IIssueControllerProps, IIssueControllerState> implements IIssueController {
-  private application = ServiceManager.Instance.getApplication();
-  private actionManager = ServiceManager.Instance.getActionManager();
-  private windowController = ServiceManager.Instance.getWindowController();
-  private dialogController = ServiceManager.Instance.getDialogController();
-  private notificationController = ServiceManager.Instance.getNotificationController();
-  private lastIssueChange: IIssueChange;
+export default class IssueController extends React.PureComponent<IIssueControllerProps, IIssueControllerState> implements IIssueController, ICommandProvider  {
+  private application = ServiceManager.Instance.getService<IApplication>('IApplication');
+  private actionManager = ServiceManager.Instance.getService<IActionManager>('IActionManager');
+  private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
+  private dialogController = ServiceManager.Instance.getService<IDialogController>('IDialogController');
+  private notificationController = ServiceManager.Instance.getService<INotificationController>('INotificationController');
+  private itemControllerManager = ServiceManager.Instance.getService<IItemControllerManager>('IItemControllerManager');
+  private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
+  private lastChange: IIssueChange;
 
   constructor() {
     super();
@@ -29,14 +36,27 @@ export default class IssueController extends React.PureComponent<IIssueControlle
   }
 
   componentWillMount() {
-    ServiceManager.Instance.setIssueController(this);
+    ServiceManager.Instance.registerService('IIssueController', this);
+    this.itemControllerManager.registerItemController(IssueType, this);
+    this.commandManager.registerCommandProvider(this);
   }
 
   componentWillUnmount() {
-    ServiceManager.Instance.setIssueController(undefined);
+    this.commandManager.unregisterCommandProvider(this);
+    this.itemControllerManager.unregisterItemController(IssueType, this);
+    ServiceManager.Instance.unregisterService('IIssueController', this);
   }
 
-  addIssue(issue: IIssue, parentIssue?: IIssue) {
+  getCommands() {
+    return [
+      new NewIssueCommand(),
+      new NewSubIssueCommand(),
+      new DuplicateIssueCommand(),
+      new UpdateIssueCommand(this),
+    ];
+  }
+
+  createNew(issue: IIssue, parentIssue?: IIssue) {
     const handleAddIssueWindowAdd = async (issue: IIssue) => {
       this.windowController.closeWindow(addIssueWindow);
 
@@ -65,7 +85,7 @@ export default class IssueController extends React.PureComponent<IIssueControlle
     this.windowController.showWindow(addIssueWindow);
   }
 
-  editIssue(issue: IIssue) {
+  editItem(issue: IIssue) {
     const handleEditIssueWindowUpdate = async (issue: IIssue, issueChange: IIssueChange) => {
       this.windowController.closeWindow(editIssueWindow);
 
@@ -76,7 +96,7 @@ export default class IssueController extends React.PureComponent<IIssueControlle
       this.notificationController.showNotification(notification);
 
       await this.actionManager.execute(new UpdateIssueAction(issue, issueChange, this.application));
-      this.lastIssueChange = issueChange;
+      this.lastChange = issueChange;
 
       this.notificationController.hideNotification(notification);
     };
@@ -95,7 +115,7 @@ export default class IssueController extends React.PureComponent<IIssueControlle
     this.windowController.showWindow(editIssueWindow);
   }
 
-  deleteIssue(issue: IIssue) {
+  deleteItem(issue: IIssue) {
     const handleConfirm = async () => {
       const notification = {
         title: 'Deleting issue...',
@@ -117,8 +137,12 @@ export default class IssueController extends React.PureComponent<IIssueControlle
     });
   }
 
-  getLastIssueChange() {
-    return this.lastIssueChange;
+  getItemId(item: IIssue) {
+    return item.sid;
+  }
+
+  getLastChange() {
+    return this.lastChange;
   }
 
   render() {

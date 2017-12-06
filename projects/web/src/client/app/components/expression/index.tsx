@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as NQL from '../../nql';
 import { ServiceManager } from '../../services';
 import HTMLExpressionFormatter from './html-expression-formatter';
+import { IApplication } from '../../application';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -14,7 +15,7 @@ interface IExpressionState {
 }
 
 export default class Expression extends React.PureComponent<IExpressionProps, IExpressionState> {
-  private application = ServiceManager.Instance.getApplication();
+  private application = ServiceManager.Instance.getService<IApplication>('IApplication');
 
   render() {
     return (

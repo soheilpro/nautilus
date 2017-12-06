@@ -7,7 +7,7 @@ import { IUserModule } from './user';
 
 export interface IApplication extends EventEmitter {
   isInitialized(): boolean;
-  initialize(): void;
+  initialize(session: ISession): void;
 
   isLoggedIn(): boolean;
   logIn(username: string, password: string): Promise<ISession>;

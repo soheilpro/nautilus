@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { IIssue } from '../../application';
-import { ITableRow } from '../table';
+import { ITableRow } from '../../framework/components/table';
 import ItemPriorityIndicator from '../item-priority-indicator';
 import ItemStateField from '../item-state-field';
 import ItemTypeField from '../item-type-field';

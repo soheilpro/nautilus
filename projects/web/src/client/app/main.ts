@@ -1,11 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Application } from './application';
-import { ContextManager } from './context';
-import { ActionManager } from './actions';
-import { CommandManager } from './commands';
+import { Application, ISession } from './application';
+import { Clipboard } from './framework/clipboard';
+import { ContextManager } from './framework/context';
+import { ActionManager } from './framework/actions';
+import { CommandManager } from './framework/commands';
+import { ItemControllerManager } from './framework/items';
 import { ServiceManager } from './services';
-import { LocalStorage, SessionStorage } from './storage';
+import { ILocalStorage, LocalStorage, SessionStorage } from './framework/storage';
 import App from './components/app';
 
 declare var config: {
@@ -14,30 +16,27 @@ declare var config: {
   }
 };
 
-async function main() {
-  ServiceManager.Instance = new ServiceManager();
-
-  const sessionStorage = new SessionStorage();
-  ServiceManager.Instance.setSessionStorage(sessionStorage);
-
-  const localStorage = new LocalStorage();
-  ServiceManager.Instance.setLocalStorage(localStorage);
-
-  const roamingStorage = new LocalStorage();
-  ServiceManager.Instance.setRoamingStorage(roamingStorage);
+async function getApplication() {
+  const localStorage = ServiceManager.Instance.getService<ILocalStorage>('ILocalStorage');
+  const session = await localStorage.get<ISession>('session');
 
   const application = new Application({ address: config.api.address });
-  await application.initialize();
-  ServiceManager.Instance.setApplication(application);
+  await application.initialize(session);
 
-  const contextManager = new ContextManager();
-  ServiceManager.Instance.setContextManager(contextManager);
+  return application;
+}
 
-  const actionManager = new ActionManager();
-  ServiceManager.Instance.setActionManager(actionManager);
-
-  const commandManager = new CommandManager();
-  ServiceManager.Instance.setCommandManager(commandManager);
+async function main() {
+  ServiceManager.Instance = new ServiceManager();
+  ServiceManager.Instance.registerService('ILocalStorage', new LocalStorage());
+  ServiceManager.Instance.registerService('ISessionStorage', new SessionStorage());
+  ServiceManager.Instance.registerService('IRoamingStorage', new LocalStorage());
+  ServiceManager.Instance.registerService('IClipboard', new Clipboard());
+  ServiceManager.Instance.registerService('IContextManager', new ContextManager());
+  ServiceManager.Instance.registerService('IActionManager', new ActionManager());
+  ServiceManager.Instance.registerService('ICommandManager', new CommandManager());
+  ServiceManager.Instance.registerService('IItemControllerManager', new ItemControllerManager());
+  ServiceManager.Instance.registerService('IApplication', await getApplication());
 
   ReactDOM.render(
     React.createElement(App),

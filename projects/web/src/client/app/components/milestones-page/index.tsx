@@ -1,19 +1,17 @@
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { IMilestone, entityComparer } from '../../application';
-import { ICommandProvider } from '../../commands';
+import { IMilestone, entityComparer, IApplication } from '../../application';
 import { ServiceManager } from '../../services';
 import ArrayHelper from '../../utilities/array-helper';
-import CopyMilestoneSidCommand from '../../milestones/copy-milestone-sid-command';
-import NewMilestoneCommand from '../../milestones/new-milestone-command';
-import EditMilestoneCommand from '../../milestones/edit-milestone-command';
-import DeleteMilestoneCommand from '../../milestones/delete-milestone-command';
 import MilestoneViewSettings, { IView, View } from '../milestone-view-settings';
 import MilestoneDetail from '../milestone-detail';
 import MilestoneTable from '../milestone-table';
 import MasterPage from '../master-page';
-import CommandButton from '../command-button';
-import Icon from '../icon';
+import CommandButton from '../../framework/components/command-button';
+import Icon from '../../framework/components/icon';
+import { ILocalStorage } from '../../framework/storage';
+import { IContextProvider, IContextManager } from '../../framework/context';
+import { MilestoneType } from '../../modules/milestones';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -27,10 +25,10 @@ interface IMilestonesPageState {
   view?: IView;
 }
 
-export default class MilestonesPage extends React.Component<IMilestonesPageProps, IMilestonesPageState> implements ICommandProvider {
-  private localStorage = ServiceManager.Instance.getLocalStorage();
-  private application = ServiceManager.Instance.getApplication();
-  private commandManager = ServiceManager.Instance.getCommandManager();
+export default class MilestonesPage extends React.Component<IMilestonesPageProps, IMilestonesPageState> implements IContextProvider {
+  private localStorage = ServiceManager.Instance.getService<ILocalStorage>('ILocalStorage');
+  private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');
+  private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private milestoneDetailContainerElement: HTMLElement;
 
   constructor() {
@@ -50,7 +48,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
   }
 
   componentWillMount() {
-    this.commandManager.registerCommandProvider(this);
+    this.contextManager.registerContextProvider(this);
     this.application.on('load', this.handleApplicationLoad);
     this.application.items.on('milestone.add', this.handleApplicationMilestoneAdd);
     this.application.items.on('milestone.update', this.handleApplicationMilestoneUpdate);
@@ -76,16 +74,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     this.application.items.off('milestone.update', this.handleApplicationMilestoneUpdate);
     this.application.items.off('milestone.add', this.handleApplicationMilestoneAdd);
     this.application.off('load', this.handleApplicationLoad);
-    this.commandManager.unregisterCommandProvider(this);
-  }
-
-  getCommands() {
-    return [
-      new NewMilestoneCommand(),
-      new CopyMilestoneSidCommand(this.state.selectedMilestone),
-      new EditMilestoneCommand(this.state.selectedMilestone),
-      new DeleteMilestoneCommand(this.state.selectedMilestone),
-    ];
+    this.contextManager.unregisterContextProvider(this);
   }
 
   private loadMilestones(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]) {
@@ -96,6 +85,16 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
       milestones,
       selectedMilestone: milestones[0],
     });
+  }
+
+  getContext() {
+    if (!this.state.selectedMilestone)
+      return null;
+
+    return {
+      'core.activeItemType': MilestoneType,
+      'core.activeItem': this.state.selectedMilestone,
+    };
   }
 
   private handleApplicationLoad() {

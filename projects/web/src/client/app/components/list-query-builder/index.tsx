@@ -2,9 +2,9 @@ import * as _ from 'underscore';
 import * as React from 'react';
 import * as classNames from 'classnames';
 import * as NQL from '../../nql';
-import { KeyCode } from '../../keyboard';
-import Input from '../input';
-import Icon from '../icon';
+import { KeyCode } from '../../framework/keyboard';
+import Input from '../../framework/components/input';
+import Icon from '../../framework/components/icon';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');

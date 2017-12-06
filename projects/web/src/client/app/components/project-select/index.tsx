@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { IProject } from '../../application';
-import Select from '../select';
+import Select from '../../framework/components/select';
 
 interface IProjectSelectProps {
   projects: IProject[];

@@ -1,23 +1,19 @@
-import * as _ from 'underscore';
 import * as React from 'react';
+import * as _ from 'underscore';
+import { IIssue, entityComparer, IApplication } from '../../application';
 import * as NQL from '../../nql';
-import { IIssue, entityComparer } from '../../application';
-import { ICommandProvider } from '../../commands';
 import { ServiceManager } from '../../services';
 import ArrayHelper from '../../utilities/array-helper';
-import CopyIssueSidCommand from '../../issues/copy-issue-sid-command';
-import DeleteIssueCommand from '../../issues/delete-issue-command';
-import DuplicateIssueCommand from '../../issues/duplicate-issue-command';
-import EditIssueCommand from '../../issues/edit-issue-command';
-import NewIssueCommand from '../../issues/new-issue-command';
-import NewSubIssueCommand from '../../issues/new-sub-issue-command';
-import UpdateIssueCommand from '../../issues/update-issue-command';
-import IssueViewSettings, { IView, View } from '../issue-view-settings';
+import CommandButton from '../../framework/components/command-button';
+import Icon from '../../framework/components/icon';
 import IssueDetail from '../issue-detail';
 import IssueTable from '../issue-table';
+import IssueViewSettings, { IView, View } from '../issue-view-settings';
 import MasterPage from '../master-page';
-import CommandButton from '../command-button';
-import Icon from '../icon';
+import { ILocalStorage } from '../../framework/storage';
+import { IRoamingStorage } from '../../modules/storage';
+import { IContextProvider, IContextManager } from '../../framework/context';
+import { IssueType } from '../../modules/issues';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -32,12 +28,11 @@ interface IIssuesPageState {
   savedViews?: IView[];
 }
 
-export default class IssuesPage extends React.Component<IIssuesPageProps, IIssuesPageState> implements ICommandProvider {
-  private localStorage = ServiceManager.Instance.getLocalStorage();
-  private roamingStorage = ServiceManager.Instance.getRoamingStorage();
-  private application = ServiceManager.Instance.getApplication();
-  private issueController = ServiceManager.Instance.getIssueController();
-  private commandManager = ServiceManager.Instance.getCommandManager();
+export default class IssuesPage extends React.Component<IIssuesPageProps, IIssuesPageState> implements IContextProvider {
+  private localStorage = ServiceManager.Instance.getService<ILocalStorage>('ILocalStorage');
+  private roamingStorage = ServiceManager.Instance.getService<IRoamingStorage>('IRoamingStorage');
+  private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');
+  private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private issueDetailContainerElement: HTMLElement;
 
   constructor() {
@@ -59,7 +54,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
   }
 
   componentWillMount() {
-    this.commandManager.registerCommandProvider(this);
+    this.contextManager.registerContextProvider(this);
     this.application.on('load', this.handleApplicationLoad);
     this.application.items.on('issue.add', this.handleApplicationIssueAdd);
     this.application.items.on('issue.update', this.handleApplicationIssueUpdate);
@@ -91,19 +86,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     this.application.items.off('issue.update', this.handleApplicationIssueUpdate);
     this.application.items.off('issue.add', this.handleApplicationIssueAdd);
     this.application.off('load', this.handleApplicationLoad);
-    this.commandManager.unregisterCommandProvider(this);
-  }
-
-  getCommands() {
-    return [
-      new NewIssueCommand(),
-      new CopyIssueSidCommand(this.state.selectedIssue),
-      new NewSubIssueCommand(this.state.selectedIssue),
-      new DuplicateIssueCommand(this.state.selectedIssue),
-      new EditIssueCommand(this.state.selectedIssue),
-      new DeleteIssueCommand(this.state.selectedIssue),
-      new UpdateIssueCommand(this.state.selectedIssue, this.issueController.getLastIssueChange()),
-    ];
+    this.contextManager.unregisterContextProvider(this);
   }
 
   private async loadIssues(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]) {
@@ -114,6 +97,16 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
       issues,
       selectedIssue: _.find(issues, issue => !issue.parent),
     });
+  }
+
+  getContext() {
+    if (!this.state.selectedIssue)
+      return null;
+
+    return {
+      'core.activeItemType': IssueType,
+      'core.activeItem': this.state.selectedIssue,
+    };
   }
 
   private handleApplicationLoad() {

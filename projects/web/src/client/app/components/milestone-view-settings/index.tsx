@@ -1,17 +1,14 @@
 import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { ICommandProvider } from '../../commands';
+import { ICommandProvider, ICommandManager } from '../../framework/commands';
 import { ServiceManager } from '../../services';
-import Button from '../button';
+import Button from '../../framework/components/button';
 import MilestoneFilterQueryBuilder from '../milestone-filter-query-builder';
 import Expression from '../expression';
 import { IView } from './iview';
 import { View } from './view';
-import FilterByProjectCommand from './filter-by-project-command';
-import FilterByStateCommand from './filter-by-state-command';
-import FilterByCreatedByCommand from './filter-by-created-by-command';
-import ResetViewCommand from './reset-view-command';
+import { FilterMilestonesByProjectCommand, FilterMilestonesByStateCommand, FilterMilestonesByCreatedByCommand, ResetViewCommand } from './commands';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -26,7 +23,7 @@ interface IMilestoneViewSettingsState {
 }
 
 export default class MilestoneViewSettings extends React.PureComponent<IMilestoneViewSettingsProps, IMilestoneViewSettingsState> implements ICommandProvider {
-  private commandManager = ServiceManager.Instance.getCommandManager();
+  private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private queryBuilderComponent: MilestoneFilterQueryBuilder;
 
   constructor(props: IMilestoneViewSettingsProps) {
@@ -64,9 +61,9 @@ export default class MilestoneViewSettings extends React.PureComponent<IMileston
     });
 
     return [
-      new FilterByProjectCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'project')),
-      new FilterByStateCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'state')),
-      new FilterByCreatedByCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'createdBy')),
+      new FilterMilestonesByProjectCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'project')),
+      new FilterMilestonesByStateCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'state')),
+      new FilterMilestonesByCreatedByCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'createdBy')),
       new ResetViewCommand(view, this.handleResetViewCommandExecute),
     ];
   }

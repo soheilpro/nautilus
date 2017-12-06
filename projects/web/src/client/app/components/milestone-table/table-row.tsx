@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { IMilestone } from '../../application';
-import { ITableRow } from '../table';
+import { ITableRow } from '../../framework/components/table';
 import ItemStateField from '../item-state-field';
 import ProjectField from '../project-field';
 import SidField from '../sid-field';

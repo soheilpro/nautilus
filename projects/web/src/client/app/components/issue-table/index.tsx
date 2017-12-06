@@ -2,10 +2,11 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { IIssue } from '../../application';
 import { ServiceManager } from '../../services';
-import Table from '../table';
+import Table from '../../framework/components/table';
 import TableHeader from './table-header';
 import TableRow from './table-row';
 import TableFooter from './table-footer';
+import { IIssueController } from '../../modules/issues';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -23,7 +24,7 @@ interface IIssueTableState {
 }
 
 export default class IssueTable extends React.PureComponent<IIssueTableProps, IIssueTableState> {
-  private issueController = ServiceManager.Instance.getIssueController();
+  private issueController = ServiceManager.Instance.getService<IIssueController>('IIssueController');
 
   constructor(props: IIssueTableProps) {
     super(props);
@@ -62,11 +63,11 @@ export default class IssueTable extends React.PureComponent<IIssueTableProps, II
   }
 
   private handleTableItemAction(issue: IIssue) {
-    return this.issueController.editIssue(issue);
+    return this.issueController.editItem(issue);
   }
 
   private handleTableItemDelete(issue: IIssue) {
-    return this.issueController.deleteIssue(issue);
+    return this.issueController.deleteItem(issue);
   }
 
   // This method reorders items in a sorted list so that child items appear

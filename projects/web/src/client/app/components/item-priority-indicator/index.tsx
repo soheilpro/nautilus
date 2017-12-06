@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import Icon from '../icon';
+import Icon from '../../framework/components/icon';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
