@@ -1,6 +1,6 @@
 import { IFilter } from '../../framework';
 import { IUser, IUserChange, IUserRepository, UserFilter, DuplicateUserFilter } from '../../framework/user';
-import { IDB } from '../../db';
+import { IDB, IUpdate } from '../../db';
 import { IUserDocument } from './iuser-document';
 import RepositoryBase from '../repository-base';
 
@@ -9,11 +9,11 @@ export class UserRepository extends RepositoryBase<IUser, IUserChange, IUserDocu
     super(db);
   }
 
-  collectionName() {
+  collectionName(): string {
     return 'users';
   }
 
-  filterToQuery(filter: IFilter) {
+  filterToQuery(filter: IFilter): IObject {
     if (filter instanceof UserFilter) {
       return {
         username: filter.username,
@@ -46,7 +46,7 @@ export class UserRepository extends RepositoryBase<IUser, IUserChange, IUserDocu
     return super.filterToQuery(filter);
   }
 
-  changeToUpdate(change: IUserChange) {
+  changeToUpdate(change: IUserChange): IUpdate {
     const update = super.changeToUpdate(change);
     update.setOrUnset('username', change.username);
     update.setOrUnset('passwordHash', change.passwordHash);
@@ -56,7 +56,7 @@ export class UserRepository extends RepositoryBase<IUser, IUserChange, IUserDocu
     return update;
   }
 
-  documentToEntity(document: IUserDocument) {
+  documentToEntity(document: IUserDocument): IUser {
     return {
       ...super.documentToEntity(document),
       username: document.username,
@@ -66,7 +66,7 @@ export class UserRepository extends RepositoryBase<IUser, IUserChange, IUserDocu
     };
   }
 
-  entityToDocument(entity: IUser) {
+  entityToDocument(entity: IUser): IUserDocument {
     return {
       ...super.entityToDocument(entity),
       username: entity.username,

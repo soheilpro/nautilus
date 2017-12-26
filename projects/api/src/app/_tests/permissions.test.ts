@@ -19,7 +19,7 @@ class TestContext extends Context {
   session1: SessionModel;
   session2: SessionModel;
 
-  async reset() {
+  async reset(): Promise<void> {
     await super.reset();
 
     this.user0 = await this.createEntity(this.adminSession, 'users', {

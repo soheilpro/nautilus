@@ -21,15 +21,15 @@ export default class DialogController extends React.PureComponent<IDialogControl
     this.handleDialogWindowButtonClick = this.handleDialogWindowButtonClick.bind(this);
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     ServiceManager.Instance.registerService('IDialogController', this);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     ServiceManager.Instance.unregisterService('IDialogController', this);
   }
 
-  showDialog(dialog: IDialog) {
+  showDialog(dialog: IDialog): void {
     this.dialogWindow = {
       content: <DialogWindow dialog={dialog} onButtonClick={_.partial(this.handleDialogWindowButtonClick, dialog)} />,
       top: 120,
@@ -40,7 +40,7 @@ export default class DialogController extends React.PureComponent<IDialogControl
     this.windowController.showWindow(this.dialogWindow);
   }
 
-  showErrorDialog(options: { title: string, message: string }) {
+  showErrorDialog(options: { title: string, message: string }): void {
     const dialog: IDialog = {
       title: options.title,
       content: options.message,
@@ -74,11 +74,11 @@ export default class DialogController extends React.PureComponent<IDialogControl
     this.showDialog(dialog);
   }
 
-  private handleDialogWindowButtonClick(dialog: IDialog, button: IDialogButton) {
+  private handleDialogWindowButtonClick(dialog: IDialog, button: IDialogButton): void {
     dialog.onButtonClick(button);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="dialog-controller-component">
       </div>

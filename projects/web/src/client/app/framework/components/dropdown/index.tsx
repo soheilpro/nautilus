@@ -35,7 +35,7 @@ export default class Dropdown extends React.PureComponent<IDropdownProps, IDropd
     this.state = {};
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(): void {
     if (this.windowContainerComponent) {
       const windowContainerElement = ReactDOM.findDOMNode(this.windowContainerComponent) as HTMLElement;
       const windowContainerElementRect = windowContainerElement.getBoundingClientRect();
@@ -45,7 +45,7 @@ export default class Dropdown extends React.PureComponent<IDropdownProps, IDropd
     }
   }
 
-  open() {
+  open(): void {
     this.setState({
       isOpen: true,
     });
@@ -54,7 +54,7 @@ export default class Dropdown extends React.PureComponent<IDropdownProps, IDropd
       this.props.onOpen();
   }
 
-  close() {
+  close(): void {
     this.setState({
       isOpen: false,
     });
@@ -63,11 +63,11 @@ export default class Dropdown extends React.PureComponent<IDropdownProps, IDropd
       this.props.onClose();
   }
 
-  focus() {
+  focus(): void {
     this.buttonElement.focus();
   }
 
-  private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+  private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
     if (event.which === KeyCode.Escape) {
       if (this.state.isOpen) {
         event.preventDefault();
@@ -79,14 +79,14 @@ export default class Dropdown extends React.PureComponent<IDropdownProps, IDropd
     }
   }
 
-  private handleButtonClick() {
+  private handleButtonClick(): void {
     if (!this.state.isOpen)
       this.open();
     else
       this.close();
   }
 
-  private handleButtonKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+  private handleButtonKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
     if (event.which === KeyCode.Enter) {
       const form = $(this.componentElement).closest('form')[0];
 
@@ -107,11 +107,11 @@ export default class Dropdown extends React.PureComponent<IDropdownProps, IDropd
     }
   }
 
-  private handleWindowContainerClose() {
+  private handleWindowContainerClose(): void {
     this.close();
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className={classNames('dropdown-component', this.props.className, { 'open': this.state.isOpen })} onKeyDown={this.handleKeyDown} ref={e => this.componentElement = e}>
         <div className="button" tabIndex={0} onClick={this.handleButtonClick} onKeyDown={this.handleButtonKeyDown} ref={e => this.buttonElement = e}>

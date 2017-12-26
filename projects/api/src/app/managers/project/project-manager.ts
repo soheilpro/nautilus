@@ -1,4 +1,5 @@
 import { IProject, IProjectChange, IProjectManager, IProjectRepository, DuplicateProjectFilter } from '../../framework/project';
+import { IValidationError, IFilter } from '../../framework';
 import ManagerBase from '../manager-base';
 
 const NameRegEx = /.+/;
@@ -8,7 +9,7 @@ export class ProjectManager extends ManagerBase<IProject, IProjectChange> implem
     super(repository);
   }
 
-  validateEntity(entity: IProject) {
+  validateEntity(entity: IProject): IValidationError {
     if (entity.name === undefined)
       return { message: 'Missing name.' };
 
@@ -18,7 +19,7 @@ export class ProjectManager extends ManagerBase<IProject, IProjectChange> implem
     return null;
   }
 
-  validateChange(change: IProjectChange) {
+  validateChange(change: IProjectChange): IValidationError {
     if (change.name !== undefined) {
       if (!NameRegEx.test(change.name))
         return { message: 'Invalid name.' };
@@ -27,11 +28,11 @@ export class ProjectManager extends ManagerBase<IProject, IProjectChange> implem
     return null;
   }
 
-  getEntityDuplicateCheckFilter(entity: IProject) {
+  getEntityDuplicateCheckFilter(entity: IProject): IFilter {
     return new DuplicateProjectFilter(entity.name);
   }
 
-  getChangeDuplicateCheckFilter(change: IProjectChange) {
+  getChangeDuplicateCheckFilter(change: IProjectChange): IFilter {
     return new DuplicateProjectFilter(change.name);
   }
 }

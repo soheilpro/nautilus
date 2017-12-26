@@ -11,7 +11,7 @@ interface IIssueDescriptionFieldState {
 }
 
 export default class IssueDescriptionField extends React.PureComponent<IIssueDescriptionFieldProps, IIssueDescriptionFieldState> {
-  render() {
+  render(): JSX.Element {
     return (
       <span className="description-field-component">
         {this.props.description}

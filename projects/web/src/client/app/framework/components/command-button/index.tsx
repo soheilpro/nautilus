@@ -24,11 +24,11 @@ export default class CommandButton extends React.PureComponent<ICommandButtonPro
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  private handleButtonClick() {
+  private handleButtonClick(): void {
     this.commandManager.executeCommand(this.props.commandId);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Button onClick={this.handleButtonClick} {...this.props}>
         {this.props.children}

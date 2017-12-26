@@ -27,7 +27,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     super();
   }
 
-  async load() {
+  async load(): Promise<void> {
     const result = await this.client.items.get(null, ['relationships']);
 
     this.issues = [];
@@ -60,7 +60,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     }
   }
 
-  getAllIssues(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]) {
+  getAllIssues(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]): Promise<IIssue[]> {
     let issues = [...this.issues];
 
     const expressionNormalizer = new IssueExpressionNormalizer();
@@ -74,11 +74,11 @@ export class ItemModule extends BaseModule implements IItemModule {
     return Promise.resolve(issues);
   }
 
-  getIssue(item: IItem) {
+  getIssue(item: IItem): Promise<IIssue> {
     return Promise.resolve(item ? this.issuesMap[item.id] : null);
   }
 
-  getIssueParent(issue: IIssue) {
+  getIssueParent(issue: IIssue): IIssue {
     const relationship = _.find(this.relationship1Map[issue.id], relationship => relationship.type === 'parent');
 
     if (!relationship)
@@ -87,7 +87,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     return this.issuesMap[relationship.item2.id];
   }
 
-  getIssueMilestone(issue: IIssue) {
+  getIssueMilestone(issue: IIssue): IMilestone {
     const relationship = _.find(this.relationship1Map[issue.id], relationship => relationship.type === 'milestone');
 
     if (!relationship)
@@ -96,7 +96,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     return this.milestonesMap[relationship.item2.id];
   }
 
-  async addIssue(issue: IIssue, parentIssue?: IIssue) {
+  async addIssue(issue: IIssue, parentIssue?: IIssue): Promise<IIssue> {
     const item: IItem = {
       kind: 'issue',
       type: issue.type,
@@ -138,7 +138,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     return addedIssue;
   }
 
-  async updateIssue(issue: IIssue, issueChange: IIssueChange) {
+  async updateIssue(issue: IIssue, issueChange: IIssueChange): Promise<IIssue> {
     const itemChange: IItemChange = {
       type: issueChange.type,
       title: issueChange.title,
@@ -177,7 +177,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     return updatedIssue;
   }
 
-  async deleteIssue(issue: IIssue)  {
+  async deleteIssue(issue: IIssue): Promise<void> {
     await this.client.items.delete(issue.id);
 
     this.issues.splice(this.issues.indexOf(issue), 1);
@@ -189,7 +189,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     this.emit('issue.delete', { issue });
   }
 
-  getAllMilestones(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]) {
+  getAllMilestones(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]): IMilestone[] {
     let milestones = [...this.milestones];
 
     const expressionNormalizer = new MilestoneExpressionNormalizer();
@@ -203,14 +203,14 @@ export class ItemModule extends BaseModule implements IItemModule {
     return milestones;
   }
 
-  getMilestone(milestone: IItem) {
+  getMilestone(milestone: IItem): IMilestone {
     if (!milestone)
       return null;
 
     return this.milestonesMap[milestone.id];
   }
 
-  async addMilestone(milestone: IMilestone) {
+  async addMilestone(milestone: IMilestone): Promise<IMilestone> {
     const item: IItem = {
       kind: 'milestone',
       title: milestone.title,
@@ -228,7 +228,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     return addedMilestone;
   }
 
-  async updateMilestone(milestone: IMilestone, milestoneChange: IMilestoneChange) {
+  async updateMilestone(milestone: IMilestone, milestoneChange: IMilestoneChange): Promise<IMilestone> {
     const itemChange: IItemChange = {
       title: milestoneChange.title,
       description: milestoneChange.description,
@@ -246,7 +246,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     return updatedMilestone;
   }
 
-  async deleteMilestone(milestone: IMilestone)  {
+  async deleteMilestone(milestone: IMilestone): Promise<void> {
     await this.client.items.delete(milestone.id);
 
     this.milestones.splice(this.milestones.indexOf(milestone), 1);
@@ -255,7 +255,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     this.emit('milestone.delete', { milestone });
   }
 
-  private async addRelationship(relationship: IItemRelationship) {
+  private async addRelationship(relationship: IItemRelationship): Promise<void> {
     const addedRelationship = await this.client.itemRelationships.insert(relationship);
 
     this.relationships.push(addedRelationship);
@@ -263,7 +263,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     this.relationship2Map[addedRelationship.item2.id] = [...this.relationship2Map[addedRelationship.item2.id] || [], addedRelationship];
   }
 
-  private async deleteRelationship(relationship: IItemRelationship) {
+  private async deleteRelationship(relationship: IItemRelationship): Promise<void> {
     await this.client.itemRelationships.delete(relationship.id);
 
     this.relationships.splice(this.relationships.indexOf(relationship), 1);
@@ -271,13 +271,13 @@ export class ItemModule extends BaseModule implements IItemModule {
     this.relationship2Map[relationship.item2.id].splice(this.relationship2Map[relationship.item2.id].indexOf(relationship), 1);
   }
 
-  private filter<T>(items: T[], expression: NQL.IExpression, expressionNormalizer: NQL.ExpressionTransformer<{}>) {
+  private filter<T>(items: T[], expression: NQL.IExpression, expressionNormalizer: NQL.ExpressionTransformer<{}>): T[] {
     const predicate = new Query().getPredicate<T>(expressionNormalizer.transform(expression, null));
 
     return items = items.filter(predicate);
   }
 
-  private sort<T>(items: T[], sortExpressions: NQL.ISortExpression[], expressionNormalizer: NQL.ExpressionTransformer<{}>) {
+  private sort<T>(items: T[], sortExpressions: NQL.ISortExpression[], expressionNormalizer: NQL.ExpressionTransformer<{}>): T[] {
     const query = new Query();
 
     const newSortExpressions = sortExpressions.map(sortExpression => {

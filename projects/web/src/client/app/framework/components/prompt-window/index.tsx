@@ -29,19 +29,19 @@ export default class PromptWindow extends React.PureComponent<IPromptWindowProps
     this.state = {};
   }
 
-  private handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+  private handleFormSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
     this.props.onConfirm(this.state.inputText);
   }
 
-  private handleInputChange(value: string) {
+  private handleInputChange(value: string): void {
     this.setState({
       inputText: value,
     });
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Window className="promp-window-component">
         <WindowHeader>{this.props.title}</WindowHeader>

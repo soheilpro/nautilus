@@ -1,27 +1,27 @@
 import { BaseCommand } from '../../../framework/commands';
-import { KeyCode } from '../../../framework/keyboard';
+import { KeyCode, IShortcut } from '../../../framework/keyboard';
 
 export class LoadViewCommand extends BaseCommand {
   constructor(private onExecute: () => void) {
     super();
   }
 
-  get id() {
+  get id(): string {
     return 'load-view';
   }
 
-  get title() {
+  get title(): string {
     return 'View: Load';
   }
 
-  get shortcut() {
+  get shortcut(): IShortcut {
     return [
       { keyCode: KeyCode.V },
       { keyCode: KeyCode.L },
     ];
   }
 
-  execute() {
+  execute(): void {
     this.onExecute();
   }
 }

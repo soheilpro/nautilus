@@ -15,18 +15,18 @@ export class ItemStateModule extends BaseModule implements IItemStateModule {
     super();
   }
 
-  async load() {
+  async load(): Promise<void> {
     const result = await this.client.itemStates.get(null);
 
     this.itemStates = _.sortBy(result.entities, itemState => itemState.order);
     this.itemStatesMap = ArrayHelper.toMap(this.itemStates, itemState => itemState.id);
   }
 
-  getAll(itemKind: ItemKind) {
+  getAll(itemKind: ItemKind): IItemState[] {
     return this.itemStates.filter(itemState => itemState.itemKind === itemKind);
   }
 
-  get(itemState: IItemState) {
+  get(itemState: IItemState): IItemState {
     if (!itemState)
       return null;
 

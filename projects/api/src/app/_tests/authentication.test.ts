@@ -12,7 +12,7 @@ class TestContext extends Context {
   itemRelationship: ItemRelationshipModel;
   session: SessionModel;
 
-  async init() {
+  async init(): Promise<void> {
     await super.init();
 
     this.user = await this.createEntity(this.adminSession, 'users', {

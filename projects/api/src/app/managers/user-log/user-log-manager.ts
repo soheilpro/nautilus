@@ -1,4 +1,5 @@
 import { IUserLog, IUserLogChange, IUserLogManager, IUserLogRepository } from '../../framework/user-log';
+import { IValidationError } from '../../framework';
 import ManagerBase from '../manager-base';
 
 const ActionRegEx = /.+/;
@@ -8,7 +9,7 @@ export class UserLogManager extends ManagerBase<IUserLog, IUserLogChange> implem
     super(repository);
   }
 
-  validateEntity(entity: IUserLog) {
+  validateEntity(entity: IUserLog): IValidationError {
     if (entity.dateTime === undefined)
       return { message: 'Missing dateTime.' };
 

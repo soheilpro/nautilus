@@ -1,4 +1,4 @@
-import { KeyCode } from '../../../framework/keyboard';
+import { KeyCode, IShortcut } from '../../../framework/keyboard';
 import { ServiceManager } from '../../../services';
 import { IContextManager } from '../../../framework/context';
 import { BaseCommand } from '../../../framework/commands';
@@ -12,19 +12,19 @@ export class EditItemCommand extends BaseCommand {
     super();
   }
 
-  get id() {
+  get id(): string {
     return 'edit-item';
   }
 
-  get title() {
+  get title(): string {
     return 'Edit';
   }
 
-  get shortcut() {
+  get shortcut(): IShortcut {
     return [{ keyCode: KeyCode.E }];
   }
 
-  get isEnabled() {
+  get isEnabled(): boolean {
     const context = this.contextManager.getContext();
     const activeItemType = context['core.activeItemType'];
     const itemController = this.itemControllerManager.getItemController(activeItemType);
@@ -32,7 +32,7 @@ export class EditItemCommand extends BaseCommand {
     return !!itemController;
   }
 
-  execute() {
+  execute(): void {
     const context = this.contextManager.getContext();
     const activeItemType = context['core.activeItemType'];
     const itemController = this.itemControllerManager.getItemController(activeItemType);

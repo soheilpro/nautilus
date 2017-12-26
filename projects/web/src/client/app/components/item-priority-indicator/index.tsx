@@ -14,7 +14,7 @@ interface IItemPriorityIndicatorState {
 }
 
 export default class ItemPriorityIndicator extends React.PureComponent<IItemPriorityIndicatorProps, IItemPriorityIndicatorState> {
-  render() {
+  render(): JSX.Element {
     if (!this.props.itemPriority)
       return null;
 

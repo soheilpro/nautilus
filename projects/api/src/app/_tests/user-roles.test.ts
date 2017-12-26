@@ -6,7 +6,7 @@ class TestContext extends Context {
   user: UserModel;
   project: ProjectModel;
 
-  async reset() {
+  async reset(): Promise<void> {
     await super.reset();
 
     this.user = await this.createEntity(this.adminSession, 'users', {

@@ -15,15 +15,15 @@ export class CopyItemIdCommand extends BaseCommand {
     super();
   }
 
-  get id() {
+  get id(): string {
     return 'copy-item-id';
   }
 
-  get title() {
+  get title(): string {
     return 'Copy id to clipboard';
   }
 
-  get isEnabled() {
+  get isEnabled(): boolean {
     const context = this.contextManager.getContext();
     const activeItemType = context['core.activeItemType'];
     const itemController = this.itemControllerManager.getItemController(activeItemType);
@@ -31,7 +31,7 @@ export class CopyItemIdCommand extends BaseCommand {
     return !!itemController;
   }
 
-  execute() {
+  execute(): void {
     const context = this.contextManager.getContext();
     const activeItemType = context['core.activeItemType'];
     const itemController = this.itemControllerManager.getItemController(activeItemType);

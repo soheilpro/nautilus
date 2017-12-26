@@ -38,21 +38,21 @@ export default class TableRow extends React.PureComponent<ITableRowProps, ITable
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
   }
 
-  focus() {
+  focus(): void {
     this.componentElement.focus();
   }
 
-  private handleClick() {
+  private handleClick(): void {
     if (this.props.onSelect)
       this.props.onSelect(this.props.item);
   }
 
-  private handleDoubleClick() {
+  private handleDoubleClick(): void {
     if (this.props.onAction)
       this.props.onAction(this.props.item);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <tr className={classNames('table-row-component', 'table-row', { 'selected': this.props.isSelected })} tabIndex={0} onClick={this.handleClick} onDoubleClick={this.handleDoubleClick} ref={e => this.componentElement = e}>
         <td className="table-cell sid">

@@ -1,5 +1,5 @@
 import { IIssueChange, IApplication } from '../../../application';
-import { KeyCode } from '../../../framework/keyboard';
+import { KeyCode, IShortcut } from '../../../framework/keyboard';
 import { ServiceManager } from '../../../services';
 import { UpdateIssueAction } from '../../../actions/issues';
 import { IActionManager } from '../../../framework/actions';
@@ -17,28 +17,28 @@ export class UpdateIssueCommand extends BaseCommand {
     super();
   }
 
-  get id() {
+  get id(): string {
     return 'update-issue';
   }
 
-  get title() {
+  get title(): string {
     return 'Update Issue';
   }
 
-  get shortcut() {
+  get shortcut(): IShortcut {
     return [
       { keyCode: KeyCode.U },
       { keyCode: KeyCode.U },
     ];
   }
 
-  get isEnabled() {
+  get isEnabled(): boolean {
     const context = this.contextManager.getContext();
 
     return context['core.activeItemType'] === IssueType && !!this.issueController.getLastChange();
   }
 
-  async execute() {
+  async execute(): Promise<void> {
     const context = this.contextManager.getContext();
     const activeIssue = context['core.activeItem'];
     const issueChange = this.issueController.getLastChange();

@@ -32,19 +32,19 @@ export default class Login extends React.PureComponent<ILoginProps, ILoginState>
     };
   }
 
-  private handleUsernameChange(value: string) {
+  private handleUsernameChange(value: string): void {
     this.setState({
       username: value,
     });
   }
 
-  private handlePasswordChange(value: string) {
+  private handlePasswordChange(value: string): void {
     this.setState({
       password: value,
     });
   }
 
-  private async handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+  private async handleFormSubmit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
 
     if (this.state.username.trim().length === 0) {
@@ -68,7 +68,7 @@ export default class Login extends React.PureComponent<ILoginProps, ILoginState>
     }
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="login-component">
         <div className="container">

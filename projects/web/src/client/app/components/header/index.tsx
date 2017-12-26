@@ -16,7 +16,7 @@ interface IHeaderState {
 export default class Header extends React.PureComponent<IHeaderProps, IHeaderState> {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
 
-  render() {
+  render(): JSX.Element {
     const user = this.application.users.get(this.application.getSession().user);
 
     return (

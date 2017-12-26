@@ -14,11 +14,11 @@ interface IProjectQueryBuilderState {
 }
 
 export default class ProjectQueryBuilder extends React.PureComponent<IProjectQueryBuilderProps, IProjectQueryBuilderState> {
-  static canParseQuery(query: NQL.IExpression, queryItem: string) {
+  static canParseQuery(query: NQL.IExpression, queryItem: string): boolean {
     return ListQueryBuilder.canParseQuery(query, queryItem, 'Project');
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <ListQueryBuilder items={this.props.projects} displayProperty="name" query={this.props.query} queryItem={this.props.queryItem} queryItemType="Project" itemToQueryItem={asEntity} itemComparer={entityComparer} onChange={this.props.onChange} />
     );

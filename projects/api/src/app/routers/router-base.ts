@@ -16,7 +16,7 @@ export abstract class RouterBase<TEntity extends IEntity, TChange extends IChang
     this.deleteEntity = this.deleteEntity.bind(this);
   }
 
-  register(server: restify.Server) {
+  register(server: restify.Server): void {
     for (const route of this.getRoutes())
       (server as any)[route.method](route.url, this.authorize(route.isProtected, route.permissions), route.handler);
   }
@@ -25,7 +25,7 @@ export abstract class RouterBase<TEntity extends IEntity, TChange extends IChang
 
   abstract getRoutes(): IRoute[];
 
-  protected route(method: string, url: string, handler: restify.RequestHandler) {
+  protected route(method: string, url: string, handler: restify.RequestHandler): IRoute {
     return {
       method: method,
       url: url,
@@ -33,7 +33,7 @@ export abstract class RouterBase<TEntity extends IEntity, TChange extends IChang
     };
   }
 
-  protected protectedRoute(method: string, url: string, handler: restify.RequestHandler, permissions?: string[]) {
+  protected protectedRoute(method: string, url: string, handler: restify.RequestHandler, permissions?: string[]): IRoute {
     return {
       method: method,
       url: url,
@@ -43,8 +43,8 @@ export abstract class RouterBase<TEntity extends IEntity, TChange extends IChang
     };
   }
 
-  private authorize(isProtected: boolean, permissions?: string[]) {
-    return (request: IRequest, response: IResponse, next: restify.Next) => {
+  private authorize(isProtected: boolean, permissions?: string[]): restify.RequestHandler {
+    return (request: IRequest, response: IResponse, next: restify.Next): void => {
       if (isProtected) {
         if (!request.user)
           return response.send(new errors.UnauthorizedError());
@@ -58,7 +58,7 @@ export abstract class RouterBase<TEntity extends IEntity, TChange extends IChang
     };
   }
 
-  protected async getEntities(request: IRequest, response: IResponse) {
+  protected async getEntities(request: IRequest, response: IResponse): Promise<void> {
     try {
       const queryParams = new Params(request.query);
       const filter = await this.filterFromParams(queryParams, request);
@@ -86,7 +86,7 @@ export abstract class RouterBase<TEntity extends IEntity, TChange extends IChang
     }
   }
 
-  protected async getEntity(request: IRequest, response: IResponse) {
+  protected async getEntity(request: IRequest, response: IResponse): Promise<void> {
     try {
       const routeParams = new Params(request.params);
       const entity = await routeParams.readEntity('id', this.manager, true);
@@ -114,7 +114,7 @@ export abstract class RouterBase<TEntity extends IEntity, TChange extends IChang
     }
   }
 
-  protected async postEntity(request: IRequest, response: IResponse) {
+  protected async postEntity(request: IRequest, response: IResponse): Promise<void> {
     try {
       const bodyParams = new Params(request.body);
       const entity = await this.entityFromParams(bodyParams, request);
@@ -158,7 +158,7 @@ export abstract class RouterBase<TEntity extends IEntity, TChange extends IChang
     }
   }
 
-  protected async patchEntity(request: IRequest, response: IResponse) {
+  protected async patchEntity(request: IRequest, response: IResponse): Promise<void> {
     try {
       const routeParams = new Params(request.params);
       const entity = await routeParams.readEntity('id', this.manager, true);
@@ -211,7 +211,7 @@ export abstract class RouterBase<TEntity extends IEntity, TChange extends IChang
     }
   }
 
-  protected async deleteEntity(request: IRequest, response: IResponse) {
+  protected async deleteEntity(request: IRequest, response: IResponse): Promise<void> {
     const routeParams = new Params(request.params);
     const entity = await routeParams.readEntity('id', this.manager, true);
 
@@ -235,32 +235,32 @@ export abstract class RouterBase<TEntity extends IEntity, TChange extends IChang
     response.send(200);
   }
 
-  protected filterFromParams(params: IParams, request: IRequest) {
-    return Promise.resolve(null as IFilter);
+  protected filterFromParams(params: IParams, request: IRequest): Promise<IFilter> {
+    return Promise.resolve(null);
   }
 
-  protected entityFromParams(params: IParams, request: IRequest) {
+  protected entityFromParams(params: IParams, request: IRequest): Promise<TEntity> {
     return Promise.resolve({} as TEntity);
   }
 
-  protected changeFromParams(params: IParams, request: IRequest) {
+  protected changeFromParams(params: IParams, request: IRequest): Promise<TChange> {
     return Promise.resolve({} as TChange);
   }
 
-  async canAccessEntity(entity: TEntity, access: string, request: IRequest) {
+  async canAccessEntity(entity: TEntity, access: string, request: IRequest): Promise<boolean> {
     return await this.checkEntityAccess(entity, access, request) ||
                  this.checkEntityPermisisons(this.name, entity, access, request);
   }
 
-  protected checkEntityAccess(entity: TEntity, access: string, request: IRequest) {
+  protected checkEntityAccess(entity: TEntity, access: string, request: IRequest): Promise<boolean> {
     return Promise.resolve(this.checkEntityAccessSync(entity, access, request));
   }
 
-  protected checkEntityAccessSync(entity: TEntity, access: string, request: IRequest) {
+  protected checkEntityAccessSync(entity: TEntity, access: string, request: IRequest): boolean {
     return false;
   }
 
-  protected checkEntityPermisisons(name: string, entity: IEntity, access: string, request: IRequest) {
+  protected checkEntityPermisisons(name: string, entity: IEntity, access: string, request: IRequest): boolean {
     switch (access) {
       case 'create':
         return this.hasPermission(`${name}:${access}`, request);
@@ -275,25 +275,25 @@ export abstract class RouterBase<TEntity extends IEntity, TChange extends IChang
     }
   }
 
-  async canChangeEntity(entity: TEntity, change: TChange, request: IRequest) {
+  async canChangeEntity(entity: TEntity, change: TChange, request: IRequest): Promise<boolean> {
     return await this.checkEntityChange(entity, change, request);
   }
 
-  protected checkEntityChange(entity: TEntity, change: TChange, request: IRequest) {
+  protected checkEntityChange(entity: TEntity, change: TChange, request: IRequest): Promise<boolean> {
     return Promise.resolve(this.checkEntityChangeSync(entity, change, request));
   }
 
-  protected checkEntityChangeSync(entity: TEntity, change: TChange, request: IRequest) {
+  protected checkEntityChangeSync(entity: TEntity, change: TChange, request: IRequest): boolean {
     return true;
   }
 
-  protected hasPermission(name: string, request: IRequest) {
+  protected hasPermission(name: string, request: IRequest): boolean {
     return PermissionHelper.hasPermission(name, request.permissions);
   }
 
   abstract entityToModel(entity: TEntity): any;
 
-  private async getSupplements(params: IParams, entities: TEntity[]) {
+  private async getSupplements(params: IParams, entities: TEntity[]): Promise<IObject> {
     const requestedSupplements = params.readStringArray('supplement') || [];
 
     if (requestedSupplements.length === 0)

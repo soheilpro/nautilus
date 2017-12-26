@@ -39,7 +39,7 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
     } as TGetResult;
   }
 
-  async get(filter: TFilter, supplement?: string[]) {
+  async get(filter: TFilter, supplement?: string[]): Promise<TGetResult> {
     const invokeOptions: IInvokeOptions = {
       method: 'GET',
       path: this.basePath(),
@@ -54,7 +54,7 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
     return this.deserializeGetResult(result);
   }
 
-  async insert(entity: TEntity) {
+  async insert(entity: TEntity): Promise<TEntity> {
     const invokeOptions: IInvokeOptions = {
       method: 'POST',
       path: this.basePath(),
@@ -66,7 +66,7 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
     return this.deserializeEntity(result.data);
   }
 
-  async update(id: string, change: TChange) {
+  async update(id: string, change: TChange): Promise<TEntity> {
     const invokeOptions: IInvokeOptions = {
       method: 'PATCH',
       path: `${this.basePath()}/${id}`,
@@ -78,7 +78,7 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
     return this.deserializeEntity(result.data);
   }
 
-  delete(id: string) {
+  delete(id: string): Promise<void> {
     const invokeOptions: IInvokeOptions = {
       method: 'DELETE',
       path: `${this.basePath()}/${id}`,
@@ -87,13 +87,13 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
     return this.invoke(invokeOptions);
   }
 
-  protected invoke(options: IInvokeOptions) {
+  protected invoke(options: IInvokeOptions): Promise<any> {
     const config: AxiosRequestConfig = {
       method: options.method,
       url: this.client.address + options.path,
       params: _.pick(options.query, (value: any) => value !== undefined),
       data: _.pick(options.data, (value: any) => value !== undefined),
-      validateStatus: () => true,
+      validateStatus: (): boolean => true,
     };
 
     if (this.client.session) {
@@ -103,7 +103,7 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
       };
     }
 
-    return new Promise<any>(async (resolve, reject) => {
+    return new Promise<any>(async (resolve, reject): Promise<void> => {
       try {
         const result = await axios.request(config);
         resolve(result);
@@ -114,7 +114,7 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
     });
   }
 
-  protected toId(object: IEntity) {
+  protected toId(object: IEntity): string {
     if (object === undefined)
       return undefined;
 
@@ -124,7 +124,7 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
     return object.id;
   }
 
-  protected toIdArray(entities: IEntity[]) {
+  protected toIdArray(entities: IEntity[]): string {
     if (!entities)
       return undefined;
 

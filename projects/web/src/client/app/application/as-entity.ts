@@ -1,6 +1,6 @@
 import { IEntity } from '../sdk';
 
-export function asEntity(entity: IEntity) {
+export function asEntity(entity: IEntity): IEntity {
   if (!entity)
     return undefined;
 

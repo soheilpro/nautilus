@@ -41,7 +41,7 @@ export default class ItemList extends React.PureComponent<ISelectItemListProps, 
     };
   }
 
-  componentWillReceiveProps(props: ISelectItemListProps) {
+  componentWillReceiveProps(props: ISelectItemListProps): void {
     if (this.props.items !== props.items) {
       this.setState({
         items: [emptySelectItem, ...props.items],
@@ -49,7 +49,7 @@ export default class ItemList extends React.PureComponent<ISelectItemListProps, 
     }
   }
 
-  private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+  private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
     if (event.which === KeyCode.DownArrow) {
       event.preventDefault();
 
@@ -81,7 +81,7 @@ export default class ItemList extends React.PureComponent<ISelectItemListProps, 
     }
   }
 
-  private handleSearchTextChange(value: string) {
+  private handleSearchTextChange(value: string): void {
     this.setState({
       searchText: value,
     });
@@ -94,13 +94,13 @@ export default class ItemList extends React.PureComponent<ISelectItemListProps, 
     });
   }
 
-  private handleItemListMouseLeave() {
+  private handleItemListMouseLeave(): void {
     this.setState({
       activeItemIndex: -1,
     });
   }
 
-  private handleItemMouseEnter(item: ISelectItem) {
+  private handleItemMouseEnter(item: ISelectItem): void {
     this.setState(state => {
       return {
         activeItemIndex: state.items.indexOf(item),
@@ -108,7 +108,7 @@ export default class ItemList extends React.PureComponent<ISelectItemListProps, 
     });
   }
 
-  private handleItemTitleClick(item: ISelectItem, event: React.MouseEvent<HTMLAnchorElement>) {
+  private handleItemTitleClick(item: ISelectItem, event: React.MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
 
     if (item === emptySelectItem)
@@ -117,7 +117,7 @@ export default class ItemList extends React.PureComponent<ISelectItemListProps, 
     this.props.onSelect(item);
   }
 
-  private filterItems(items: ISelectItem[], text: string) {
+  private filterItems(items: ISelectItem[], text: string): ISelectItem[] {
     if (!text)
       return items;
 
@@ -126,7 +126,7 @@ export default class ItemList extends React.PureComponent<ISelectItemListProps, 
     return items.filter(item => item === emptySelectItem || (item[this.props.displayProperty] || '').toLowerCase().indexOf(text) !== -1);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="item-list-component" onKeyDown={this.handleKeyDown}>
         <Input className="search-input" value={this.state.searchText} autoFocus={true} selectOnFocus={true} style="simple" onChange={this.handleSearchTextChange} />

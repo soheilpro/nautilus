@@ -6,7 +6,7 @@ export class AddIssueAction extends BaseAction {
     super();
   }
 
-  async execute() {
+  async execute(): Promise<void> {
     await this.application.items.addIssue(this.issue, this.parentIssue);
   }
 }

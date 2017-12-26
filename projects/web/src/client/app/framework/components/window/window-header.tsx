@@ -10,7 +10,7 @@ interface IWindowHeaderState {
 }
 
 export class WindowHeader extends React.PureComponent<IWindowHeaderProps, IWindowHeaderState> {
-  render() {
+  render(): JSX.Element {
     return (
       <div className="window-header-component">
         <span className="title">{this.props.children}</span>

@@ -6,11 +6,11 @@ export class AndExpression extends Expression {
     super();
   }
 
-  get returnType() {
+  get returnType(): string {
     return 'Boolean';
   }
 
-  toString() {
+  toString(): string {
     return this.children.map(e => {
       if (e instanceof OrExpression)
         return `(${e.toString()})`;

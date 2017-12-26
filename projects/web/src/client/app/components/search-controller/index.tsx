@@ -25,17 +25,17 @@ export default class SearchController extends React.PureComponent<ISearchControl
     this.state = {};
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     ServiceManager.Instance.registerService('ISearchController', this);
     this.commandManager.registerCommandProvider(this);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.commandManager.unregisterCommandProvider(this);
     ServiceManager.Instance.unregisterService('ISearchController', this);
   }
 
-  showSearchWindow() {
+  showSearchWindow(): void {
     this.searchWindow = {
       content: <SearchWindow onIssueSelect={this.handleSearchWindowIssueSelect} />,
       top: 20,
@@ -45,17 +45,15 @@ export default class SearchController extends React.PureComponent<ISearchControl
     this.windowController.showWindow(this.searchWindow);
   }
 
-  getCommands() {
-    return [
-      // new SearchCommand(),
-    ] as ICommand[];
+  getCommands(): ICommand[] {
+    return [];
   }
 
-  private handleSearchWindowIssueSelect(issue: IIssue) {
+  private handleSearchWindowIssueSelect(issue: IIssue): void {
     this.windowController.closeWindow(this.searchWindow);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="search-controller-component">
       </div>

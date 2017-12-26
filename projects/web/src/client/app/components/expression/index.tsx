@@ -17,7 +17,7 @@ interface IExpressionState {
 export default class Expression extends React.PureComponent<IExpressionProps, IExpressionState> {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="expression-component">
         {

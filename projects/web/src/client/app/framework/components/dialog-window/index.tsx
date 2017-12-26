@@ -2,7 +2,7 @@ import * as _ from 'underscore';
 import * as React from 'react';
 import { IDialog, IDialogButton } from '../../dialog';
 import Window, { WindowHeader, WindowContent, WindowActionBar } from '../window';
-import Button from '../button';
+import Button, { ButtonType } from '../button';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -16,7 +16,7 @@ interface IDialogWindowState {
 }
 
 export default class DialogWindow extends React.PureComponent<IDialogWindowProps, IDialogWindowState> {
-  private getButtonType(button: IDialogButton) {
+  private getButtonType(button: IDialogButton): ButtonType {
     if (button.type === 'default')
       return 'primary';
 
@@ -29,7 +29,7 @@ export default class DialogWindow extends React.PureComponent<IDialogWindowProps
     throw new Error('Not supported.');
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Window className="dialog-window-component">
         <WindowHeader>{this.props.dialog.title}</WindowHeader>

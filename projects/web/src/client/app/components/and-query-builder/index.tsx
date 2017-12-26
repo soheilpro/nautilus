@@ -52,7 +52,7 @@ export default class AndQueryBuilder extends React.PureComponent<IAndQueryBuilde
     };
   }
 
-  componentWillReceiveProps(props: IAndQueryBuilderProps) {
+  componentWillReceiveProps(props: IAndQueryBuilderProps): void {
     if (props.query !== this.props.query) {
       this.setState({
         queries: this.getQueryObject(props.query) || {},
@@ -60,11 +60,11 @@ export default class AndQueryBuilder extends React.PureComponent<IAndQueryBuilde
     }
   }
 
-  open(key: string) {
+  open(key: string): void {
     this.dropdownComponents[key].open();
   }
 
-  private getQueryObject(query: NQL.IExpression) {
+  private getQueryObject(query: NQL.IExpression): IQueryObject {
     if (!query)
       return null;
 
@@ -83,7 +83,7 @@ export default class AndQueryBuilder extends React.PureComponent<IAndQueryBuilde
     return queries;
   }
 
-  private handleFilterChange(key: string, query: NQL.IExpression, reset: boolean, done: boolean) {
+  private handleFilterChange(key: string, query: NQL.IExpression, reset: boolean, done: boolean): void {
     const queries: IQueryObject = reset ? {} : {...this.state.queries};
 
     if (query)
@@ -101,7 +101,7 @@ export default class AndQueryBuilder extends React.PureComponent<IAndQueryBuilde
     this.props.onChange(this.getQuery(queries));
   }
 
-  private getQuery(queries: IQueryObject) {
+  private getQuery(queries: IQueryObject): NQL.IExpression {
     const queryValues = _.values(queries);
 
     if (queryValues.length === 0)
@@ -110,7 +110,7 @@ export default class AndQueryBuilder extends React.PureComponent<IAndQueryBuilde
     return new NQL.AndExpression(queryValues);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="and-query-builder-component">
         <div className="query-builders">

@@ -1,10 +1,6 @@
+import { IEntityMeta } from './ientity-meta';
+
 export interface IEntity {
   id?: string;
-  meta?: {
-    version: number,
-    state: number,
-    insertDateTime: Date,
-    updateDateTime?: Date,
-    deleteDateTime?: Date,
-  };
+  meta?: IEntityMeta;
 }

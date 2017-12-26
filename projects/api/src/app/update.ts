@@ -3,7 +3,7 @@ import { DateTimeService } from './services';
 import { DBConnection } from './db';
 import { UpdaterFactory } from './updater';
 
-async function run() {
+async function run(): Promise<void> {
   const dateTimeService = new DateTimeService();
 
   const dbConnection = new DBConnection(settings.db.address);

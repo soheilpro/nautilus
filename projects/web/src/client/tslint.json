@@ -32,6 +32,11 @@
       true,
       "allow-null-check"
     ],
+    "typedef": [
+      true,
+      "call-signature",
+      "arrow-call-signature"
+    ],
     "typedef-whitespace": [
       true,
       {

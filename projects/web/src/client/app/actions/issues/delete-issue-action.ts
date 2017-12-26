@@ -6,7 +6,7 @@ export class DeleteIssueAction extends BaseAction {
     super();
   }
 
-  async execute() {
+  async execute(): Promise<void> {
     await this.application.items.deleteIssue(this.issue);
   }
 }

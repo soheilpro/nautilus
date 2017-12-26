@@ -32,7 +32,7 @@ export default class MilestoneFilterQueryBuilder extends React.PureComponent<IMi
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.setState({
       projects: this.application.projects.getAll(),
       itemStates: this.application.itemStates.getAll('milestone'),
@@ -40,11 +40,11 @@ export default class MilestoneFilterQueryBuilder extends React.PureComponent<IMi
     });
   }
 
-  open(key: string) {
+  open(key: string): void {
     this.andQueryBuilderComponent.open(key);
   }
 
-  render() {
+  render(): JSX.Element {
     const queryBuilders: IQueryBuilder[] = [
       { key: 'project',    title: 'Project',     queryItem: 'project',    Component: ProjectQueryBuilder,      props: { projects: this.state.projects } },
       { key: 'state',      title: 'State',       queryItem: 'state',      Component: ItemStateQueryBuilder,    props: { itemStates: this.state.itemStates } },

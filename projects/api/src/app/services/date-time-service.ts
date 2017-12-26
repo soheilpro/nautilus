@@ -1,7 +1,7 @@
 import { IDateTimeService } from './idate-time-service';
 
 export class DateTimeService implements IDateTimeService {
-  nowUTC() {
+  nowUTC(): Date {
     return new Date();
   }
 }

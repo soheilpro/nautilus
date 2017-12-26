@@ -1,6 +1,6 @@
 import { IFilter } from '../../framework';
 import { IUserRole, IUserRoleChange, IUserRoleRepository, UserRoleFilter } from '../../framework/user-role';
-import { IDB } from '../../db';
+import { IDB, IUpdate } from '../../db';
 import { IUserRoleDocument } from './iuser-role-document';
 import RepositoryBase from '../repository-base';
 
@@ -9,11 +9,11 @@ export class UserRoleRepository extends RepositoryBase<IUserRole, IUserRoleChang
     super(db);
   }
 
-  collectionName() {
+  collectionName(): string {
     return 'userRoles';
   }
 
-  filterToQuery(filter: IFilter) {
+  filterToQuery(filter: IFilter): IObject {
     if (filter instanceof UserRoleFilter) {
       return {
         user: {
@@ -25,7 +25,7 @@ export class UserRoleRepository extends RepositoryBase<IUserRole, IUserRoleChang
     return super.filterToQuery(filter);
   }
 
-  changeToUpdate(change: IUserRoleDocument) {
+  changeToUpdate(change: IUserRoleDocument): IUpdate {
     const update = super.changeToUpdate(change);
     update.setOrUnset('user', change.user, this.toRef);
     update.setOrUnset('project', change.project, this.toRef);
@@ -34,7 +34,7 @@ export class UserRoleRepository extends RepositoryBase<IUserRole, IUserRoleChang
     return update;
   }
 
-  documentToEntity(document: IUserRoleDocument) {
+  documentToEntity(document: IUserRoleDocument): IUserRole {
     return {
       ...super.documentToEntity(document),
       user: this.fromRef(document.user),
@@ -43,7 +43,7 @@ export class UserRoleRepository extends RepositoryBase<IUserRole, IUserRoleChang
     };
   }
 
-  entityToDocument(entity: IUserRole) {
+  entityToDocument(entity: IUserRole): IUserRoleDocument {
     return {
       ...super.entityToDocument(entity),
       user: this.toRef(entity.user),

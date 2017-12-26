@@ -5,15 +5,15 @@ import { IMilestoneController } from '../../../modules/milestones';
 export class NewMilestoneCommand extends BaseCommand {
   private milestoneController = ServiceManager.Instance.getService<IMilestoneController>('IMilestoneController');
 
-  get id() {
+  get id(): string {
     return 'new-milestone';
   }
 
-  get title() {
+  get title(): string {
     return 'New Milestone';
   }
 
-  execute() {
+  execute(): void {
     this.milestoneController.createNew();
   }
 }

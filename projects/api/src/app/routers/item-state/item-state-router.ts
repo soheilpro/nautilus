@@ -4,6 +4,7 @@ import { IUserLogManager } from '../../framework/user-log';
 import { IDateTimeService } from '../../services';
 import { ItemStateModel } from '../../models';
 import { IRequest, IParams } from '../../web';
+import { IRoute } from '../iroute';
 
 export class ItemStateRouter extends RouterBase<IItemState, IItemStateChange> {
   constructor(itemStateManager: IItemStateManager, userLogManager: IUserLogManager, dateTimeService: IDateTimeService) {
@@ -12,7 +13,7 @@ export class ItemStateRouter extends RouterBase<IItemState, IItemStateChange> {
 
   readonly name = 'item-states';
 
-  getRoutes() {
+  getRoutes(): IRoute[] {
     return [
       this.protectedRoute('get',   '/item-states',     this.getEntities),
       this.protectedRoute('get',   '/item-states/:id', this.getEntity),
@@ -22,7 +23,7 @@ export class ItemStateRouter extends RouterBase<IItemState, IItemStateChange> {
     ];
   }
 
-  async entityFromParams(params: IParams, request: IRequest) {
+  async entityFromParams(params: IParams, request: IRequest): Promise<IItemState> {
     return {
       ...await super.entityFromParams(params, request),
       itemKind: params.readString('item_kind'),
@@ -32,7 +33,7 @@ export class ItemStateRouter extends RouterBase<IItemState, IItemStateChange> {
     };
   }
 
-  async changeFromParams(params: IParams, request: IRequest) {
+  async changeFromParams(params: IParams, request: IRequest): Promise<IItemStateChange> {
     return {
       ...await super.changeFromParams(params, request),
       itemKind: params.readString('item_kind'),
@@ -42,7 +43,7 @@ export class ItemStateRouter extends RouterBase<IItemState, IItemStateChange> {
     };
   }
 
-  entityToModel(entity: IItemState) {
+  entityToModel(entity: IItemState): ItemStateModel {
     if (!entity)
       return undefined;
 

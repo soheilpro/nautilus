@@ -11,7 +11,7 @@ interface INavigationState {
 }
 
 export default class Navigation extends React.PureComponent<INavigationProps, INavigationState> {
-  render() {
+  render(): JSX.Element {
     return (
       <div className="navigation-component">
         <NavLink to="/" exact activeClassName="active">Issues</NavLink>

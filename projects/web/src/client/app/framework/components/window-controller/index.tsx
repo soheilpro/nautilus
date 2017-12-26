@@ -24,7 +24,7 @@ export default class WindowController extends React.PureComponent<IWindowControl
   private windowKeyCounter = 0;
   private elementToFocus?: HTMLElement;
 
-  private get commandController() {
+  private get commandController(): ICommandController {
     return ServiceManager.Instance.getService<ICommandController>('ICommandController');
   }
 
@@ -38,22 +38,22 @@ export default class WindowController extends React.PureComponent<IWindowControl
     };
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     ServiceManager.Instance.registerService('IWindowController', this);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(): void {
     if (this.elementToFocus)
       this.elementToFocus.focus();
 
     document.body.style.overflowY = this.state.windows.some(window => window.modal) ? 'hidden' : null;
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     ServiceManager.Instance.unregisterService('IWindowController', this);
   }
 
-  showWindow(window: IWindow, callback?: () => any) {
+  showWindow(window: IWindow, callback?: () => any): void {
     const extendedWindow: IExtendedWindow = window;
     extendedWindow.key = this.windowKeyCounter++;
     extendedWindow.focusedElementOnOpen = document.activeElement as HTMLElement;
@@ -68,7 +68,7 @@ export default class WindowController extends React.PureComponent<IWindowControl
       this.commandController.disableCommandShortcuts();
   }
 
-  closeWindow(window: IExtendedWindow, callback?: () => any) {
+  closeWindow(window: IExtendedWindow, callback?: () => any): void {
     this.elementToFocus = window.focusedElementOnOpen;
 
     this.setState(state => ({
@@ -83,7 +83,7 @@ export default class WindowController extends React.PureComponent<IWindowControl
     this.closeWindow(window);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="window-controller-component">
       {

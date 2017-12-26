@@ -42,21 +42,21 @@ export default class TableRow extends React.PureComponent<ITableRowProps, ITable
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
   }
 
-  focus() {
+  focus(): void {
     this.componentElement.focus();
   }
 
-  private handleClick() {
+  private handleClick(): void {
     if (this.props.onSelect)
       this.props.onSelect(this.props.item);
   }
 
-  private handleDoubleClick() {
+  private handleDoubleClick(): void {
     if (this.props.onAction)
       this.props.onAction(this.props.item);
   }
 
-  private getIndentationLevel() {
+  private getIndentationLevel(): number {
     let indentationLevel = 0;
 
     let parent = this.props.item.parent;
@@ -69,7 +69,7 @@ export default class TableRow extends React.PureComponent<ITableRowProps, ITable
     return indentationLevel;
   }
 
-  render() {
+  render(): JSX.Element {
     let indentationLevel = this.getIndentationLevel();
 
     return (

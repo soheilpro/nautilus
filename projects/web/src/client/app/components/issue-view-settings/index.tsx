@@ -1,7 +1,7 @@
 import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { ICommandProvider, ICommandManager } from '../../framework/commands';
+import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { ServiceManager } from '../../services';
 import { IWindow, IWindowController } from '../../framework/windows';
 import Button from '../../framework/components/button';
@@ -57,11 +57,11 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     };
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     this.commandManager.registerCommandProvider(this);
   }
 
-  componentWillReceiveProps(props: IIssueViewSettingsProps) {
+  componentWillReceiveProps(props: IIssueViewSettingsProps): void {
     if (this.props.view !== props.view) {
       this.setState({
         filterExpression: props.view ? props.view.filterExpression : undefined,
@@ -75,11 +75,11 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.commandManager.unregisterCommandProvider(this);
   }
 
-  getCommands() {
+  getCommands(): ICommand[] {
     const view = View.create({
       filterExpression: this.state.filterExpression,
     });
@@ -97,11 +97,11 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     ];
   }
 
-  private handleOpenFilterCommandExecute(itemKind: string, key: string) {
+  private handleOpenFilterCommandExecute(itemKind: string, key: string): void {
     this.queryBuilderComponent.open(key);
   }
 
-  private handleResetViewCommandExecute() {
+  private handleResetViewCommandExecute(): void {
     this.props.onChange(View.create());
 
     this.setState({
@@ -109,7 +109,7 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     });
   }
 
-  private handleSaveViewCommandExecute() {
+  private handleSaveViewCommandExecute(): void {
     this.promptWindow = {
       content: <PromptWindow title="Save" placeholder="Name" confirmButtonText="Save" onConfirm={this.handleSavePromptWindowConfirm} onClose={this.handleSavePromptWindowClose} />,
       top: 120,
@@ -120,11 +120,11 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     this.windowController.showWindow(this.promptWindow);
   }
 
-  private handleLoadViewCommandExecute() {
+  private handleLoadViewCommandExecute(): void {
     this.savedViewListDropdownComponent.open();
   }
 
-  private handleIssueFilterQueryBuilderChange(query: NQL.IExpression) {
+  private handleIssueFilterQueryBuilderChange(query: NQL.IExpression): void {
     const view = View.create({
       filterExpression: query,
     });
@@ -136,7 +136,7 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     });
   }
 
-  private handleResetButtonClick() {
+  private handleResetButtonClick(): void {
     this.props.onChange(View.create());
 
     this.setState({
@@ -144,7 +144,7 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     });
   }
 
-  private handleSaveButtonClick() {
+  private handleSaveButtonClick(): void {
     this.promptWindow = {
       content: <PromptWindow title="Save" placeholder="Name" confirmButtonText="Save" onConfirm={this.handleSavePromptWindowConfirm} onClose={this.handleSavePromptWindowClose} />,
       top: 120,
@@ -155,7 +155,7 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     this.windowController.showWindow(this.promptWindow);
   }
 
-  private handleSavePromptWindowConfirm(name: string) {
+  private handleSavePromptWindowConfirm(name: string): void {
     this.windowController.closeWindow(this.promptWindow);
 
     const view = View.create({
@@ -172,7 +172,7 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     });
   }
 
-  private handleSavePromptWindowClose() {
+  private handleSavePromptWindowClose(): void {
     this.windowController.closeWindow(this.promptWindow);
   }
 
@@ -186,12 +186,12 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     });
   }
 
-  private handleViewListSelect(view: IView) {
+  private handleViewListSelect(view: IView): void {
     this.savedViewListDropdownComponent.close();
     this.props.onChange(view);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="issue-view-settings-component">
         <div className="query">

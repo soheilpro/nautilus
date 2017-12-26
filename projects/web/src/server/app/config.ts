@@ -1,6 +1,6 @@
 import { configuration } from './configuration';
 
-async function run() {
+async function run(): Promise<void> {
   const command = process.argv[2];
 
   switch (command) {

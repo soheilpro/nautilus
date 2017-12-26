@@ -13,7 +13,7 @@ export class ManagedDB extends DB {
     super(dbConnection);
   }
 
-  async select<TDocument extends IManagedDocument>(collectionName: string, query: IQuery) {
+  async select<TDocument extends IManagedDocument>(collectionName: string, query: IQuery): Promise<TDocument[]> {
     query = {
       ...query,
       'meta.state': { $ne: ManagedDocumentState.Deleted },
@@ -22,7 +22,7 @@ export class ManagedDB extends DB {
     return (await super.select(collectionName, query)) as TDocument[];
   }
 
-  async count(collectionName: string, query: IQuery) {
+  async count(collectionName: string, query: IQuery): Promise<number> {
     query = {
       ...query,
       'meta.state': { $ne: ManagedDocumentState.Deleted },
@@ -31,7 +31,7 @@ export class ManagedDB extends DB {
     return await super.count(collectionName, query);
   }
 
-  async insert<TDocument extends IManagedDocument>(collectionName: string, document: IDocument) {
+  async insert<TDocument extends IManagedDocument>(collectionName: string, document: IDocument): Promise<TDocument> {
     const metaDocument = {
       ...document,
       meta: {
@@ -44,7 +44,7 @@ export class ManagedDB extends DB {
     return (await super.insert(collectionName, metaDocument)) as TDocument;
   }
 
-  async update<TDocument extends IManagedDocument>(collectionName: string, query: IQuery, update: IUpdate) {
+  async update<TDocument extends IManagedDocument>(collectionName: string, query: IQuery, update: IUpdate): Promise<TDocument> {
     query = {
       ...query,
       'meta.state': { $ne: ManagedDocumentState.Deleted },
@@ -58,7 +58,7 @@ export class ManagedDB extends DB {
     return (await super.update(collectionName, query, update)) as TDocument;
   }
 
-  async delete(collectionName: string, query: IQuery) {
+  async delete(collectionName: string, query: IQuery): Promise<void> {
     query = {
       ...query,
       'meta.state': { $ne: ManagedDocumentState.Deleted },
@@ -72,7 +72,7 @@ export class ManagedDB extends DB {
     await super.update(collectionName, query, update);
   }
 
-  private async nextVersion() {
+  private async nextVersion(): Promise<number> {
     return await super.counter('*.meta.version');
   }
 }

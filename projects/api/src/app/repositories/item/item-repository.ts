@@ -1,5 +1,5 @@
 import { IItem, IItemChange, IItemRepository } from '../../framework/item';
-import { IDB } from '../../db';
+import { IDB, IUpdate } from '../../db';
 import { IItemDocument } from './iitem-document';
 import RepositoryBase from '../repository-base';
 
@@ -8,11 +8,11 @@ export class ItemRepository extends RepositoryBase<IItem, IItemChange, IItemDocu
     super(db);
   }
 
-  collectionName() {
+  collectionName(): string {
     return 'items';
   }
 
-  changeToUpdate(change: IItemChange) {
+  changeToUpdate(change: IItemChange): IUpdate {
     const update = super.changeToUpdate(change);
     update.setOrUnset('type', change.type, this.toRef);
     update.setOrUnset('kind', change.kind);
@@ -27,7 +27,7 @@ export class ItemRepository extends RepositoryBase<IItem, IItemChange, IItemDocu
     return update;
   }
 
-  documentToEntity(document: IItemDocument) {
+  documentToEntity(document: IItemDocument): IItem {
     return {
       ...super.documentToEntity(document),
       sid: document.sid,
@@ -44,7 +44,7 @@ export class ItemRepository extends RepositoryBase<IItem, IItemChange, IItemDocu
     };
   }
 
-  entityToDocument(entity: IItem) {
+  entityToDocument(entity: IItem): IItemDocument {
     return {
       ...super.entityToDocument(entity),
       sid: entity.sid,

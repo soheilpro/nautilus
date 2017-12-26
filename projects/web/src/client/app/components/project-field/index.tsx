@@ -14,7 +14,7 @@ interface IProjectFieldState {
 }
 
 export default class ProjectField extends React.PureComponent<IProjectFieldProps, IProjectFieldState> {
-  render() {
+  render(): JSX.Element {
     if (!this.props.project)
       return null;
 

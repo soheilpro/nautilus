@@ -8,11 +8,11 @@ export class View implements IView {
   filterExpression: NQL.IExpression;
   sortExpressions: NQL.ISortExpression[];
 
-  isDefault() {
+  isDefault(): boolean {
     return !this.filterExpression;
   }
 
-  toJSON() {
+  toJSON(): any {
     const expressionObjectConverter = new NQL.ExpressionJSONConverter();
 
     return {
@@ -22,7 +22,7 @@ export class View implements IView {
     };
   }
 
-  static fromJSON(json: any) {
+  static fromJSON(json: any): IView {
     const expressionObjectConverter = new NQL.ExpressionJSONConverter();
 
     const view = new View();
@@ -33,7 +33,7 @@ export class View implements IView {
     return view;
   }
 
-  static create({ name, filterExpression }: { name?: string, filterExpression?: NQL.IExpression } = {}) {
+  static create({ name, filterExpression }: { name?: string, filterExpression?: NQL.IExpression } = {}): IView {
     const view = new View();
     view.id = uuid().replace(/-/g, '');
     view.name = name;

@@ -5,11 +5,11 @@ export class LocalExpression extends Expression {
     super();
   }
 
-  get returnType() {
+  get returnType(): string {
     return 'Any';
   }
 
-  toString() {
+  toString(): string {
     return this.name;
   }
 }

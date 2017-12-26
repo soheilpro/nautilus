@@ -36,15 +36,16 @@ export class Application extends EventEmitter implements IApplication {
     this.itemTypes = new ItemTypeModule(this, client);
   }
 
-  isInitialized() {
+  isInitialized(): boolean {
     return this.isInitializedState;
   }
 
-  async initialize(session: ISession) {
+  async initialize(session: ISession): Promise<void> {
     if (session) {
       this.session = session;
       this.client.session = session;
 
+      // Do not neet to wait
       this.load();
     }
 
@@ -52,7 +53,7 @@ export class Application extends EventEmitter implements IApplication {
     this.emit('initialize');
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     return !!this.session;
   }
 
@@ -70,15 +71,15 @@ export class Application extends EventEmitter implements IApplication {
     return session;
   }
 
-  getSession() {
+  getSession(): ISession {
     return this.session;
   }
 
-  isLoaded() {
+  isLoaded(): boolean {
     return this.isLoadedState;
   }
 
-  async load() {
+  async load(): Promise<void> {
     // Put most time consuming ones first
     await Promise.all([
       this.items.load(),

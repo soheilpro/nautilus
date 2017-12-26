@@ -11,7 +11,7 @@ export class Update implements IUpdate {
       Object.assign(this, update);
   }
 
-  setOrUnset(key: string, value: any, map?: (value: any) => any) {
+  setOrUnset(key: string, value: any, map?: (value: any) => any): void {
     if (value === undefined)
       return;
 
@@ -21,14 +21,14 @@ export class Update implements IUpdate {
       this.$unset[key] = '';
   }
 
-  addToSet(key: string, value: any, map?: (value: any) => any) {
+  addToSet(key: string, value: any, map?: (value: any) => any): void {
     if (value === undefined)
       return;
 
     this.$addToSet[key] = { $each: map ? map(value) : value };
   }
 
-  removeFromSet(key: string, value: any, map?: (value: any) => any) {
+  removeFromSet(key: string, value: any, map?: (value: any) => any): void {
     if (value === undefined)
       return;
 

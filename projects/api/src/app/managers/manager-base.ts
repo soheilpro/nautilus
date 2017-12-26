@@ -4,15 +4,15 @@ export default abstract class ManagerBase<TEntity extends IEntity, TChange exten
   constructor(protected repository: IRepository<TEntity, TChange>) {
   }
 
-  getAll(filter: IFilter) {
+  getAll(filter: IFilter): Promise<TEntity[]> {
     return this.repository.getAll(filter);
   }
 
-  get(filter: IFilter) {
+  get(filter: IFilter): Promise<TEntity> {
     return this.repository.get(filter);
   }
 
-  async insert(entity: TEntity) {
+  async insert(entity: TEntity): Promise<TEntity> {
     const duplicateCheckFilter = this.getEntityDuplicateCheckFilter(entity);
 
     if (duplicateCheckFilter) {
@@ -25,7 +25,7 @@ export default abstract class ManagerBase<TEntity extends IEntity, TChange exten
     return this.repository.insert(entity);
   }
 
-  async update(id: string, change: TChange) {
+  async update(id: string, change: TChange): Promise<TEntity> {
     const duplicateCheckFilter = this.getChangeDuplicateCheckFilter(change);
 
     if (duplicateCheckFilter) {
@@ -41,23 +41,23 @@ export default abstract class ManagerBase<TEntity extends IEntity, TChange exten
     return this.repository.update(id, change);
   }
 
-  delete(id: string) {
+  delete(id: string): Promise<void> {
     return this.repository.delete(id);
   }
 
-  validateEntity(entity: TEntity) {
-    return null as IValidationError;
+  validateEntity(entity: TEntity): IValidationError {
+    return null;
   }
 
-  validateChange(change: TChange) {
-    return null as IValidationError;
+  validateChange(change: TChange): IValidationError {
+    return null;
   }
 
-  getEntityDuplicateCheckFilter(entity: TEntity) {
-    return null as IFilter;
+  getEntityDuplicateCheckFilter(entity: TEntity): IFilter {
+    return null;
   }
 
-  getChangeDuplicateCheckFilter(change: TChange) {
-    return null as IFilter;
+  getChangeDuplicateCheckFilter(change: TChange): IFilter {
+    return null;
   }
 }

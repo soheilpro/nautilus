@@ -12,7 +12,7 @@ export default class Query {
   getPredicate<T>(query: NQL.IExpression): (item: T) => boolean {
     const compiler = new NQL.ExpressionCompiler(this.types);
 
-    return compiler.compile(query, ['item']) as any;
+    return compiler.compile(query, ['item']) as (item: T) => boolean;
   }
 
   getComparer<T>(query: NQL.IExpression): (item1: T, item2: T) => number {
@@ -20,7 +20,7 @@ export default class Query {
     const func = compiler.compile(query, ['item']);
 
     if (query.returnType === 'Number') {
-      return (item1, item2) => {
+      return (item1, item2): number => {
         const result1 = func(item1) || 0;
         const result2 = func(item2) || 0;
 
@@ -29,7 +29,7 @@ export default class Query {
     }
 
     if (query.returnType === 'String') {
-      return (item1, item2) => {
+      return (item1, item2): number => {
         const result1 = func(item1) || '';
         const result2 = func(item2) || '';
 

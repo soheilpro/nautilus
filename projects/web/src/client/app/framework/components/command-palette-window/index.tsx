@@ -37,7 +37,7 @@ export default class CommandPaletteWindow extends React.PureComponent<ICommandPa
     };
   }
 
-  private handleContainerKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+  private handleContainerKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
     if (event.which === KeyCode.DownArrow) {
       event.preventDefault();
 
@@ -70,7 +70,7 @@ export default class CommandPaletteWindow extends React.PureComponent<ICommandPa
     }
   }
 
-  private handleSearchInputChange(value: string) {
+  private handleSearchInputChange(value: string): void {
     this.setState({
       searchText: value,
     });
@@ -83,13 +83,13 @@ export default class CommandPaletteWindow extends React.PureComponent<ICommandPa
     });
   }
 
-  private handleCommandListMouseLeave() {
+  private handleCommandListMouseLeave(): void {
     this.setState({
       activeCommandIndex: -1,
     });
   }
 
-  private handleCommandMouseEnter(command: ICommand) {
+  private handleCommandMouseEnter(command: ICommand): void {
     this.setState(state => {
       return {
         activeCommandIndex: state.commands.indexOf(command),
@@ -97,14 +97,14 @@ export default class CommandPaletteWindow extends React.PureComponent<ICommandPa
     });
   }
 
-  private handleCommandClick(command: ICommand, event: React.MouseEvent<HTMLAnchorElement>) {
+  private handleCommandClick(command: ICommand, event: React.MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
 
     if (command.isEnabled)
       this.props.onSelect(command);
   }
 
-  private filterCommands(commands: ICommand[], text: string) {
+  private filterCommands(commands: ICommand[], text: string): ICommand[] {
     if (!text)
       return commands;
 
@@ -113,7 +113,7 @@ export default class CommandPaletteWindow extends React.PureComponent<ICommandPa
     return commands.filter(command => command.title.toLowerCase().indexOf(text) !== -1);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Window className="command-palette-window-component">
         <div className="container" onKeyDown={this.handleContainerKeyDown}>

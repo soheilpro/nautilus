@@ -10,7 +10,7 @@ interface ITableHeaderState {
 }
 
 export default class TableHeader extends React.PureComponent<ITableHeaderProps, ITableHeaderState> {
-  render() {
+  render(): JSX.Element {
     return (
       <tr className="table-header-component table-row">
         <td className="table-cell sid">#</td>

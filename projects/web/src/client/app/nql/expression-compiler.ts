@@ -24,7 +24,7 @@ export class ExpressionCompiler extends ExpressionVisitor<any, IContext> {
     this.typeSystem.registerTypes(types);
   }
 
-  compile(expression: IExpression, args: string[]) {
+  compile(expression: IExpression, args: string[]): Function {
     const context: IContext = {};
 
     return new Function(...args, `return ${this.visit(expression, context)};`);
@@ -88,7 +88,7 @@ export class ExpressionCompiler extends ExpressionVisitor<any, IContext> {
     return `${leftValue} ${operatorValue} ${rightValue}`;
   }
 
-  private javaScriptOperatorFromComparisonOperator(operator: string) {
+  private javaScriptOperatorFromComparisonOperator(operator: string): string {
       if (operator === 'eq')
         return '===';
 

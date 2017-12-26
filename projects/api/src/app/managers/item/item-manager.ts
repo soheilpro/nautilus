@@ -1,4 +1,5 @@
 import { IItem, IItemChange, IItemManager, IItemRepository } from '../../framework/item';
+import { IValidationError } from '../../framework';
 import ManagerBase from '../manager-base';
 
 const KindRegEx = /.+/;
@@ -8,13 +9,13 @@ export class ItemManager extends ManagerBase<IItem, IItemChange> implements IIte
     super(repository);
   }
 
-  async insert(entity: IItem) {
+  async insert(entity: IItem): Promise<IItem> {
     entity.sid = (await this.repository.counter('items.sid')).toString();
 
     return super.insert(entity);
   }
 
-  validateEntity(entity: IItem) {
+  validateEntity(entity: IItem): IValidationError {
     if (entity.kind === undefined)
       return { message: 'Missing kind.' };
 
@@ -47,7 +48,7 @@ export class ItemManager extends ManagerBase<IItem, IItemChange> implements IIte
     return null;
   }
 
-  validateChange(change: IItemChange) {
+  validateChange(change: IItemChange): IValidationError {
     if (change.kind !== undefined)
       if (!KindRegEx.test(change.kind))
         return { message: 'Invalid kind.' };

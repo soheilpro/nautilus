@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
+import { ButtonType } from './button-type';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
 
 interface IButtonProps {
-  type?: 'primary' | 'secondary' | 'submit' | 'destructive' | 'link';
+  type?: ButtonType;
   enabled?: boolean;
   autoFocus?: boolean;
   form?: string;
@@ -28,12 +29,12 @@ export default class Button extends React.PureComponent<IButtonProps, IButtonSta
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  private handleButtonClick() {
+  private handleButtonClick(): void {
     if (this.props.onClick)
       this.props.onClick();
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <button className={classNames('button-component', this.props.type, this.props.className)} disabled={!this.props.enabled} autoFocus={this.props.autoFocus} form={this.props.form} onClick={this.handleButtonClick}>
         {this.props.children}
@@ -41,3 +42,5 @@ export default class Button extends React.PureComponent<IButtonProps, IButtonSta
     );
   }
 };
+
+export * from './button-type';

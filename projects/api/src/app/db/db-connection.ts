@@ -7,22 +7,22 @@ export class DBConnection implements IDBConnection {
   constructor(private address: string) {
   }
 
-  isOpen() {
+  isOpen(): boolean {
     return !!DBConnection._db;
   }
 
-  async open() {
+  async open(): Promise<void> {
     if (!this.isOpen())
       DBConnection._db = await mongodb.MongoClient.connect(this.address, { ignoreUndefined: true });
   }
 
-  async getDB() {
+  async getDB(): Promise<mongodb.Db> {
     await this.open();
 
     return DBConnection._db;
   }
 
-  async close() {
+  async close(): Promise<void> {
     if (this.isOpen())
       DBConnection._db.close();
   }

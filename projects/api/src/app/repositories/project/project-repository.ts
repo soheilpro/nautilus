@@ -1,6 +1,6 @@
 import { IFilter } from '../../framework';
 import { IProject, IProjectChange, IProjectRepository, DuplicateProjectFilter } from '../../framework/project';
-import { IDB } from '../../db';
+import { IDB, IUpdate } from '../../db';
 import { IProjectDocument } from './iproject-document';
 import RepositoryBase from '../repository-base';
 
@@ -9,11 +9,11 @@ export class ProjectRepository extends RepositoryBase<IProject, IProjectChange, 
     super(db);
   }
 
-  collectionName() {
+  collectionName(): string {
     return 'projects';
   }
 
-  filterToQuery(filter: IFilter) {
+  filterToQuery(filter: IFilter): IObject {
     if (filter instanceof DuplicateProjectFilter) {
       const predicates = [];
 
@@ -34,7 +34,7 @@ export class ProjectRepository extends RepositoryBase<IProject, IProjectChange, 
     return super.filterToQuery(filter);
   }
 
-  changeToUpdate(change: IProjectChange) {
+  changeToUpdate(change: IProjectChange): IUpdate {
     const update = super.changeToUpdate(change);
     update.setOrUnset('name', change.name);
     update.setOrUnset('description', change.description);
@@ -43,7 +43,7 @@ export class ProjectRepository extends RepositoryBase<IProject, IProjectChange, 
     return update;
   }
 
-  documentToEntity(document: IProjectDocument) {
+  documentToEntity(document: IProjectDocument): IProject {
     return {
       ...super.documentToEntity(document),
       name: document.name,
@@ -52,7 +52,7 @@ export class ProjectRepository extends RepositoryBase<IProject, IProjectChange, 
     };
   }
 
-  entityToDocument(entity: IProject) {
+  entityToDocument(entity: IProject): IProjectDocument {
     return {
       ...super.entityToDocument(entity),
       name: entity.name,

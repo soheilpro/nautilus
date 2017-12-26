@@ -12,7 +12,7 @@ interface IMilestoneFieldState {
 }
 
 export default class MilestoneField extends React.PureComponent<IMilestoneFieldProps, IMilestoneFieldState> {
-  render() {
+  render(): JSX.Element {
     if (!this.props.milestone)
       return null;
 

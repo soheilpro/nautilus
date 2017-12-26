@@ -6,7 +6,7 @@ class TestContext extends Context {
   item1: ItemModel;
   item2: ItemModel;
 
-  async reset() {
+  async reset(): Promise<void> {
     await super.reset();
 
     this.item1 = await this.createEntity(this.adminSession, 'items', {

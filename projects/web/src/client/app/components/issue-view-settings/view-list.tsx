@@ -38,7 +38,7 @@ export default class ViewList extends React.PureComponent<IViewListProps, IViewL
     };
   }
 
-  componentWillReceiveProps(props: IViewListProps) {
+  componentWillReceiveProps(props: IViewListProps): void {
     if (this.props.views !== props.views) {
       this.setState({
         views: props.views,
@@ -46,7 +46,7 @@ export default class ViewList extends React.PureComponent<IViewListProps, IViewL
     }
   }
 
-  private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+  private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
     if (event.which === KeyCode.DownArrow) {
       event.preventDefault();
 
@@ -75,7 +75,7 @@ export default class ViewList extends React.PureComponent<IViewListProps, IViewL
     }
   }
 
-  private handleSearchTextChange(value: string) {
+  private handleSearchTextChange(value: string): void {
     value = value.trim();
 
     this.setState({
@@ -85,13 +85,13 @@ export default class ViewList extends React.PureComponent<IViewListProps, IViewL
     });
   }
 
-  private handleViewListMouseLeave() {
+  private handleViewListMouseLeave(): void {
     this.setState({
       activeViewIndex: -1,
     });
   }
 
-  private handleViewMouseEnter(view: IView) {
+  private handleViewMouseEnter(view: IView): void {
     this.setState(state => {
       return {
         activeViewIndex: state.views.indexOf(view),
@@ -99,19 +99,19 @@ export default class ViewList extends React.PureComponent<IViewListProps, IViewL
     });
   }
 
-  private handleViewDeleteClick(view: IView, event: React.MouseEvent<HTMLAnchorElement>) {
+  private handleViewDeleteClick(view: IView, event: React.MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
 
     this.props.onDelete(view);
   }
 
-  private handleViewTitleClick(view: IView, event: React.MouseEvent<HTMLAnchorElement>) {
+  private handleViewTitleClick(view: IView, event: React.MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
 
     this.props.onSelect(view);
   }
 
-  private filterItems(views: IView[], text: string) {
+  private filterItems(views: IView[], text: string): IView[] {
     if (!text)
       return views;
 
@@ -120,7 +120,7 @@ export default class ViewList extends React.PureComponent<IViewListProps, IViewL
     return views.filter(view => view.name.toLowerCase().indexOf(text) !== -1);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="view-list-component" onKeyDown={this.handleKeyDown}>
         <Input className="search-input" value={this.state.searchText} autoFocus={true} selectOnFocus={true} style="simple" onChange={this.handleSearchTextChange} />

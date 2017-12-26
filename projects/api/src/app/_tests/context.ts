@@ -20,11 +20,11 @@ export class Context {
     this.destroy = this.destroy.bind(this);
   }
 
-  private generateUniqeId(length: number) {
+  private generateUniqeId(length: number): string {
     return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
   }
 
-  async init() {
+  async init(): Promise<void> {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
 
     const dbName = `__nautilus_test_${this.generateUniqeId(12)}`;
@@ -40,7 +40,7 @@ export class Context {
     return await this.reset();
   }
 
-  async reset() {
+  async reset(): Promise<void> {
     await this.db.dropDatabase();
 
     const dateTimeService = new DateTimeService();
@@ -57,12 +57,12 @@ export class Context {
     this.adminUser = this.adminSession.user as UserModel;
   }
 
-  async destroy() {
+  async destroy(): Promise<void> {
     await this.db.dropDatabase();
     await this.dbConnection.close();
   }
 
-  async createEntity(session: SessionModel, path: string, params: any) {
+  async createEntity(session: SessionModel, path: string, params: any): Promise<any> {
     let req = request(this.server)
       .post(`/${path}`)
       .send(params);

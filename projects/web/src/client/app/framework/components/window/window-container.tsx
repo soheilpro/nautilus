@@ -34,13 +34,13 @@ export class WindowContainer extends React.PureComponent<IWindowContainerProps, 
     this.state = {};
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     this.state = {
       zIndex: WindowContainer.zIndexCounter++,
     };
   }
 
-  private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+  private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
     if (event.which === KeyCode.Escape) {
       event.preventDefault();
 
@@ -49,7 +49,7 @@ export class WindowContainer extends React.PureComponent<IWindowContainerProps, 
     }
   }
 
-  private handleBlur(event: React.FocusEvent<HTMLDivElement>) {
+  private handleBlur(event: React.FocusEvent<HTMLDivElement>): void {
     if (!this.props.closeOnBlur)
       return;
 
@@ -62,7 +62,7 @@ export class WindowContainer extends React.PureComponent<IWindowContainerProps, 
     }, 0);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="window-container-component" style={{ position: this.props.position, top: this.props.top, left: `calc(100% / 2 - ${this.props.width}px / 2)`, width: this.props.width, zIndex: this.state.zIndex }} tabIndex={0} onKeyDown={this.handleKeyDown} onBlur={this.handleBlur} ref={e => this.componentElement = e}>
         {this.props.children}

@@ -39,7 +39,7 @@ export default class IssueTable extends React.PureComponent<IIssueTableProps, II
     };
   }
 
-  componentWillReceiveProps(props: IIssueTableProps) {
+  componentWillReceiveProps(props: IIssueTableProps): void {
     if (this.props.issues !== props.issues) {
       this.setState({
         issues: this.sortTreeList(props.issues),
@@ -53,7 +53,7 @@ export default class IssueTable extends React.PureComponent<IIssueTableProps, II
     }
   }
 
-  private handleTableItemSelect(issue: IIssue) {
+  private handleTableItemSelect(issue: IIssue): void {
     if (this.props.onIssueSelect)
       this.props.onIssueSelect(issue);
 
@@ -62,17 +62,17 @@ export default class IssueTable extends React.PureComponent<IIssueTableProps, II
     });
   }
 
-  private handleTableItemAction(issue: IIssue) {
+  private handleTableItemAction(issue: IIssue): void {
     return this.issueController.editItem(issue);
   }
 
-  private handleTableItemDelete(issue: IIssue) {
+  private handleTableItemDelete(issue: IIssue): void {
     return this.issueController.deleteItem(issue);
   }
 
   // This method reorders items in a sorted list so that child items appear
   // beneath their parents (while still retaining their original order)
-  private sortTreeList(issues: IIssue[]) {
+  private sortTreeList(issues: IIssue[]): IIssue[] {
     issues = [...issues];
 
     const children: { [key: string]: IIssue[] } = {};
@@ -89,7 +89,7 @@ export default class IssueTable extends React.PureComponent<IIssueTableProps, II
     }
 
     // Then, turn the tree back into a flat list
-    function flatten(issues: IIssue[]) {
+    function flatten(issues: IIssue[]): IIssue[] {
       let result: IIssue[] = [];
 
       for (const issue of issues) {
@@ -106,7 +106,7 @@ export default class IssueTable extends React.PureComponent<IIssueTableProps, II
     return flatten(issues);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Table className={classNames('issue-table-component', this.props.className)} items={this.state.issues} selectedItem={this.state.selectedIssue} Header={TableHeader} Row={TableRow} Footer={TableFooter} onItemSelect={this.handleTableItemSelect} onItemAction={this.handleTableItemAction} onItemDelete={this.handleTableItemDelete} />
     );

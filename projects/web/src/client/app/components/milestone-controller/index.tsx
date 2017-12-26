@@ -11,7 +11,7 @@ import { IDialogController } from '../../framework/dialog';
 import { INotificationController } from '../../framework/notifications';
 import { IWindowController } from '../../framework/windows';
 import { NewMilestoneCommand } from './commands';
-import { ICommandProvider, ICommandManager } from '../../framework/commands';
+import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { IItemControllerManager } from '../../framework/items';
 
 interface IMilestoneControllerProps {
@@ -35,25 +35,25 @@ export default class MilestoneController extends React.PureComponent<IMilestoneC
     this.state = {};
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     ServiceManager.Instance.registerService('IMilestoneController', this);
     this.itemControllerManager.registerItemController(MilestoneType, this);
     this.commandManager.registerCommandProvider(this);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.commandManager.unregisterCommandProvider(this);
     this.itemControllerManager.unregisterItemController(MilestoneType, this);
     ServiceManager.Instance.unregisterService('IMilestoneController', this);
   }
 
-  getCommands() {
+  getCommands(): ICommand[] {
     return [
       new NewMilestoneCommand(),
     ];
   }
 
-  createNew() {
+  createNew(): void {
     const handleAddMilestoneWindowAdd = async (milestone: IMilestone) => {
       this.windowController.closeWindow(addMilestoneWindow);
 
@@ -82,7 +82,7 @@ export default class MilestoneController extends React.PureComponent<IMilestoneC
     this.windowController.showWindow(addMilestoneWindow);
   }
 
-  editItem(milestone: IMilestone) {
+  editItem(milestone: IMilestone): void {
     const handleEditMilestoneWindowUpdate = async (milestone: IMilestone, milestoneChange: IMilestoneChange) => {
       this.windowController.closeWindow(editMilestoneWindow);
 
@@ -111,7 +111,7 @@ export default class MilestoneController extends React.PureComponent<IMilestoneC
     this.windowController.showWindow(editMilestoneWindow);
   }
 
-  async deleteItem(milestone: IMilestone) {
+  async deleteItem(milestone: IMilestone): Promise<void> {
     const filter = new NQL.ComparisonExpression(
       new NQL.LocalExpression('milestone'),
       new NQL.ConstantExpression(milestone, 'Milestone'),
@@ -150,11 +150,11 @@ export default class MilestoneController extends React.PureComponent<IMilestoneC
     });
   }
 
-  getItemId(milestone: IMilestone) {
+  getItemId(milestone: IMilestone): string {
     return milestone.sid;
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="milestone-controller-component">
       </div>

@@ -9,15 +9,15 @@ export abstract class BaseCommand implements ICommand {
     return null;
   }
 
-  get isAvailable() {
+  get isAvailable(): boolean {
     return true;
   }
 
-  get isEnabled() {
+  get isEnabled(): boolean {
     return true;
   }
 
-  get isVisible() {
+  get isVisible(): boolean {
     return true;
   }
 

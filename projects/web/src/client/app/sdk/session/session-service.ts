@@ -27,7 +27,7 @@ export class SessionService extends ServiceBase<ISession, ISessionFilter, ISessi
     return undefined;
   }
 
-  async create(username: string, password: string) {
+  async create(username: string, password: string): Promise<ISession> {
     const invokeOptions = {
       method: 'POST',
       path: this.basePath(),

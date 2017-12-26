@@ -6,6 +6,7 @@ import { IUserLogManager } from '../../framework/user-log';
 import { IDateTimeService } from '../../services';
 import { SessionModel } from '../../models';
 import { IRequest, IResponse, Params } from '../../web';
+import { IRoute } from '../iroute';
 
 export class SessionRouter extends RouterBase<ISession, ISessionChange> {
   constructor(private sessionManager: ISessionManager, private userManager: IUserManager, userLogManager: IUserLogManager, dateTimeService: IDateTimeService) {
@@ -16,13 +17,13 @@ export class SessionRouter extends RouterBase<ISession, ISessionChange> {
 
   readonly name = 'sessions';
 
-  getRoutes() {
+  getRoutes(): IRoute[] {
     return [
       this.route('post', '/sessions', this.postEntity),
     ];
   }
 
-  protected async postEntity(request: IRequest, response: IResponse) {
+  protected async postEntity(request: IRequest, response: IResponse): Promise<void> {
     const bodyParams = new Params(request.body);
     const username = bodyParams.readString('username');
     const password = bodyParams.readString('password');
@@ -55,7 +56,7 @@ export class SessionRouter extends RouterBase<ISession, ISessionChange> {
     });
   }
 
-  entityToModel(entity: ISession) {
+  entityToModel(entity: ISession): SessionModel {
     if (!entity)
       return undefined;
 

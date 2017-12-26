@@ -12,7 +12,7 @@ interface IShortcutState {
 }
 
 export default class Shortcut extends React.PureComponent<IShortcutProps, IShortcutState> {
-  render() {
+  render(): JSX.Element {
     if (!this.props.shortcut)
       return null;
 

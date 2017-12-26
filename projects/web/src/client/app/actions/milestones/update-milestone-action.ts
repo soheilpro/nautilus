@@ -6,7 +6,7 @@ export class UpdateMilestoneAction extends BaseAction {
     super();
   }
 
-  async execute() {
+  async execute(): Promise<void> {
     this.milestone = await this.application.items.updateMilestone(this.milestone, this.milestoneChange);
   }
 }

@@ -6,6 +6,7 @@ import { EntityHelper, EntityFilter } from '../../framework';
 import { IDateTimeService } from '../../services';
 import { ItemRelationshipModel } from '../../models';
 import { IRequest, IParams } from '../../web';
+import { IRoute } from '../iroute';
 
 export class ItemRelationshipRouter extends RouterBase<IItemRelationship, IItemRelationshipChange> {
   constructor(itemRelationshipManager: IItemRelationshipManager, private itemManager: IItemManager, userLogManager: IUserLogManager, dateTimeService: IDateTimeService) {
@@ -14,7 +15,7 @@ export class ItemRelationshipRouter extends RouterBase<IItemRelationship, IItemR
 
   readonly name = 'item-relationships';
 
-  getRoutes() {
+  getRoutes(): IRoute[] {
     return [
       this.protectedRoute('get',   '/item-relationships',     this.getEntities),
       this.protectedRoute('get',   '/item-relationships/:id', this.getEntity),
@@ -24,7 +25,7 @@ export class ItemRelationshipRouter extends RouterBase<IItemRelationship, IItemR
     ];
   }
 
-  async checkEntityAccess(entity: IItemRelationship, access: string, request: IRequest) {
+  async checkEntityAccess(entity: IItemRelationship, access: string, request: IRequest): Promise<boolean> {
     switch (access) {
       case 'create':
       case 'read':
@@ -38,7 +39,7 @@ export class ItemRelationshipRouter extends RouterBase<IItemRelationship, IItemR
     }
   }
 
-  async checkEntityChange(entity: IItemRelationship, change: IItemRelationshipChange, request: IRequest) {
+  async checkEntityChange(entity: IItemRelationship, change: IItemRelationshipChange, request: IRequest): Promise<boolean> {
     if (change.item1)
       if (!(await this.checkItemUpdateAccess(change.item1, request)))
         return false;
@@ -50,7 +51,7 @@ export class ItemRelationshipRouter extends RouterBase<IItemRelationship, IItemR
     return true;
   }
 
-  private async checkItemUpdateAccess(item: IItem, request: IRequest) {
+  private async checkItemUpdateAccess(item: IItem, request: IRequest): Promise<boolean> {
     if (!item)
       return false;
 
@@ -66,7 +67,7 @@ export class ItemRelationshipRouter extends RouterBase<IItemRelationship, IItemR
       return item.createdBy.id === request.user.id;
   }
 
-  async entityFromParams(params: IParams, request: IRequest) {
+  async entityFromParams(params: IParams, request: IRequest): Promise<IItemRelationship> {
     return {
       ...await super.entityFromParams(params, request),
       item1: await params.readEntity('item1_id', this.itemManager),
@@ -75,7 +76,7 @@ export class ItemRelationshipRouter extends RouterBase<IItemRelationship, IItemR
     };
   }
 
-  async changeFromParams(params: IParams, request: IRequest) {
+  async changeFromParams(params: IParams, request: IRequest): Promise<IItemRelationshipChange> {
     return {
       ...await super.changeFromParams(params, request),
       item1: await params.readEntity('item1_id', this.itemManager),
@@ -84,7 +85,7 @@ export class ItemRelationshipRouter extends RouterBase<IItemRelationship, IItemR
     };
   }
 
-  entityToModel(entity: IItemRelationship) {
+  entityToModel(entity: IItemRelationship): ItemRelationshipModel {
     if (!entity)
       return undefined;
 

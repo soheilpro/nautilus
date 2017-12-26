@@ -1,5 +1,5 @@
 import { IIssue } from '../../../application';
-import { KeyCode } from '../../../framework/keyboard';
+import { KeyCode, IShortcut } from '../../../framework/keyboard';
 import { ServiceManager } from '../../../services';
 import { IIssueController, IssueType } from '../../../modules/issues';
 import { IContextManager } from '../../../framework/context';
@@ -13,25 +13,25 @@ export class DuplicateIssueCommand extends BaseCommand {
     super();
   }
 
-  get id() {
+  get id(): string {
     return 'duplicate-issue';
   }
 
-  get title() {
+  get title(): string {
     return 'Duplicate Issue';
   }
 
-  get shortcut() {
+  get shortcut(): IShortcut {
     return [{ keyCode: KeyCode.N, shiftKey: true }];
   }
 
-  get isEnabled() {
+  get isEnabled(): boolean {
     const context = this.contextManager.getContext();
 
     return context['core.activeItemType'] === IssueType;
   }
 
-  execute() {
+  execute(): void {
     const context = this.contextManager.getContext();
     const activeIssue = context['core.activeItem'];
 

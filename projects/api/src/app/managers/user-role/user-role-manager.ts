@@ -1,4 +1,5 @@
 import { IUserRole, IUserRoleChange, IUserRoleManager, IUserRoleRepository } from '../../framework/user-role';
+import { IValidationError } from '../../framework';
 import ManagerBase from '../manager-base';
 
 const NameRegEx = /.+/;
@@ -8,7 +9,7 @@ export class UserRoleManager extends ManagerBase<IUserRole, IUserRoleChange> imp
     super(repository);
   }
 
-  validateEntity(entity: IUserRole) {
+  validateEntity(entity: IUserRole): IValidationError {
     if (entity.user === undefined)
       return { message: 'Missing user.' };
 
@@ -29,7 +30,7 @@ export class UserRoleManager extends ManagerBase<IUserRole, IUserRoleChange> imp
     return null;
   }
 
-  validateChange(change: IUserRoleChange) {
+  validateChange(change: IUserRoleChange): IValidationError {
     if (change.user !== undefined) {
       if (change.user === null)
         return { message: 'Requires user.' };

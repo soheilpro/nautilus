@@ -14,7 +14,7 @@ interface IItemTypeFieldState {
 }
 
 export default class ItemTypeField extends React.PureComponent<IItemTypeFieldProps, IItemTypeFieldState> {
-  render() {
+  render(): JSX.Element {
     if (!this.props.itemType)
       return null;
 

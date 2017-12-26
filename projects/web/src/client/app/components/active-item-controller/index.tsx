@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ServiceManager } from '../../services';
 import { CopyItemIdCommand, EditItemCommand, DeleteItemCommand } from './commands';
-import { ICommandProvider, ICommandManager } from '../../framework/commands';
+import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 
 interface IItemControllerProps {
 }
@@ -18,15 +18,15 @@ export default class ItemController extends React.PureComponent<IItemControllerP
     this.state = {};
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     this.commandManager.registerCommandProvider(this);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.commandManager.unregisterCommandProvider(this);
   }
 
-  getCommands() {
+  getCommands(): ICommand[] {
     return [
       new CopyItemIdCommand(),
       new EditItemCommand(),
@@ -34,7 +34,7 @@ export default class ItemController extends React.PureComponent<IItemControllerP
     ];
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="item-controller-component">
       </div>

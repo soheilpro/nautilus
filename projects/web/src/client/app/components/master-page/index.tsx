@@ -12,7 +12,7 @@ interface IMasterPageState {
 }
 
 export default class MasterPage extends React.PureComponent<IMasterPageProps, IMasterPageState> {
-  render() {
+  render(): JSX.Element {
     return (
       <div className="master-page-component">
         <div className="header">

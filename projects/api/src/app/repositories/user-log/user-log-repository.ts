@@ -8,11 +8,11 @@ export class UserLogRepository extends RepositoryBase<IUserLog, IUserLogChange, 
     super(db);
   }
 
-  collectionName() {
+  collectionName(): string {
     return 'userLogs';
   }
 
-  documentToEntity(document: IUserLogDocument) {
+  documentToEntity(document: IUserLogDocument): IUserLog {
     return {
       ...super.documentToEntity(document),
       dateTime: document.dateTime,
@@ -23,7 +23,7 @@ export class UserLogRepository extends RepositoryBase<IUserLog, IUserLogChange, 
     };
   }
 
-  entityToDocument(entity: IUserLog) {
+  entityToDocument(entity: IUserLog): IUserLogDocument {
     return {
       ...super.entityToDocument(entity),
       dateTime: entity.dateTime,

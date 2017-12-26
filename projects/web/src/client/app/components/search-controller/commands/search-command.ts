@@ -1,24 +1,24 @@
 import { BaseCommand } from '../../../framework/commands';
-import { KeyCode } from '../../../framework/keyboard';
+import { KeyCode, IShortcut } from '../../../framework/keyboard';
 import { ServiceManager } from '../../../services';
 import { ISearchController } from '../../../modules/search';
 
 export default class SearchCommand extends BaseCommand {
   private searchController = ServiceManager.Instance.getService<ISearchController>('ISearchController');
 
-  get id() {
+  get id(): string {
     return 'search';
   }
 
-  get title() {
+  get title(): string {
     return 'Search';
   }
 
-  get shortcut() {
+  get shortcut(): IShortcut {
     return [{ keyCode: KeyCode.S }];
   }
 
-  execute() {
+  execute(): void {
     this.searchController.showSearchWindow();
   }
 }

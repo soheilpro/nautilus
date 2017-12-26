@@ -21,7 +21,7 @@ export class EntityModelBase {
     };
 }
 
-  protected renderEntity(entity: IEntity) {
+  protected renderEntity(entity: IEntity): any {
     if (!entity)
       return undefined;
 
@@ -30,7 +30,7 @@ export class EntityModelBase {
     };
   }
 
-  protected renderDateTime(date: Date) {
+  protected renderDateTime(date: Date): any {
     if (!date)
       return undefined;
 

@@ -5,11 +5,11 @@ export class ConstantExpression extends Expression {
     super();
   }
 
-  get returnType() {
+  get returnType(): string {
     return this.type;
   }
 
-  toString() {
+  toString(): string {
     return JSON.stringify(this.value);
   }
 }

@@ -6,6 +6,7 @@ import { IUserLogManager } from '../../framework/user-log';
 import { IDateTimeService } from '../../services';
 import { UserRoleModel } from '../../models';
 import { IRequest, IParams } from '../../web';
+import { IRoute } from '../iroute';
 
 export class UserRoleRouter extends RouterBase<IUserRole, IUserRoleChange> {
   constructor(userRoleManager: IUserRoleManager, private userManager: IUserManager, private projectManager: IProjectManager, userLogManager: IUserLogManager, dateTimeService: IDateTimeService) {
@@ -14,7 +15,7 @@ export class UserRoleRouter extends RouterBase<IUserRole, IUserRoleChange> {
 
   readonly name = 'user-roles';
 
-  getRoutes() {
+  getRoutes(): IRoute[] {
     return [
       this.protectedRoute('get',   '/user-roles',     this.getEntities),
       this.protectedRoute('get',   '/user-roles/:id', this.getEntity),
@@ -24,7 +25,7 @@ export class UserRoleRouter extends RouterBase<IUserRole, IUserRoleChange> {
     ];
   }
 
-  checkEntityAccessSync(entity: IUserRole, access: string, request: IRequest) {
+  checkEntityAccessSync(entity: IUserRole, access: string, request: IRequest): boolean {
     switch (access) {
       case 'create':
         return false;
@@ -41,7 +42,7 @@ export class UserRoleRouter extends RouterBase<IUserRole, IUserRoleChange> {
     }
   }
 
-  async entityFromParams(params: IParams, request: IRequest) {
+  async entityFromParams(params: IParams, request: IRequest): Promise<IUserRole> {
     return {
       ...await super.entityFromParams(params, request),
       user: await params.readEntity('user_id', this.userManager),
@@ -50,7 +51,7 @@ export class UserRoleRouter extends RouterBase<IUserRole, IUserRoleChange> {
     };
   }
 
-  async changeFromParams(params: IParams, request: IRequest) {
+  async changeFromParams(params: IParams, request: IRequest): Promise<IUserRoleChange> {
     return {
       ...await super.changeFromParams(params, request),
       user: await params.readEntity('user_id', this.userManager),
@@ -59,7 +60,7 @@ export class UserRoleRouter extends RouterBase<IUserRole, IUserRoleChange> {
     };
   }
 
-  entityToModel(entity: IUserRole) {
+  entityToModel(entity: IUserRole): UserRoleModel {
     if (!entity)
       return undefined;
 

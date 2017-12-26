@@ -34,29 +34,29 @@ export default class Input extends React.PureComponent<IInputProps, IInputState>
     this.handleTextAreaFocus = this.handleTextAreaFocus.bind(this);
   }
 
-  private handleInputFocus(event: React.FormEvent<HTMLInputElement>) {
+  private handleInputFocus(event: React.FormEvent<HTMLInputElement>): void {
     if (this.props.selectOnFocus)
       (event.target as HTMLInputElement).select();
   }
 
-  private handleInputChange(event: React.FormEvent<HTMLInputElement>) {
+  private handleInputChange(event: React.FormEvent<HTMLInputElement>): void {
     const value = (event.target as HTMLInputElement).value;
 
     this.props.onChange(value);
   }
 
-  private handleTextAreaFocus(event: React.FormEvent<HTMLTextAreaElement>) {
+  private handleTextAreaFocus(event: React.FormEvent<HTMLTextAreaElement>): void {
     if (this.props.selectOnFocus)
       (event.target as HTMLTextAreaElement).select();
   }
 
-  private handleTextAreaChange(event: React.FormEvent<HTMLTextAreaElement>) {
+  private handleTextAreaChange(event: React.FormEvent<HTMLTextAreaElement>): void {
     const value = (event.target as HTMLTextAreaElement).value;
 
     this.props.onChange(value);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       this.props.multiline ?
         <textarea className={classNames('input-component', this.props.style, this.props.className)} value={this.props.value} placeholder={this.props.placeholder} autoFocus={this.props.autoFocus} onFocus={this.handleTextAreaFocus} onChange={this.handleTextAreaChange} />

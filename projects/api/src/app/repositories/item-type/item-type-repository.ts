@@ -1,6 +1,6 @@
 import { IFilter } from '../../framework';
 import { IItemType, IItemTypeChange, IItemTypeRepository, DuplicateItemTypeFilter } from '../../framework/item-type';
-import { IDB } from '../../db';
+import { IDB, IUpdate } from '../../db';
 import { IItemTypeDocument } from './iitem-type-document';
 import RepositoryBase from '../repository-base';
 
@@ -9,11 +9,11 @@ export class ItemTypeRepository extends RepositoryBase<IItemType, IItemTypeChang
     super(db);
   }
 
-  collectionName() {
+  collectionName(): string {
     return 'itemTypes';
   }
 
-  filterToQuery(filter: IFilter) {
+  filterToQuery(filter: IFilter): IObject {
     if (filter instanceof DuplicateItemTypeFilter) {
       const predicates = [];
 
@@ -34,7 +34,7 @@ export class ItemTypeRepository extends RepositoryBase<IItemType, IItemTypeChang
     return super.filterToQuery(filter);
   }
 
-  changeToUpdate(change: IItemTypeChange) {
+  changeToUpdate(change: IItemTypeChange): IUpdate {
     const update = super.changeToUpdate(change);
     update.setOrUnset('itemKind', change.itemKind);
     update.setOrUnset('title', change.title);
@@ -44,7 +44,7 @@ export class ItemTypeRepository extends RepositoryBase<IItemType, IItemTypeChang
     return update;
   }
 
-  documentToEntity(document: IItemTypeDocument) {
+  documentToEntity(document: IItemTypeDocument): IItemType {
     return {
       ...super.documentToEntity(document),
       itemKind: document.itemKind,
@@ -54,7 +54,7 @@ export class ItemTypeRepository extends RepositoryBase<IItemType, IItemTypeChang
     };
   }
 
-  entityToDocument(entity: IItemType) {
+  entityToDocument(entity: IItemType): IItemTypeDocument {
     return {
       ...super.entityToDocument(entity),
       itemKind: entity.itemKind,

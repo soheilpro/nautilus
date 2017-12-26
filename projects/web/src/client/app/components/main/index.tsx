@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { History } from 'history';
-import { ICommandProvider, ICommandManager } from '../../framework/commands';
+import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { ServiceManager } from '../../services';
 import CommandController from '../../framework/components/command-controller';
 import DialogController from '../../framework/components/dialog-controller';
@@ -25,15 +25,15 @@ export default class Main extends React.PureComponent<IMainProps, IMainState> im
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private browserRouterComponent: BrowserRouter;
 
-  componentWillMount() {
+  componentWillMount(): void {
     this.commandManager.registerCommandProvider(this);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.commandManager.unregisterCommandProvider(this);
   }
 
-  getCommands() {
+  getCommands(): ICommand[] {
     const history: History = (this.browserRouterComponent as any).history;
 
     return [
@@ -43,7 +43,7 @@ export default class Main extends React.PureComponent<IMainProps, IMainState> im
     ];
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="main-component rtl">
         <WindowController />

@@ -18,7 +18,7 @@ export default class Avatar extends React.PureComponent<IAvatarProps, IAvatarSta
     size: 50
   };
 
-  render() {
+  render(): JSX.Element {
     const md5: any = blueimpmd5;
     const emailHash = md5(this.props.user.email);
     const size = this.props.size * 2;

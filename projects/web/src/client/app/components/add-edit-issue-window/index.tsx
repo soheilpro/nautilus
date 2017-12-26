@@ -74,7 +74,7 @@ export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssu
     this.state = state;
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.setState(state => {
       return {
         projects: this.application.projects.getAll(),
@@ -86,7 +86,7 @@ export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssu
     });
   }
 
-  private handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+  private handleFormSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
     switch (this.props.mode) {
@@ -120,50 +120,50 @@ export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssu
     }
   }
 
-  private handleTitleInputChange(value: string) {
+  private handleTitleInputChange(value: string): void {
     this.setState({
       title: value,
     });
   }
 
-  private handleDescriptionInputChange(value: string) {
+  private handleDescriptionInputChange(value: string): void {
     this.setState({
       description: value,
     });
   }
 
-  private handleProjectSelectChange(value: IProject) {
+  private handleProjectSelectChange(value: IProject): void {
     this.setState({
       project: value,
       milestones: this.getMilestones(value),
     });
   }
 
-  private handleTypeInputChange(value: IItemType) {
+  private handleTypeInputChange(value: IItemType): void {
     this.setState({
       type: value,
     });
   }
 
-  private handleStateInputChange(value: IItemState) {
+  private handleStateInputChange(value: IItemState): void {
     this.setState({
       state: value,
     });
   }
 
-  private handleAssignedToInputChange(value: IItemState) {
+  private handleAssignedToInputChange(value: IItemState): void {
     this.setState({
       assignedTo: value,
     });
   }
 
-  private handleMilestoneInputChange(value: IMilestone) {
+  private handleMilestoneInputChange(value: IMilestone): void {
     this.setState({
       milestone: value,
     });
   }
 
-  private getMilestones(project: IProject) {
+  private getMilestones(project: IProject): IMilestone[] {
     const milestones = this.application.items.getAllMilestones(null, [new NQL.SortExpression(new NQL.LocalExpression('fullTitle'))]);
 
     if (!project)
@@ -172,7 +172,7 @@ export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssu
     return milestones.filter(milestone => !milestone.project || entityComparer(milestone.project, project));
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Window className="add-edit-issue-window-component">
         <WindowHeader>

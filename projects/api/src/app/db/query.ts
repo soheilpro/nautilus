@@ -1,7 +1,7 @@
 import { IQuery } from './iquery';
 
 export class Query implements IQuery {
-  set(key: string, value: any, map?: (value: any) => any) {
+  set(key: string, value: any, map?: (value: any) => any): void {
     if (value === undefined)
       return;
 

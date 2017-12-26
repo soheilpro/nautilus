@@ -1,4 +1,5 @@
 import { IItemRelationship, IItemRelationshipChange, IItemRelationshipManager, IItemRelationshipRepository } from '../../framework/item-relationship';
+import { IValidationError } from '../../framework';
 import ManagerBase from '../manager-base';
 
 const TypeRegEx = /.+/;
@@ -8,7 +9,7 @@ export class ItemRelationshipManager extends ManagerBase<IItemRelationship, IIte
     super(repository);
   }
 
-  validateEntity(entity: IItemRelationship) {
+  validateEntity(entity: IItemRelationship): IValidationError {
     if (entity.item1 === undefined)
       return { message: 'Missing item1.' };
 
@@ -30,7 +31,7 @@ export class ItemRelationshipManager extends ManagerBase<IItemRelationship, IIte
     return null;
   }
 
-  validateChange(change: IItemRelationship) {
+  validateChange(change: IItemRelationship): IValidationError {
     if (change.item1 !== undefined) {
       if (change.item1 === null)
         return { message: 'Requires item1.' };

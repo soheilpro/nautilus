@@ -13,7 +13,7 @@ interface IIssueTitleFieldState {
 }
 
 export default class IssueTitleField extends React.PureComponent<IIssueTitleFieldProps, IIssueTitleFieldState> {
-  render() {
+  render(): JSX.Element {
     return (
       <span className={classNames('title-field-component', this.props.status ? `status-${this.props.status}` : null)}>
         {this.props.title}

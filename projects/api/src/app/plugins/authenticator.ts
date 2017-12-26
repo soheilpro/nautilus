@@ -3,8 +3,8 @@ import { ISessionManager, SessionFilter } from '../framework/session';
 import { IRequest, IResponse } from '../web';
 import { IPermissionProvider } from '../security';
 
-export function authenticator(sessionManager: ISessionManager, permissionProvider: IPermissionProvider) {
-  return async (request: IRequest, response: IResponse, next: restify.Next) => {
+export function authenticator(sessionManager: ISessionManager, permissionProvider: IPermissionProvider): restify.RequestHandler {
+  return async (request: IRequest, response: IResponse, next: restify.Next): Promise<void> => {
     request.permissions = [];
 
     if (request.authorization.basic) {

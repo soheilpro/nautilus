@@ -17,7 +17,7 @@ export default abstract class RepositoryBase<TEntity extends IEntity, TChange ex
 
   abstract collectionName(): string;
 
-  async getAll(filter: IFilter) {
+  async getAll(filter: IFilter): Promise<TEntity[]> {
     const query = this.filterToQuery(filter);
 
     if (!query)
@@ -28,7 +28,7 @@ export default abstract class RepositoryBase<TEntity extends IEntity, TChange ex
     return documents.map(this.documentToEntity);
   }
 
-  async get(filter: IFilter) {
+  async get(filter: IFilter): Promise<TEntity> {
     const query = this.filterToQuery(filter);
 
     if (!query)
@@ -45,7 +45,7 @@ export default abstract class RepositoryBase<TEntity extends IEntity, TChange ex
     return this.documentToEntity(documents[0]);
   }
 
-  async insert(entity: TEntity) {
+  async insert(entity: TEntity): Promise<TEntity> {
     const document = this.entityToDocument(entity);
 
     const insertedDocument = await this.db.insert<TDocument>(this.collectionName(), document);
@@ -53,7 +53,7 @@ export default abstract class RepositoryBase<TEntity extends IEntity, TChange ex
     return this.documentToEntity(insertedDocument);
   }
 
-  async update(id: string, change: TChange) {
+  async update(id: string, change: TChange): Promise<TEntity> {
     const filter = new EntityFilter(id);
     const query = this.filterToQuery(filter);
     const update = this.changeToUpdate(change);
@@ -63,14 +63,14 @@ export default abstract class RepositoryBase<TEntity extends IEntity, TChange ex
     return this.documentToEntity(document);
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<void> {
     const filter = new EntityFilter(id);
     const query = this.filterToQuery(filter);
 
     await this.db.delete(this.collectionName(), query);
   }
 
-  async counter(name: string) {
+  async counter(name: string): Promise<number> {
     return await this.db.counter(name);
   }
 
@@ -87,11 +87,11 @@ export default abstract class RepositoryBase<TEntity extends IEntity, TChange ex
     throw new Error('Not supported.');
   }
 
-  protected changeToUpdate(change: IChange) {
-    return new Update() as IUpdate;
+  protected changeToUpdate(change: IChange): IUpdate {
+    return new Update();
   }
 
-  protected documentToEntity(document: TDocument) {
+  protected documentToEntity(document: TDocument): TEntity {
     return {
       id: document._id.toString(),
       meta: {
@@ -104,13 +104,13 @@ export default abstract class RepositoryBase<TEntity extends IEntity, TChange ex
     } as TEntity;
   }
 
-  protected entityToDocument(entity: TEntity) {
+  protected entityToDocument(entity: TEntity): IDocument {
     return {
       _id: this.toObjectId(entity.id),
-    } as TDocument;
+    };
   }
 
-  protected toRef(entity: IEntity) {
+  protected toRef(entity: IEntity): IDocument {
     if (!entity)
       return undefined;
 
@@ -119,7 +119,7 @@ export default abstract class RepositoryBase<TEntity extends IEntity, TChange ex
     };
   }
 
-  protected toRefArray(entities: IEntity[]) {
+  protected toRefArray(entities: IEntity[]): IDocument[] {
     if (!entities)
       return undefined;
 
@@ -131,7 +131,7 @@ export default abstract class RepositoryBase<TEntity extends IEntity, TChange ex
     return result;
   }
 
-  protected fromRef(document: IDocument) {
+  protected fromRef(document: IDocument): IEntity {
     if (!document)
       return undefined;
 
@@ -140,7 +140,7 @@ export default abstract class RepositoryBase<TEntity extends IEntity, TChange ex
     };
   }
 
-  protected fromRefArray(documents: IDocument[]) {
+  protected fromRefArray(documents: IDocument[]): IEntity[] {
     if (!documents)
       return undefined;
 
@@ -152,7 +152,7 @@ export default abstract class RepositoryBase<TEntity extends IEntity, TChange ex
     return result;
   }
 
-  protected toObjectId(id: string) {
+  protected toObjectId(id: string): ObjectId {
     if (!id)
       return undefined;
 

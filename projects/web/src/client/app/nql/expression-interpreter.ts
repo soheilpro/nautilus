@@ -29,7 +29,7 @@ export class ExpressionInterpreter extends ExpressionVisitor<any, IInterpretatio
     this.typeSystem.registerTypes(types);
   }
 
-  evaluate(expression: IExpression, locals: ILocals) {
+  evaluate(expression: IExpression, locals: ILocals): any {
     const context: IInterpretationContext = {
       locals
     };
@@ -37,7 +37,7 @@ export class ExpressionInterpreter extends ExpressionVisitor<any, IInterpretatio
     return this.visit(expression, context);
   }
 
-  visitAnd(expression: AndExpression, context: IInterpretationContext) {
+  visitAnd(expression: AndExpression, context: IInterpretationContext): any {
     for (const child of expression.children)
       if (!this.visit(child, context))
         return false;
@@ -45,12 +45,12 @@ export class ExpressionInterpreter extends ExpressionVisitor<any, IInterpretatio
     return true;
   }
 
-  visitCast(expression: CastExpression, context: IInterpretationContext) {
+  visitCast(expression: CastExpression, context: IInterpretationContext): any {
     return this.visit(expression.child, context);
   }
 
-  visitComparison(expression: ComparisonExpression, context: IInterpretationContext) {
-    const areEqual = (left: IExpression, right: IExpression) => {
+  visitComparison(expression: ComparisonExpression, context: IInterpretationContext): any {
+    const areEqual = (left: IExpression, right: IExpression): boolean => {
       const leftReturnType = this.typeSystem.getType(expression.left.returnType);
       const rightReturnType = this.typeSystem.getType(expression.right.returnType);
 
@@ -85,7 +85,7 @@ export class ExpressionInterpreter extends ExpressionVisitor<any, IInterpretatio
       return false;
     };
 
-    const isIn = (left: IExpression, right: IExpression) => {
+    const isIn = (left: IExpression, right: IExpression): boolean => {
       const rightReturnType = right.returnType;
 
       if (rightReturnType !== 'List')
@@ -112,26 +112,26 @@ export class ExpressionInterpreter extends ExpressionVisitor<any, IInterpretatio
     }
   }
 
-  visitConstant(expression: ConstantExpression, context: IInterpretationContext) {
+  visitConstant(expression: ConstantExpression, context: IInterpretationContext): any {
     return expression.value;
   }
 
-  visitList(expression: ListExpression, context: IInterpretationContext) {
+  visitList(expression: ListExpression, context: IInterpretationContext): any {
     return expression.children.map(e => this.visit(e, context));
   }
 
-  visitLocal(expression: LocalExpression, context: IInterpretationContext) {
+  visitLocal(expression: LocalExpression, context: IInterpretationContext): any {
     return context.locals[expression.name];
   }
 
-  visitMethodCall(expression: MethodCallExpression, context: IInterpretationContext) {
+  visitMethodCall(expression: MethodCallExpression, context: IInterpretationContext): any {
     const targetValue = this.visit(expression.target, context);
     const argValues = expression.args.map(e => this.visit(e, context));
 
     return targetValue[expression.name].call(targetValue, argValues);
   }
 
-  visitOr(expression: OrExpression, context: IInterpretationContext) {
+  visitOr(expression: OrExpression, context: IInterpretationContext): any {
     for (const child of expression.children)
       if (this.visit(child, context))
         return true;
@@ -139,7 +139,7 @@ export class ExpressionInterpreter extends ExpressionVisitor<any, IInterpretatio
     return false;
   }
 
-  visitProperty(expression: PropertyExpression, context: IInterpretationContext) {
+  visitProperty(expression: PropertyExpression, context: IInterpretationContext): any {
     const targetValue = this.visit(expression.target, context);
 
     return targetValue[expression.name];

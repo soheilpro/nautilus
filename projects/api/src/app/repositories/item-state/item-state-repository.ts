@@ -1,6 +1,6 @@
 import { IFilter } from '../../framework';
 import { IItemState, IItemStateChange, IItemStateRepository, DuplicateItemStateFilter } from '../../framework/item-state';
-import { IDB } from '../../db';
+import { IDB, IUpdate } from '../../db';
 import { IItemStateDocument } from './iitem-state-document';
 import RepositoryBase from '../repository-base';
 
@@ -9,11 +9,11 @@ export class ItemStateRepository extends RepositoryBase<IItemState, IItemStateCh
     super(db);
   }
 
-  collectionName() {
+  collectionName(): string {
     return 'itemStates';
   }
 
-  filterToQuery(filter: IFilter) {
+  filterToQuery(filter: IFilter): IObject {
     if (filter instanceof DuplicateItemStateFilter) {
       const predicates = [];
 
@@ -34,7 +34,7 @@ export class ItemStateRepository extends RepositoryBase<IItemState, IItemStateCh
     return super.filterToQuery(filter);
   }
 
-  changeToUpdate(change: IItemStateChange) {
+  changeToUpdate(change: IItemStateChange): IUpdate {
     const update = super.changeToUpdate(change);
     update.setOrUnset('itemKind', change.itemKind);
     update.setOrUnset('title', change.title);
@@ -44,7 +44,7 @@ export class ItemStateRepository extends RepositoryBase<IItemState, IItemStateCh
     return update;
   }
 
-  documentToEntity(document: IItemStateDocument) {
+  documentToEntity(document: IItemStateDocument): IItemState {
     return {
       ...super.documentToEntity(document),
       itemKind: document.itemKind,
@@ -54,7 +54,7 @@ export class ItemStateRepository extends RepositoryBase<IItemState, IItemStateCh
     };
   }
 
-  entityToDocument(entity: IItemState) {
+  entityToDocument(entity: IItemState): IItemStateDocument {
     return {
       ...super.entityToDocument(entity),
       itemKind: entity.itemKind,

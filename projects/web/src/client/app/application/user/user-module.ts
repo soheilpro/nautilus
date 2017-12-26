@@ -13,18 +13,18 @@ export class UserModule extends BaseModule implements IUserModule {
     super();
   }
 
-  async load() {
+  async load(): Promise<void> {
     const result = await this.client.users.get(null);
 
     this.users = _.sortBy(result.entities, user => user.name);
     this.usersMap = ArrayHelper.toMap(this.users, user => user.id);
   }
 
-  getAll() {
+  getAll(): IUser[] {
     return [...this.users];
   }
 
-  get(user: IUser) {
+  get(user: IUser): IUser {
     if (!user)
       return null;
 

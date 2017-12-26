@@ -9,11 +9,11 @@ export class SessionRepository extends RepositoryBase<ISession, ISessionChange, 
     super(db);
   }
 
-  collectionName() {
+  collectionName(): string {
     return 'sessions';
   }
 
-  filterToQuery(filter: IFilter) {
+  filterToQuery(filter: IFilter): IObject {
     if (filter instanceof SessionFilter) {
       return {
         accessToken: filter.accessToken,
@@ -26,7 +26,7 @@ export class SessionRepository extends RepositoryBase<ISession, ISessionChange, 
     return super.filterToQuery(filter);
   }
 
-  documentToEntity(document: ISessionDocument) {
+  documentToEntity(document: ISessionDocument): ISession {
     return {
       ...super.documentToEntity(document),
       accessToken: document.accessToken,
@@ -34,7 +34,7 @@ export class SessionRepository extends RepositoryBase<ISession, ISessionChange, 
     };
   }
 
-  entityToDocument(entity: ISession) {
+  entityToDocument(entity: ISession): ISessionDocument {
     return {
       ...super.entityToDocument(entity),
       accessToken: entity.accessToken,

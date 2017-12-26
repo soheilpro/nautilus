@@ -39,7 +39,7 @@ export default class IssueFilterQueryBuilder extends React.PureComponent<IIssueF
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     const closedMilestoneState = _.find(this.application.itemStates.getAll('milestone'), itemState => itemState.key === 'closed');
 
     this.setState({
@@ -51,11 +51,11 @@ export default class IssueFilterQueryBuilder extends React.PureComponent<IIssueF
     });
   }
 
-  open(key: string) {
+  open(key: string): void {
     this.andQueryBuilderComponent.open(key);
   }
 
-  render() {
+  render(): JSX.Element {
     const queryBuilders: IQueryBuilder[] = [
       { key: 'milestone',  title: 'Milestone',   queryItem: 'milestone',  Component: MilestoneQueryBuilder, props: { milestones: this.state.milestones } },
       { key: 'project',    title: 'Project',     queryItem: 'project',    Component: ProjectQueryBuilder,   props: { projects: this.state.projects } },

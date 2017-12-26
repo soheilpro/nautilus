@@ -14,11 +14,11 @@ interface IItemTypeQueryBuilderState {
 }
 
 export default class ItemTypeQueryBuilder extends React.PureComponent<IItemTypeQueryBuilderProps, IItemTypeQueryBuilderState> {
-  static canParseQuery(query: NQL.IExpression, queryItem: string) {
+  static canParseQuery(query: NQL.IExpression, queryItem: string): boolean {
     return ListQueryBuilder.canParseQuery(query, queryItem, 'ItemType');
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <ListQueryBuilder items={this.props.itemTypes} displayProperty="title" query={this.props.query} queryItem={this.props.queryItem} queryItemType="ItemType" itemToQueryItem={asEntity} itemComparer={entityComparer} onChange={this.props.onChange} />
     );

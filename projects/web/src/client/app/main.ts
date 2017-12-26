@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Application, ISession } from './application';
+import { Application, ISession, IApplication } from './application';
 import { Clipboard } from './framework/clipboard';
 import { ContextManager } from './framework/context';
 import { ActionManager } from './framework/actions';
@@ -16,7 +16,7 @@ declare var config: {
   }
 };
 
-async function getApplication() {
+async function getApplication(): Promise<IApplication> {
   const localStorage = ServiceManager.Instance.getService<ILocalStorage>('ILocalStorage');
   const session = await localStorage.get<ISession>('session');
 
@@ -26,7 +26,7 @@ async function getApplication() {
   return application;
 }
 
-async function main() {
+async function main(): Promise<void> {
   ServiceManager.Instance = new ServiceManager();
   ServiceManager.Instance.registerService('ILocalStorage', new LocalStorage());
   ServiceManager.Instance.registerService('ISessionStorage', new SessionStorage());

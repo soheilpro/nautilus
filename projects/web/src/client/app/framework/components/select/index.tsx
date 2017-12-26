@@ -33,7 +33,7 @@ export default class Select extends React.PureComponent<ISelectProps, ISelectSta
     };
   }
 
-  componentWillReceiveProps(props: ISelectProps) {
+  componentWillReceiveProps(props: ISelectProps): void {
     if (this.props.items !== props.items || this.props.selectedItem !== props.selectedItem) {
       const selectedItem = this.getSelectedItem(props.selectedItem, props.items);
 
@@ -46,18 +46,18 @@ export default class Select extends React.PureComponent<ISelectProps, ISelectSta
     }
   }
 
-  private handleItemListSelect(item: ISelectItem) {
+  private handleItemListSelect(item: ISelectItem): void {
     this.dropdownComponent.close();
     this.dropdownComponent.focus();
     this.props.onChange(item);
   }
 
-  private getSelectedItem(selectedItem: ISelectItem, items: ISelectItem[]) {
+  private getSelectedItem(selectedItem: ISelectItem, items: ISelectItem[]): ISelectItem {
     // Ensure selectedItem exists in items
     return items.indexOf(selectedItem) !== -1 ? selectedItem : null;
   }
 
-  private getDropdownTitle() {
+  private getDropdownTitle(): JSX.Element {
     return (
       <span className={classNames('title', { 'placeholder': !this.props.selectedItem })}>
         {
@@ -69,7 +69,7 @@ export default class Select extends React.PureComponent<ISelectProps, ISelectSta
     );
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className={classNames('select-component', this.props.className)}>
         <Dropdown className="dropdown" title={this.getDropdownTitle()} ref={e => this.dropdownComponent = e}>

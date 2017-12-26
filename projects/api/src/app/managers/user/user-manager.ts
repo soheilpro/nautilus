@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 import { IUser, IUserChange, IUserManager, IUserRepository, DuplicateUserFilter } from '../../framework/user';
+import { IValidationError, IFilter } from '../../framework';
 import ManagerBase from '../manager-base';
 
 const UsernameRegEx = /[a-zA-Z][a-zA-Z0-9.]{1,}/;
@@ -12,20 +13,20 @@ export class UserManager extends ManagerBase<IUser, IUserChange> implements IUse
     super(repository);
   }
 
-  insert(entity: IUser) {
+  insert(entity: IUser): Promise<IUser> {
     entity.passwordHash = this.hashPassword(entity.password);
 
     return super.insert(entity);
   }
 
-  update(id: string, change: IUserChange) {
+  update(id: string, change: IUserChange): Promise<IUser> {
     if (change.password !== undefined)
       change.passwordHash = this.hashPassword(change.password);
 
     return super.update(id, change);
   }
 
-  validateEntity(entity: IUser) {
+  validateEntity(entity: IUser): IValidationError {
     if (entity.username === undefined)
       return { message: 'Missing username.' };
 
@@ -53,7 +54,7 @@ export class UserManager extends ManagerBase<IUser, IUserChange> implements IUse
     return null;
   }
 
-  validateChange(change: IUserChange) {
+  validateChange(change: IUserChange): IValidationError {
     if (change.username !== undefined) {
       if (!UsernameRegEx.test(change.username))
         return { message: 'Invalid username.' };
@@ -77,19 +78,19 @@ export class UserManager extends ManagerBase<IUser, IUserChange> implements IUse
     return null;
   }
 
-  getEntityDuplicateCheckFilter(entity: IUser) {
+  getEntityDuplicateCheckFilter(entity: IUser): IFilter {
     return new DuplicateUserFilter(entity.username, entity.email);
   }
 
-  getChangeDuplicateCheckFilter(change: IUserChange) {
+  getChangeDuplicateCheckFilter(change: IUserChange): IFilter {
     return new DuplicateUserFilter(change.username, change.email);
   }
 
-  private hashPassword(password: string) {
+  private hashPassword(password: string): string {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   }
 
-  testPassword(password: string, passwordHash: string) {
+  testPassword(password: string, passwordHash: string): boolean {
     return bcrypt.compareSync(password, passwordHash);
   }
 }

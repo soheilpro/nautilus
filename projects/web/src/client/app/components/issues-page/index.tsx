@@ -12,7 +12,7 @@ import IssueViewSettings, { IView, View } from '../issue-view-settings';
 import MasterPage from '../master-page';
 import { ILocalStorage } from '../../framework/storage';
 import { IRoamingStorage } from '../../modules/storage';
-import { IContextProvider, IContextManager } from '../../framework/context';
+import { IContextProvider, IContextManager, IContext } from '../../framework/context';
 import { IssueType } from '../../modules/issues';
 
 require('../../assets/stylesheets/base.less');
@@ -53,7 +53,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     };
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     this.contextManager.registerContextProvider(this);
     this.application.on('load', this.handleApplicationLoad);
     this.application.items.on('issue.add', this.handleApplicationIssueAdd);
@@ -61,7 +61,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     this.application.items.on('issue.delete', this.handleApplicationIssueDelete);
   }
 
-  async componentDidMount() {
+  async componentDidMount(): Promise<void> {
     ($(this.issueDetailContainerElement) as any).sticky({
       topSpacing: 10,
     });
@@ -81,7 +81,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     });
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.application.items.off('issue.delete', this.handleApplicationIssueDelete);
     this.application.items.off('issue.update', this.handleApplicationIssueUpdate);
     this.application.items.off('issue.add', this.handleApplicationIssueAdd);
@@ -89,7 +89,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     this.contextManager.unregisterContextProvider(this);
   }
 
-  private async loadIssues(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]) {
+  private async loadIssues(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]): Promise<void> {
     sortExpressions = [new NQL.SortExpression(new NQL.LocalExpression('sid'), -1)];
     const issues = await this.application.items.getAllIssues(filterExpression, sortExpressions);
 
@@ -99,7 +99,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     });
   }
 
-  getContext() {
+  getContext(): IContext {
     if (!this.state.selectedIssue)
       return null;
 
@@ -109,11 +109,11 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     };
   }
 
-  private handleApplicationLoad() {
+  private handleApplicationLoad(): void {
     this.loadIssues(this.state.view.filterExpression, this.state.view.sortExpressions);
   }
 
-  private handleApplicationIssueAdd({ issue }: { issue: IIssue }) {
+  private handleApplicationIssueAdd({ issue }: { issue: IIssue }): void {
     this.setState(state => {
       return {
         issues: [issue, ...state.issues],
@@ -122,7 +122,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     });
   }
 
-  private handleApplicationIssueUpdate({ issue }: { issue: IIssue }) {
+  private handleApplicationIssueUpdate({ issue }: { issue: IIssue }): void {
     this.setState(state => {
       return {
         issues: ArrayHelper.replaceElement(state.issues, issue, issue, entityComparer),
@@ -131,7 +131,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     });
   }
 
-  private handleApplicationIssueDelete({ issue }: { issue: IIssue }) {
+  private handleApplicationIssueDelete({ issue }: { issue: IIssue }): void {
     this.setState(state => {
       return {
         issues: ArrayHelper.removeElement(state.issues, issue, entityComparer),
@@ -140,7 +140,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     });
   }
 
-  private handleIssueViewSettingsChange(view: IView) {
+  private handleIssueViewSettingsChange(view: IView): void {
     this.localStorage.set('issues.view', view.toJSON());
 
     this.setState({
@@ -150,7 +150,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     this.loadIssues(view.filterExpression, view.sortExpressions);
   }
 
-  private handleIssueViewSettingsSavedViewsChange(savedViews: IView[]) {
+  private handleIssueViewSettingsSavedViewsChange(savedViews: IView[]): void {
     this.roamingStorage.set('issues.savedViews', savedViews.map(view => view.toJSON()));
 
     this.setState({
@@ -158,13 +158,13 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     });
   }
 
-  private handleIssueTableIssueSelect(issue: IIssue) {
+  private handleIssueTableIssueSelect(issue: IIssue): void {
     this.setState({
       selectedIssue: issue,
     });
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <MasterPage>
         <div className="issues-page-component">

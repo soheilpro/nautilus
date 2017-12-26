@@ -15,18 +15,18 @@ export class ItemTypeModule extends BaseModule implements IItemTypeModule {
     super();
   }
 
-  async load() {
+  async load(): Promise<void> {
     const result = await this.client.itemTypes.get(null);
 
     this.itemTypes = _.sortBy(result.entities, itemType => itemType.order);
     this.itemTypesMap = ArrayHelper.toMap(this.itemTypes, itemType => itemType.id);
   }
 
-  getAll(itemKind: ItemKind) {
+  getAll(itemKind: ItemKind): IItemType[] {
     return this.itemTypes.filter(itemType => itemType.itemKind === itemKind);
   }
 
-  get(itemType: IItemType) {
+  get(itemType: IItemType): IItemType {
     if (!itemType)
       return null;
 

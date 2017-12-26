@@ -6,7 +6,7 @@ export class DeleteMilestoneAction extends BaseAction {
     super();
   }
 
-  async execute() {
+  async execute(): Promise<void> {
     await this.application.items.deleteMilestone(this.milestone);
   }
 }

@@ -9,7 +9,7 @@ import { PermissionProvider } from './security';
 import { authenticator } from './plugins';
 
 export class ServerFactory {
-  createServer(dbConnection: IDBConnection, dateTimeService: IDateTimeService) {
+  createServer(dbConnection: IDBConnection, dateTimeService: IDateTimeService): restify.Server {
     const managedDB = new ManagedDB(dbConnection, dateTimeService);
 
     const userRepository = new UserRepository(managedDB);

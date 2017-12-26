@@ -14,11 +14,11 @@ interface IUserQueryBuilderState {
 }
 
 export default class UserQueryBuilder extends React.PureComponent<IUserQueryBuilderProps, IUserQueryBuilderState> {
-  static canParseQuery(query: NQL.IExpression, queryItem: string) {
+  static canParseQuery(query: NQL.IExpression, queryItem: string): boolean {
     return ListQueryBuilder.canParseQuery(query, queryItem, 'User');
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <ListQueryBuilder items={this.props.users} displayProperty="name" query={this.props.query} queryItem={this.props.queryItem} queryItemType="User" itemToQueryItem={asEntity} itemComparer={entityComparer} onChange={this.props.onChange} />
     );

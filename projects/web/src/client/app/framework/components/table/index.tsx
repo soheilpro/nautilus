@@ -50,12 +50,12 @@ export default class Table extends React.PureComponent<ITableProps, ITableState>
     };
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(): void {
     if (this.componentElement.contains(document.activeElement) && this.selectedChunkComponent)
       this.selectedChunkComponent.focus();
   }
 
-  componentWillReceiveProps(props: ITableProps) {
+  componentWillReceiveProps(props: ITableProps): void {
     if (this.props.items !== props.items || this.props.selectedItem !== props.selectedItem) {
       let selectedItem = props.selectedItem;
 
@@ -89,7 +89,7 @@ export default class Table extends React.PureComponent<ITableProps, ITableState>
     }
   }
 
-  private handleKeyDown(event: React.KeyboardEvent<HTMLTableElement>) {
+  private handleKeyDown(event: React.KeyboardEvent<HTMLTableElement>): void {
     if (event.which === KeyCode.DownArrow) {
       const selectedItemIndex = this.props.items.indexOf(this.state.selectedItem);
 
@@ -134,7 +134,7 @@ export default class Table extends React.PureComponent<ITableProps, ITableState>
     }
   }
 
-  private handleItemSelect(item: IItem) {
+  private handleItemSelect(item: IItem): void {
     if (this.props.onItemSelect)
       this.props.onItemSelect(item);
 
@@ -143,12 +143,12 @@ export default class Table extends React.PureComponent<ITableProps, ITableState>
     });
   }
 
-  private handleItemAction(item: IItem) {
+  private handleItemAction(item: IItem): void {
     if (this.props.onItemAction)
       this.props.onItemAction(item);
   }
 
-  private getChunks(items: IItem[]) {
+  private getChunks(items: IItem[]): IChunk[] {
     const totalChunks = Math.ceil(items.length / CHUNK_SIZE);
     const chunks: IChunk[] = [];
 
@@ -163,7 +163,7 @@ export default class Table extends React.PureComponent<ITableProps, ITableState>
     return chunks;
   }
 
-  private getSelectedChunk(chunks: IChunk[], selectedItem: IItem) {
+  private getSelectedChunk(chunks: IChunk[], selectedItem: IItem): IChunk {
     for (const chunk of chunks)
       if (chunk.items.indexOf(selectedItem) !== -1)
         return chunk;
@@ -171,7 +171,7 @@ export default class Table extends React.PureComponent<ITableProps, ITableState>
     return null;
   }
 
-  render() {
+  render(): JSX.Element {
     const selectedChunk = this.getSelectedChunk(this.state.chunks, this.state.selectedItem);
 
     return (
@@ -217,11 +217,11 @@ interface IChunkState {
 class Chunk extends React.PureComponent<IChunkProps, IChunkState> {
   private selectedRow: TableRow;
 
-  focus() {
+  focus(): void {
     this.selectedRow.focus();
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <tbody className="table-body">
         {

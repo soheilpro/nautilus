@@ -6,11 +6,11 @@ export default class HTMLExpressionFormatter extends NQL.ExpressionVisitor<strin
     super();
   }
 
-  format(expression: NQL.IExpression, context: {}) {
+  format(expression: NQL.IExpression, context: {}): string {
     return this.visit(expression, context);
   }
 
-  visitAnd(expression: NQL.AndExpression, context: {}) {
+  visitAnd(expression: NQL.AndExpression, context: {}): string {
     return `<span class="expression expression-and">${expression.children.map(e => {
       if (e instanceof NQL.OrExpression)
         return `(${this.visit(e, context)})`;
@@ -19,31 +19,31 @@ export default class HTMLExpressionFormatter extends NQL.ExpressionVisitor<strin
     }).join(' <span class="expression-and-operator">AND</span> ')}</span>`;
   }
 
-  visitCast(expression: NQL.CastExpression, context: {}) {
+  visitCast(expression: NQL.CastExpression, context: {}): string {
     return `<span class="expression expression-cast">(${expression.type})(${this.visit(expression.child, context)})<span>`;
   }
 
-  visitComparison(expression: NQL.ComparisonExpression, context: {}) {
+  visitComparison(expression: NQL.ComparisonExpression, context: {}): string {
     return `<span class="expression expression-comparison expression-comparison-operator-${expression.operator}">${this.visit(expression.left, context)} <span class="expression-comparison-operator">${this.titleForComparisonOperator(expression.operator)}</span> ${this.visit(expression.right, context)}</span>`;
   }
 
-  visitConstant(expression: NQL.ConstantExpression, context: {}) {
+  visitConstant(expression: NQL.ConstantExpression, context: {}): string {
     return `<span class="expression expression-constant"><span class="${expression.type.toLowerCase()}">${this.titleForConstant(expression)}</span></span>`;
   }
 
-  visitList(expression: NQL.ListExpression, context: {}) {
+  visitList(expression: NQL.ListExpression, context: {}): string {
     return `<span class="expression expression-list">[${expression.children.map(e => this.visit(e, context)).join(', ')}]</span>`;
   }
 
-  visitLocal(expression: NQL.LocalExpression, context: {}) {
+  visitLocal(expression: NQL.LocalExpression, context: {}): string {
     return `<span class="expression expression-local">${expression.name}</span>`;
   }
 
-  visitMethodCall(expression: NQL.MethodCallExpression, context: {}) {
+  visitMethodCall(expression: NQL.MethodCallExpression, context: {}): string {
     return `<span class="expression expression-method-call">${this.visit(expression.target, context)}.${expression.name}(${expression.args.map(e => this.visit(e, context)).join(',')})</span>`;
   }
 
-  visitOr(expression: NQL.OrExpression, context: {}) {
+  visitOr(expression: NQL.OrExpression, context: {}): string {
     return `<span class="expression expression-or">${expression.children.map(e => {
       if (e instanceof NQL.AndExpression)
         return `(${this.visit(e, context)})`;
@@ -52,11 +52,11 @@ export default class HTMLExpressionFormatter extends NQL.ExpressionVisitor<strin
     }).join(' <span class="expression-or-operator">OR</span> ')}</span>`;
   }
 
-  visitProperty(expression: NQL.PropertyExpression, context: {}) {
+  visitProperty(expression: NQL.PropertyExpression, context: {}): string {
     return `<span class="expression expression-property">${this.visit(expression.target, context)}.${expression.name}</span>`;
   }
 
-  private titleForComparisonOperator(operator: string) {
+  private titleForComparisonOperator(operator: string): string {
     if (operator === 'eq')
       return '=';
 
@@ -72,7 +72,7 @@ export default class HTMLExpressionFormatter extends NQL.ExpressionVisitor<strin
     throw new Error('Not supported.');
   }
 
-  private titleForConstant(expression: NQL.ConstantExpression) {
+  private titleForConstant(expression: NQL.ConstantExpression): string {
     if (expression.type === 'User')
       return this.application.users.get(expression.value).name;
 

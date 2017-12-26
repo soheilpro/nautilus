@@ -4,6 +4,7 @@ import { IUserLogManager } from '../../framework/user-log';
 import { IDateTimeService } from '../../services';
 import { ProjectModel } from '../../models';
 import { IRequest, IParams } from '../../web';
+import { IRoute } from '../iroute';
 
 export class ProjectRouter extends RouterBase<IProject, IProjectChange> {
   constructor(projectManager: IProjectManager, userLogManager: IUserLogManager, dateTimeService: IDateTimeService) {
@@ -12,7 +13,7 @@ export class ProjectRouter extends RouterBase<IProject, IProjectChange> {
 
   readonly name = 'projects';
 
-  getRoutes() {
+  getRoutes(): IRoute[] {
     return [
       this.protectedRoute('get',   '/projects',     this.getEntities),
       this.protectedRoute('get',   '/projects/:id', this.getEntity),
@@ -22,7 +23,7 @@ export class ProjectRouter extends RouterBase<IProject, IProjectChange> {
     ];
   }
 
-  async entityFromParams(params: IParams, request: IRequest) {
+  async entityFromParams(params: IParams, request: IRequest): Promise<IProject> {
     return {
       ...await super.entityFromParams(params, request),
       name: params.readString('name'),
@@ -31,7 +32,7 @@ export class ProjectRouter extends RouterBase<IProject, IProjectChange> {
     };
   }
 
-  async changeFromParams(params: IParams, request: IRequest) {
+  async changeFromParams(params: IParams, request: IRequest): Promise<IProjectChange> {
     return {
       ...await super.changeFromParams(params, request),
       name: params.readString('name'),
@@ -40,7 +41,7 @@ export class ProjectRouter extends RouterBase<IProject, IProjectChange> {
     };
   }
 
-  entityToModel(entity: IProject) {
+  entityToModel(entity: IProject): ProjectModel {
     return new ProjectModel(entity);
   }
 }

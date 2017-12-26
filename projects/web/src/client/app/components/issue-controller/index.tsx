@@ -8,7 +8,7 @@ import { IActionManager } from '../../framework/actions';
 import { IDialogController } from '../../framework/dialog';
 import { INotificationController } from '../../framework/notifications';
 import { IWindowController } from '../../framework/windows';
-import { ICommandProvider, ICommandManager } from '../../framework/commands';
+import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, UpdateIssueCommand } from './commands';
 import { IItemControllerManager } from '../../framework/items';
 import AddEditIssueWindow from '../add-edit-issue-window';
@@ -35,19 +35,19 @@ export default class IssueController extends React.PureComponent<IIssueControlle
     this.state = {};
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     ServiceManager.Instance.registerService('IIssueController', this);
     this.itemControllerManager.registerItemController(IssueType, this);
     this.commandManager.registerCommandProvider(this);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.commandManager.unregisterCommandProvider(this);
     this.itemControllerManager.unregisterItemController(IssueType, this);
     ServiceManager.Instance.unregisterService('IIssueController', this);
   }
 
-  getCommands() {
+  getCommands(): ICommand[] {
     return [
       new NewIssueCommand(),
       new NewSubIssueCommand(),
@@ -56,7 +56,7 @@ export default class IssueController extends React.PureComponent<IIssueControlle
     ];
   }
 
-  createNew(issue: IIssue, parentIssue?: IIssue) {
+  createNew(issue: IIssue, parentIssue?: IIssue): void {
     const handleAddIssueWindowAdd = async (issue: IIssue) => {
       this.windowController.closeWindow(addIssueWindow);
 
@@ -85,7 +85,7 @@ export default class IssueController extends React.PureComponent<IIssueControlle
     this.windowController.showWindow(addIssueWindow);
   }
 
-  editItem(issue: IIssue) {
+  editItem(issue: IIssue): void {
     const handleEditIssueWindowUpdate = async (issue: IIssue, issueChange: IIssueChange) => {
       this.windowController.closeWindow(editIssueWindow);
 
@@ -115,7 +115,7 @@ export default class IssueController extends React.PureComponent<IIssueControlle
     this.windowController.showWindow(editIssueWindow);
   }
 
-  deleteItem(issue: IIssue) {
+  deleteItem(issue: IIssue): void {
     const handleConfirm = async () => {
       const notification = {
         title: 'Deleting issue...',
@@ -137,15 +137,15 @@ export default class IssueController extends React.PureComponent<IIssueControlle
     });
   }
 
-  getItemId(item: IIssue) {
+  getItemId(item: IIssue): string {
     return item.sid;
   }
 
-  getLastChange() {
+  getLastChange(): IIssueChange {
     return this.lastChange;
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="issue-controller-component">
       </div>

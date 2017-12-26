@@ -44,7 +44,7 @@ export default class SearchWindow extends React.PureComponent<ISearchWindowProps
     };
   }
 
-  private onSearchResultSelect(searchResult: ISearchResult) {
+  private onSearchResultSelect(searchResult: ISearchResult): void {
     switch (searchResult.type) {
       case 'Issue':
         this.props.onIssueSelect(searchResult.item);
@@ -55,7 +55,7 @@ export default class SearchWindow extends React.PureComponent<ISearchWindowProps
     }
   }
 
-  private handleContainerKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+  private handleContainerKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
     if (event.which === KeyCode.DownArrow) {
       event.preventDefault();
 
@@ -90,7 +90,7 @@ export default class SearchWindow extends React.PureComponent<ISearchWindowProps
     }
   }
 
-  private async handleSearchInputChange(value: string) {
+  private async handleSearchInputChange(value: string): Promise<void> {
     this.searchCounter++;
 
     this.setState({
@@ -120,25 +120,25 @@ export default class SearchWindow extends React.PureComponent<ISearchWindowProps
     });
   }
 
-  private handleSearchResultListMouseLeave() {
+  private handleSearchResultListMouseLeave(): void {
     this.setState({
       selectedSearchResultIndex: -1,
     });
   }
 
-  private handleSearchResultMouseEnter(searchResult: ISearchResult) {
+  private handleSearchResultMouseEnter(searchResult: ISearchResult): void {
     this.setState({
       selectedSearchResultIndex: this.state.searchResults.indexOf(searchResult),
     });
   }
 
-  private handleSearchResultClick(searchResult: ISearchResult, event: React.MouseEvent<HTMLAnchorElement>) {
+  private handleSearchResultClick(searchResult: ISearchResult, event: React.MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
 
     this.onSearchResultSelect(searchResult);
   }
 
-  private async search(query: string) {
+  private async search(query: string): Promise<ISearchResult[]> {
     const issues = await this.application.items.getAllIssues(null, null);
 
     return issues.map(issue => {
@@ -150,7 +150,7 @@ export default class SearchWindow extends React.PureComponent<ISearchWindowProps
     });
   }
 
-  private renderSearchResult(searchResult: ISearchResult) {
+  private renderSearchResult(searchResult: ISearchResult): JSX.Element {
     if (searchResult.type === 'Issue') {
       const issue = searchResult.item as IIssue;
 
@@ -165,7 +165,7 @@ export default class SearchWindow extends React.PureComponent<ISearchWindowProps
     return null;
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Window className="search-window-component">
         <div className="container" onKeyDown={this.handleContainerKeyDown}>

@@ -20,11 +20,11 @@ export default class ItemStateSelect extends React.PureComponent<IItemStateSelec
     this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
-  private handleSelectChange(itemState: IItemState) {
+  private handleSelectChange(itemState: IItemState): void {
     this.props.onChange(itemState);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Select className={classNames('item-state-select-component', this.props.className)} selectedItem={this.props.itemState} items={this.props.itemStates} displayProperty="title" onChange={this.handleSelectChange} />
     );

@@ -1,5 +1,5 @@
 import { BaseCommand } from '../../../framework/commands';
-import { KeyCode } from '../../../framework/keyboard';
+import { KeyCode, IShortcut } from '../../../framework/keyboard';
 import { ServiceManager } from '../../../services';
 import { IApplication } from '../../../application';
 import { INotificationController } from '../../../framework/notifications';
@@ -8,19 +8,19 @@ export class RefreshCommand extends BaseCommand {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private notificationController = ServiceManager.Instance.getService<INotificationController>('INotificationController');
 
-  get id() {
+  get id(): string {
     return 'refresh';
   }
 
-  get title() {
+  get title(): string {
     return 'Refresh';
   }
 
-  get shortcut() {
+  get shortcut(): IShortcut {
     return [{ keyCode: KeyCode.R }];
   }
 
-  async execute() {
+  async execute(): Promise<void> {
     const notification = {
       title: 'Refreshing...',
     };

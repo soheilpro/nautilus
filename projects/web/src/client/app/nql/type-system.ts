@@ -12,19 +12,19 @@ export default class TypeSystem implements ITypeSystem {
     this.registerType({ name: 'Entity' });
   }
 
-  registerType(type: IType) {
+  registerType(type: IType): void {
     this.types.push(type);
   }
 
-  registerTypes(types: IType[]) {
+  registerTypes(types: IType[]): void {
     this.types.push(...types);
   }
 
-  getType(name: string) {
+  getType(name: string): IType {
     return _.find(this.types, type => type.name === name);
   }
 
-  getTypeHierarchy(type: IType) {
+  getTypeHierarchy(type: IType): IType[] {
     const hierarchy: IType[] = [];
 
     while (type) {
@@ -39,14 +39,14 @@ export default class TypeSystem implements ITypeSystem {
     return hierarchy;
   }
 
-  isOfType(type: IType, baseType: IType | string) {
+  isOfType(type: IType, baseType: IType | string): boolean {
     if (typeof baseType === 'string')
       baseType = this.getType(baseType);
 
     return this.getTypeHierarchy(type).some(_type => _type.name === (baseType as IType).name);
   }
 
-  getCommonType(type1: IType, type2: IType) {
+  getCommonType(type1: IType, type2: IType): IType {
     const type1Hierarchy = this.getTypeHierarchy(type1);
     const type2Hierarchy = this.getTypeHierarchy(type2);
 

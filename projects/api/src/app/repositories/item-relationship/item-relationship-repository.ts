@@ -1,6 +1,6 @@
 import { IFilter } from '../../framework';
 import { IItemRelationship, IItemRelationshipChange, IItemRelationshipRepository, ItemItemRelationshipFilter } from '../../framework/item-relationship';
-import { IDB } from '../../db';
+import { IDB, IUpdate } from '../../db';
 import { IItemRelationshipDocument } from './iitem-relationship-document';
 import RepositoryBase from '../repository-base';
 
@@ -9,11 +9,11 @@ export class ItemRelationshipRepository extends RepositoryBase<IItemRelationship
     super(db);
   }
 
-  collectionName() {
+  collectionName(): string {
     return 'itemRelationships';
   }
 
-  filterToQuery(filter: IFilter) {
+  filterToQuery(filter: IFilter): IObject {
     if (filter instanceof ItemItemRelationshipFilter) {
       const entityIds = filter.items.map(item => this.toObjectId(item.id));
 
@@ -28,7 +28,7 @@ export class ItemRelationshipRepository extends RepositoryBase<IItemRelationship
     return super.filterToQuery(filter);
   }
 
-  changeToUpdate(change: IItemRelationshipChange) {
+  changeToUpdate(change: IItemRelationshipChange): IUpdate {
     const update = super.changeToUpdate(change);
     update.setOrUnset('item1', change.item1, this.toRef);
     update.setOrUnset('item2', change.item2, this.toRef);
@@ -37,7 +37,7 @@ export class ItemRelationshipRepository extends RepositoryBase<IItemRelationship
     return update;
   }
 
-  documentToEntity(document: IItemRelationshipDocument) {
+  documentToEntity(document: IItemRelationshipDocument): IItemRelationship {
     return {
       ...super.documentToEntity(document),
       item1: this.fromRef(document.item1),
@@ -46,7 +46,7 @@ export class ItemRelationshipRepository extends RepositoryBase<IItemRelationship
     };
   }
 
-  entityToDocument(entity: IItemRelationship) {
+  entityToDocument(entity: IItemRelationship): IItemRelationshipDocument {
     return {
       ...super.entityToDocument(entity),
       item1: this.toRef(entity.item1),

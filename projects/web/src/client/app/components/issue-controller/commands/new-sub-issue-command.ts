@@ -1,6 +1,6 @@
 import * as _ from 'underscore';
 import { IIssue, IApplication } from '../../../application';
-import { KeyCode } from '../../../framework/keyboard';
+import { KeyCode, IShortcut } from '../../../framework/keyboard';
 import { ServiceManager } from '../../../services';
 import { IIssueController, IssueType } from '../../../modules/issues';
 import { BaseCommand } from '../../../framework/commands';
@@ -15,25 +15,25 @@ export class NewSubIssueCommand extends BaseCommand {
     super();
   }
 
-  get id() {
+  get id(): string {
     return 'new-sub-issue';
   }
 
-  get title() {
+  get title(): string {
     return 'New Sub-Issue';
   }
 
-  get shortcut() {
+  get shortcut(): IShortcut {
     return [{ keyCode: KeyCode.S }];
   }
 
-  get isEnabled() {
+  get isEnabled(): boolean {
     const context = this.contextManager.getContext();
 
     return context['core.activeItemType'] === IssueType;
   }
 
-  execute() {
+  execute(): void {
     const context = this.contextManager.getContext();
     const activeIssue = context['core.activeItem'];
 

@@ -26,33 +26,33 @@ export default class App extends React.PureComponent<IAppProps, IAppState> {
     this.state = {};
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     this.application.on('initialize', this.handleApplicationInitialize);
     this.application.on('login', this.handleApplicationLogIn);
     this.application.on('load', this.handleApplicationLoad);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.application.off('initialize', this.handleApplicationInitialize);
     this.application.off('login', this.handleApplicationLogIn);
     this.application.off('load', this.handleApplicationLoad);
   }
 
-  private handleApplicationInitialize() {
+  private handleApplicationInitialize(): void {
     this.forceUpdate();
   }
 
-  private handleApplicationLogIn(session: ISession) {
+  private handleApplicationLogIn(session: ISession): void {
     this.localStorage.set('session', session);
 
     this.forceUpdate();
   }
 
-  private handleApplicationLoad() {
+  private handleApplicationLoad(): void {
     this.forceUpdate();
   }
 
-  render() {
+  render(): JSX.Element {
     if (!this.application.isInitialized())
       return <span />;
 

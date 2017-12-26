@@ -5,15 +5,15 @@ import { ICommandProvider } from './icommand-provider';
 export class CommandManager implements ICommandManager {
   private commandProviders: ICommandProvider[] = [];
 
-  registerCommandProvider(commandProvider: ICommandProvider) {
+  registerCommandProvider(commandProvider: ICommandProvider): void {
     this.commandProviders.push(commandProvider);
   }
 
-  unregisterCommandProvider(commandProvider: ICommandProvider) {
+  unregisterCommandProvider(commandProvider: ICommandProvider): void {
     this.commandProviders.splice(this.commandProviders.indexOf(commandProvider), 1);
   }
 
-  getCommands() {
+  getCommands(): ICommand[] {
     const commands: ICommand[] = [];
 
     for (const commandProvider of this.commandProviders)
@@ -24,7 +24,7 @@ export class CommandManager implements ICommandManager {
     return commands;
   }
 
-  executeCommand(commandId: string) {
+  executeCommand(commandId: string): void {
     for (const command of this.getCommands()) {
       if (command.id === commandId && command.isAvailable && command.isEnabled) {
         command.execute();

@@ -1,4 +1,5 @@
 import { IItemState, IItemStateChange, IItemStateManager, IItemStateRepository, DuplicateItemStateFilter } from '../../framework/item-state';
+import { IValidationError, IFilter } from '../../framework';
 import ManagerBase from '../manager-base';
 
 const ItemKindRegEx = /.+/;
@@ -10,7 +11,7 @@ export class ItemStateManager extends ManagerBase<IItemState, IItemStateChange> 
     super(repository);
   }
 
-  validateEntity(entity: IItemState) {
+  validateEntity(entity: IItemState): IValidationError {
     if (entity.itemKind === undefined)
       return { message: 'Missing itemKind.' };
 
@@ -41,7 +42,7 @@ export class ItemStateManager extends ManagerBase<IItemState, IItemStateChange> 
     return null;
   }
 
-  validateChange(change: IItemState) {
+  validateChange(change: IItemState): IValidationError {
     if (change.itemKind !== undefined) {
       if (!ItemKindRegEx.test(change.itemKind))
         return { message: 'Invalid itemKind.' };
@@ -68,11 +69,11 @@ export class ItemStateManager extends ManagerBase<IItemState, IItemStateChange> 
     return null;
   }
 
-  getEntityDuplicateCheckFilter(entity: IItemState) {
+  getEntityDuplicateCheckFilter(entity: IItemState): IFilter {
     return new DuplicateItemStateFilter(entity.key);
   }
 
-  getChangeDuplicateCheckFilter(change: IItemStateChange) {
+  getChangeDuplicateCheckFilter(change: IItemStateChange): IFilter {
     return new DuplicateItemStateFilter(change.key);
   }
 }

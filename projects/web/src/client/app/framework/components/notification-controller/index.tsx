@@ -21,7 +21,7 @@ interface INotificationControllerState {
 export default class NotificationController extends React.PureComponent<INotificationControllerProps, INotificationControllerState> implements INotificationController {
   private notificationKeyCounter = 0;
 
-  private get commandController() {
+  private get commandController(): ICommandController {
     return ServiceManager.Instance.getService<ICommandController>('ICommandController');
   }
 
@@ -33,15 +33,15 @@ export default class NotificationController extends React.PureComponent<INotific
     };
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     ServiceManager.Instance.registerService('INotificationController', this);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     ServiceManager.Instance.unregisterService('INotificationController', this);
   }
 
-  showNotification(notification: INotification, options: INotificationOptions = {}) {
+  showNotification(notification: INotification, options: INotificationOptions = {}): void {
     if (!notification.type)
       notification.type = 'info';
 
@@ -56,13 +56,13 @@ export default class NotificationController extends React.PureComponent<INotific
       setTimeout(() => { this.hideNotification(notification); }, options.hideAfter);
   }
 
-  hideNotification(notification: IExtendedNotification) {
+  hideNotification(notification: IExtendedNotification): void {
     this.setState(state => ({
       notifications: state.notifications.filter(x => x !== notification),
     }));
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="notification-controller-component">
         <div className="notificataion-container">

@@ -15,7 +15,7 @@ interface IMilestoneDetailState {
 }
 
 export default class MilestoneDetail extends React.PureComponent<IMilestoneDetailProps, IMilestoneDetailState> {
-  render() {
+  render(): JSX.Element {
     return (
       <div className="milestone-detail-component">
         <div className="header">Milestone #{this.props.milestone.sid}</div>

@@ -20,11 +20,11 @@ export default class ProjectSelect extends React.PureComponent<IProjectSelectPro
     this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
-  private handleSelectChange(project: IProject) {
+  private handleSelectChange(project: IProject): void {
     this.props.onChange(project);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Select className={classNames('project-select-component', this.props.className)} selectedItem={this.props.project} items={this.props.projects} displayProperty="name" onChange={this.handleSelectChange} />
     );

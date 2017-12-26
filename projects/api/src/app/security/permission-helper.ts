@@ -4,13 +4,13 @@ interface IParsedPermission {
 }
 
 export class PermissionHelper {
-  static hasPermission(permission: string, permissions: string[]) {
+  static hasPermission(permission: string, permissions: string[]): boolean {
     const permissionObject = this.parsePermission(permission);
 
     return permissions.some(_permission => this.matches(permissionObject, this.parsePermission(_permission)));
   }
 
-  private static matches(permission1: IParsedPermission, permission2: IParsedPermission) {
+  private static matches(permission1: IParsedPermission, permission2: IParsedPermission): boolean {
     if (permission1.access !== permission2.access)
       return false;
 

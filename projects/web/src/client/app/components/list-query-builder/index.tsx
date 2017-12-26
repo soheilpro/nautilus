@@ -55,7 +55,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     };
   }
 
-  componentWillReceiveProps(props: IListQueryBuilderProps) {
+  componentWillReceiveProps(props: IListQueryBuilderProps): void {
     if (this.props.query !== props.query || this.props.items !== props.items) {
       const { includedItems, excludedItems } = this.parseQuery(props.query, props);
 
@@ -69,7 +69,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     }
   }
 
-  private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+  private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
     if (event.which === KeyCode.DownArrow) {
       event.preventDefault();
 
@@ -112,7 +112,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     }
   }
 
-  private handleSearchTextChange(value: string) {
+  private handleSearchTextChange(value: string): void {
     this.setState({
       searchText: value,
     });
@@ -125,13 +125,13 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     });
   }
 
-  private handleItemListMouseLeave() {
+  private handleItemListMouseLeave(): void {
     this.setState({
       activeItemIndex: -1,
     });
   }
 
-  private handleItemMouseEnter(item: IItem) {
+  private handleItemMouseEnter(item: IItem): void {
     this.setState(state => {
       return {
         activeItemIndex: state.items.indexOf(item),
@@ -139,7 +139,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     });
   }
 
-  private handleItemExcludeClick(item: IItem, event: React.MouseEvent<HTMLAnchorElement>) {
+  private handleItemExcludeClick(item: IItem, event: React.MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
 
     this.toggleItemExclude(item);
@@ -151,7 +151,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     });
   }
 
-  private handleItemIncludeClick(item: IItem, event: React.MouseEvent<HTMLAnchorElement>) {
+  private handleItemIncludeClick(item: IItem, event: React.MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
 
     this.toggleItemInclude(item);
@@ -163,7 +163,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     });
   }
 
-  private handleItemTitleClick(item: IItem, event: React.MouseEvent<HTMLAnchorElement>) {
+  private handleItemTitleClick(item: IItem, event: React.MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
 
     this.includeItem(item);
@@ -175,7 +175,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     });
   }
 
-  private filterItems(items: IItem[], text: string) {
+  private filterItems(items: IItem[], text: string): IItem[] {
     if (!text)
       return items;
 
@@ -184,7 +184,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     return items.filter(item => item[this.props.displayProperty].toLowerCase().indexOf(text) !== -1);
   }
 
-  private includeItem(item: IItem) {
+  private includeItem(item: IItem): void {
     const includedItems = [item];
     const excludedItems: IItem[] = [];
 
@@ -196,7 +196,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     });
   }
 
-  private toggleItemExclude(item: IItem) {
+  private toggleItemExclude(item: IItem): void {
     const includedItems: IItem[] = [];
     const excludedItems = (this.state.excludedItems.indexOf(item) === -1) ? [...this.state.excludedItems, item] : this.state.excludedItems.filter(x => x !== item);
 
@@ -208,7 +208,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     });
   }
 
-  private toggleItemInclude(item: IItem) {
+  private toggleItemInclude(item: IItem): void {
     const includedItems = (this.state.includedItems.indexOf(item) === -1) ? [...this.state.includedItems, item] : this.state.includedItems.filter(x => x !== item);
     const excludedItems: IItem[] = [];
 
@@ -300,7 +300,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     throw new Error('Not supported.');
   }
 
-  static canParseQuery(query: NQL.IExpression, queryItem: string, queryItemType: string) {
+  static canParseQuery(query: NQL.IExpression, queryItem: string, queryItemType: string): boolean {
     if (!(query instanceof NQL.ComparisonExpression))
       return false;
 
@@ -333,7 +333,7 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     return false;
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="list-query-builder-component" onKeyDown={this.handleKeyDown}>
         <Input className="search-input" value={this.state.searchText} autoFocus={true} selectOnFocus={true} style="simple" onChange={this.handleSearchTextChange} />

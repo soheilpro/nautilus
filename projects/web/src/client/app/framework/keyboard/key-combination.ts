@@ -2,7 +2,7 @@ import { IKeyCombination } from './ikey-combination';
 import { IShortcut } from './ishortcut';
 
 export class KeyCombination {
-  static matches(keyCombination: IKeyCombination, event: KeyboardEvent) {
+  static matches(keyCombination: IKeyCombination, event: KeyboardEvent): boolean {
     if (keyCombination.keyCode !== event.keyCode)
       return false;
 
@@ -21,7 +21,7 @@ export class KeyCombination {
     return true;
   }
 
-  static matchesSome(keyCombinations: IShortcut, events: KeyboardEvent[]) {
+  static matchesSome(keyCombinations: IShortcut, events: KeyboardEvent[]): number {
     let i: number;
 
     for (i = 0; i < events.length; i++) {

@@ -6,7 +6,7 @@ export class AddMilestoneAction extends BaseAction {
     super();
   }
 
-  async execute() {
+  async execute(): Promise<void> {
     await this.application.items.addMilestone(this.milestone);
   }
 }

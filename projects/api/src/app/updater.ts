@@ -12,7 +12,7 @@ class Updater extends EventEmitter {
     super();
   }
 
-  async run() {
+  async run(): Promise<void> {
     const db = new DB(this.dbConnection);
     const managedDB = new ManagedDB(this.dbConnection, this.dateTimeService);
 
@@ -36,7 +36,7 @@ class Updater extends EventEmitter {
 }
 
 export class UpdaterFactory {
-  createUpdater(dbConnection: IDBConnection, dateTimeService: IDateTimeService) {
+  createUpdater(dbConnection: IDBConnection, dateTimeService: IDateTimeService): Updater {
     return new Updater(dbConnection, dateTimeService);
   }
 }

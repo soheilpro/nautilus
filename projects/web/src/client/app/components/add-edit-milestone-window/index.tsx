@@ -54,7 +54,7 @@ export default class AddEditMilestoneWindow extends React.PureComponent<IAddEdit
     this.state = state;
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.setState(state => {
       return {
         projects: this.application.projects.getAll(),
@@ -63,7 +63,7 @@ export default class AddEditMilestoneWindow extends React.PureComponent<IAddEdit
     });
   }
 
-  private handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+  private handleFormSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
     switch (this.props.mode) {
@@ -91,31 +91,31 @@ export default class AddEditMilestoneWindow extends React.PureComponent<IAddEdit
     }
   }
 
-  private handleTitleInputChange(value: string) {
+  private handleTitleInputChange(value: string): void {
     this.setState({
       title: value,
     });
   }
 
-  private handleDescriptionInputChange(value: string) {
+  private handleDescriptionInputChange(value: string): void {
     this.setState({
       description: value,
     });
   }
 
-  private handleProjectSelectChange(value: IProject) {
+  private handleProjectSelectChange(value: IProject): void {
     this.setState({
       project: value,
     });
   }
 
-  private handleStateInputChange(value: IItemState) {
+  private handleStateInputChange(value: IItemState): void {
     this.setState({
       state: value,
     });
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Window className="add-edit-milestone-window-component">
         <WindowHeader>

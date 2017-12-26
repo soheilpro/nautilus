@@ -13,7 +13,7 @@ interface INotificationState {
 }
 
 export class Notification extends React.PureComponent<INotificationProps, INotificationState> {
-  render() {
+  render(): JSX.Element {
     return (
       <div className="notification-component">
         <div className={classNames('wrapper', `type-${this.props.notification.type}`)}>

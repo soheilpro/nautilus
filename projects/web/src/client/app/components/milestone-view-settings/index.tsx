@@ -1,7 +1,7 @@
 import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { ICommandProvider, ICommandManager } from '../../framework/commands';
+import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { ServiceManager } from '../../services';
 import Button from '../../framework/components/button';
 import MilestoneFilterQueryBuilder from '../milestone-filter-query-builder';
@@ -39,11 +39,11 @@ export default class MilestoneViewSettings extends React.PureComponent<IMileston
     };
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     this.commandManager.registerCommandProvider(this);
   }
 
-  componentWillReceiveProps(props: IMilestoneViewSettingsProps) {
+  componentWillReceiveProps(props: IMilestoneViewSettingsProps): void {
     if (this.props.view !== props.view) {
       this.setState({
         filterExpression: props.view ? props.view.filterExpression : undefined,
@@ -51,11 +51,11 @@ export default class MilestoneViewSettings extends React.PureComponent<IMileston
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.commandManager.unregisterCommandProvider(this);
   }
 
-  getCommands() {
+  getCommands(): ICommand[] {
     const view = View.create({
       filterExpression: this.state.filterExpression,
     });
@@ -68,11 +68,11 @@ export default class MilestoneViewSettings extends React.PureComponent<IMileston
     ];
   }
 
-  private handleOpenFilterCommandExecute(itemKind: string, key: string) {
+  private handleOpenFilterCommandExecute(itemKind: string, key: string): void {
     this.queryBuilderComponent.open(key);
   }
 
-  private handleResetViewCommandExecute() {
+  private handleResetViewCommandExecute(): void {
     this.props.onChange(View.create());
 
     this.setState({
@@ -80,7 +80,7 @@ export default class MilestoneViewSettings extends React.PureComponent<IMileston
     });
   }
 
-  private handleMilestoneFilterQueryBuilderChange(query: NQL.IExpression) {
+  private handleMilestoneFilterQueryBuilderChange(query: NQL.IExpression): void {
     const view = View.create({
       filterExpression: query,
     });
@@ -92,7 +92,7 @@ export default class MilestoneViewSettings extends React.PureComponent<IMileston
     });
   }
 
-  private handleResetButtonClick() {
+  private handleResetButtonClick(): void {
     this.props.onChange(View.create());
 
     this.setState({
@@ -100,7 +100,7 @@ export default class MilestoneViewSettings extends React.PureComponent<IMileston
     });
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="milestone-view-settings-component">
         <div className="query">

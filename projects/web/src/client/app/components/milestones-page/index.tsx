@@ -10,7 +10,7 @@ import MasterPage from '../master-page';
 import CommandButton from '../../framework/components/command-button';
 import Icon from '../../framework/components/icon';
 import { ILocalStorage } from '../../framework/storage';
-import { IContextProvider, IContextManager } from '../../framework/context';
+import { IContextProvider, IContextManager, IContext } from '../../framework/context';
 import { MilestoneType } from '../../modules/milestones';
 
 require('../../assets/stylesheets/base.less');
@@ -47,7 +47,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     };
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     this.contextManager.registerContextProvider(this);
     this.application.on('load', this.handleApplicationLoad);
     this.application.items.on('milestone.add', this.handleApplicationMilestoneAdd);
@@ -55,7 +55,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     this.application.items.on('milestone.delete', this.handleApplicationMilestoneDelete);
   }
 
-  async componentDidMount() {
+  async componentDidMount(): Promise<void> {
     ($(this.milestoneDetailContainerElement) as any).sticky({
       topSpacing: 10,
     });
@@ -69,7 +69,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     this.loadMilestones(view.filterExpression, view.sortExpressions);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.application.items.off('milestone.delete', this.handleApplicationMilestoneDelete);
     this.application.items.off('milestone.update', this.handleApplicationMilestoneUpdate);
     this.application.items.off('milestone.add', this.handleApplicationMilestoneAdd);
@@ -77,7 +77,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     this.contextManager.unregisterContextProvider(this);
   }
 
-  private loadMilestones(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]) {
+  private loadMilestones(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]): void {
     sortExpressions = [new NQL.SortExpression(new NQL.LocalExpression('fullTitle'))];
     const milestones = this.application.items.getAllMilestones(filterExpression, sortExpressions);
 
@@ -87,7 +87,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     });
   }
 
-  getContext() {
+  getContext(): IContext {
     if (!this.state.selectedMilestone)
       return null;
 
@@ -97,11 +97,11 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     };
   }
 
-  private handleApplicationLoad() {
+  private handleApplicationLoad(): void {
     this.loadMilestones(this.state.view.filterExpression, this.state.view.sortExpressions);
   }
 
-  private handleApplicationMilestoneAdd({ milestone }: { milestone: IMilestone }) {
+  private handleApplicationMilestoneAdd({ milestone }: { milestone: IMilestone }): void {
     this.setState(state => {
       return {
         milestones: [milestone, ...state.milestones],
@@ -110,7 +110,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     });
   }
 
-  private handleApplicationMilestoneUpdate({ milestone }: { milestone: IMilestone }) {
+  private handleApplicationMilestoneUpdate({ milestone }: { milestone: IMilestone }): void {
     this.setState(state => {
       return {
         milestones: ArrayHelper.replaceElement(state.milestones, milestone, milestone, entityComparer),
@@ -119,7 +119,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     });
   }
 
-  private handleApplicationMilestoneDelete({ milestone }: { milestone: IMilestone }) {
+  private handleApplicationMilestoneDelete({ milestone }: { milestone: IMilestone }): void {
     this.setState(state => {
       return {
         milestones: ArrayHelper.removeElement(state.milestones, milestone, entityComparer),
@@ -128,7 +128,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     });
   }
 
-  private handleMilestoneViewSettingsChange(view: IView) {
+  private handleMilestoneViewSettingsChange(view: IView): void {
     this.localStorage.set('milestones.view', view.toJSON());
 
     this.setState({
@@ -138,13 +138,13 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     this.loadMilestones(view.filterExpression, view.sortExpressions);
   }
 
-  private handleMilestoneTableMilestoneSelect(milestone: IMilestone) {
+  private handleMilestoneTableMilestoneSelect(milestone: IMilestone): void {
     this.setState({
       selectedMilestone: milestone,
     });
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <MasterPage>
         <div className="milestones-page-component">

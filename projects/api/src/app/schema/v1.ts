@@ -5,7 +5,7 @@ import { IDB, IDocument } from '../db';
 export class v1 implements ISchema {
   readonly version = 1;
 
-  async apply(db: IDB, managedDB: IDB) {
+  async apply(db: IDB, managedDB: IDB): Promise<void> {
     await db.insert('counters', {
       'name': '*.meta.version',
       'value': 0,

@@ -1,5 +1,5 @@
 import { BaseCommand } from '../../../framework/commands';
-import { KeyCode } from '../../../framework/keyboard';
+import { KeyCode, IShortcut } from '../../../framework/keyboard';
 import { IView } from '../iview';
 
 export class ResetViewCommand extends BaseCommand {
@@ -7,26 +7,26 @@ export class ResetViewCommand extends BaseCommand {
     super();
   }
 
-  get id() {
+  get id(): string {
     return 'reset-view';
   }
 
-  get title() {
+  get title(): string {
     return 'View: Reset';
   }
 
-  get shortcut() {
+  get shortcut(): IShortcut {
     return [
       { keyCode: KeyCode.V },
       { keyCode: KeyCode.R },
     ];
   }
 
-  get isEnabled() {
+  get isEnabled(): boolean {
     return !this.view.isDefault();
   }
 
-  execute() {
+  execute(): void {
     this.onExecute();
   }
 }

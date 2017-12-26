@@ -5,6 +5,7 @@ import { IUserLogManager } from '../../framework/user-log';
 import { IDateTimeService } from '../../services';
 import { UserModel } from '../../models';
 import { IRequest, IResponse, IParams, Params } from '../../web';
+import { IRoute } from '../iroute';
 
 export class UserRouter extends RouterBase<IUser, IUserChange> {
   constructor(private userManager: IUserManager, userLogManager: IUserLogManager, dateTimeService: IDateTimeService) {
@@ -15,7 +16,7 @@ export class UserRouter extends RouterBase<IUser, IUserChange> {
 
   readonly name = 'users';
 
-  getRoutes() {
+  getRoutes(): IRoute[] {
     return [
       this.protectedRoute('get',   '/users',                 this.getEntities),
       this.protectedRoute('get',   '/users/:id',             this.getEntity),
@@ -26,7 +27,7 @@ export class UserRouter extends RouterBase<IUser, IUserChange> {
     ];
   }
 
-  checkEntityAccessSync(entity: IUser, access: string, request: IRequest) {
+  checkEntityAccessSync(entity: IUser, access: string, request: IRequest): boolean {
     switch (access) {
       case 'create':
         return false;
@@ -43,7 +44,7 @@ export class UserRouter extends RouterBase<IUser, IUserChange> {
     }
   }
 
-  async getPermissions(request: IRequest, response: IResponse) {
+  async getPermissions(request: IRequest, response: IResponse): Promise<void> {
     const params = new Params(request);
     const user = await params.readEntity('id', this.userManager);
 
@@ -60,7 +61,7 @@ export class UserRouter extends RouterBase<IUser, IUserChange> {
     });
   }
 
-  async entityFromParams(params: IParams, request: IRequest) {
+  async entityFromParams(params: IParams, request: IRequest): Promise<IUser> {
     return {
       ...await super.entityFromParams(params, request),
       username: params.readString('username'),
@@ -70,7 +71,7 @@ export class UserRouter extends RouterBase<IUser, IUserChange> {
     };
   }
 
-  async changeFromParams(params: IParams, request: IRequest) {
+  async changeFromParams(params: IParams, request: IRequest): Promise<IUserChange> {
     return {
       ...await super.changeFromParams(params, request),
       username: params.readString('username'),
@@ -80,7 +81,7 @@ export class UserRouter extends RouterBase<IUser, IUserChange> {
     };
   }
 
-  entityToModel(entity: IUser) {
+  entityToModel(entity: IUser): UserModel {
     if (!entity)
       return undefined;
 

@@ -34,7 +34,7 @@ export default class MilestoneTable extends React.PureComponent<IMilestoneTableP
     };
   }
 
-  componentWillReceiveProps(props: IMilestoneTableProps) {
+  componentWillReceiveProps(props: IMilestoneTableProps): void {
     if (this.props.selectedMilestone !== props.selectedMilestone) {
       this.setState({
         selectedMilestone: props.selectedMilestone,
@@ -42,7 +42,7 @@ export default class MilestoneTable extends React.PureComponent<IMilestoneTableP
     }
   }
 
-  private handleTableItemSelect(milestone: IMilestone) {
+  private handleTableItemSelect(milestone: IMilestone): void {
     if (this.props.onMilestoneSelect)
       this.props.onMilestoneSelect(milestone);
 
@@ -51,15 +51,15 @@ export default class MilestoneTable extends React.PureComponent<IMilestoneTableP
     });
   }
 
-  private handleTableItemAction(milestone: IMilestone) {
+  private handleTableItemAction(milestone: IMilestone): void {
     return this.milestoneController.editItem(milestone);
   }
 
-  private handleTableItemDelete(milestone: IMilestone) {
+  private handleTableItemDelete(milestone: IMilestone): void {
     return this.milestoneController.deleteItem(milestone);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Table className={classNames('milestone-table-component', this.props.className)} items={this.props.milestones} selectedItem={this.state.selectedMilestone} Header={TableHeader} Row={TableRow} Footer={TableFooter} onItemSelect={this.handleTableItemSelect} onItemAction={this.handleTableItemAction} onItemDelete={this.handleTableItemDelete} />
     );

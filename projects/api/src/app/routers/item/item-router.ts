@@ -9,6 +9,7 @@ import { IUserLogManager } from '../../framework/user-log';
 import { IDateTimeService } from '../../services';
 import { ItemModel, ItemRelationshipModel } from '../../models';
 import { IRequest, IParams } from '../../web';
+import { IRoute } from '../iroute';
 
 export class ItemRouter extends RouterBase<IItem, IItemChange> {
   constructor(itemManager: IItemManager, private userManager: IUserManager, private projectManager: IProjectManager, private itemTypeManager: IItemTypeManager, private itemStateManager: IItemStateManager, private itemRelationshipManager: IItemRelationshipManager, userLogManager: IUserLogManager, dateTimeService: IDateTimeService) {
@@ -17,7 +18,7 @@ export class ItemRouter extends RouterBase<IItem, IItemChange> {
 
   readonly name = 'items';
 
-  getRoutes() {
+  getRoutes(): IRoute[] {
     return [
       this.protectedRoute('get',   '/items',     this.getEntities),
       this.protectedRoute('get',   '/items/:id', this.getEntity),
@@ -27,7 +28,7 @@ export class ItemRouter extends RouterBase<IItem, IItemChange> {
     ];
   }
 
-  checkEntityAccessSync(entity: IItem, access: string, request: IRequest) {
+  checkEntityAccessSync(entity: IItem, access: string, request: IRequest): boolean {
     switch (access) {
       case 'create':
         if (entity.project)
@@ -53,14 +54,14 @@ export class ItemRouter extends RouterBase<IItem, IItemChange> {
     }
   }
 
-  checkChangeSync(entity: IItem, change: IItemChange, request: IRequest) {
+  checkChangeSync(entity: IItem, change: IItemChange, request: IRequest): boolean {
     if (change.project)
       return this.hasPermission(`projects.${change.project.id}.items:modify`, request);
     else
       return true;
   }
 
-  async getSupplement(name: string, entities: IItem[]) {
+  async getSupplement(name: string, entities: IItem[]): Promise<IObject> {
     if (name === 'relationships') {
       const relationships = await this.itemRelationshipManager.getAll(new ItemItemRelationshipFilter(entities));
 
@@ -70,7 +71,7 @@ export class ItemRouter extends RouterBase<IItem, IItemChange> {
     return Promise.resolve(undefined);
   }
 
-  async entityFromParams(params: IParams, request: IRequest) {
+  async entityFromParams(params: IParams, request: IRequest): Promise<IItem> {
     return {
       ...await super.entityFromParams(params, request),
       kind: params.readString('kind'),
@@ -85,7 +86,7 @@ export class ItemRouter extends RouterBase<IItem, IItemChange> {
     };
   }
 
-  async changeFromParams(params: IParams, request: IRequest) {
+  async changeFromParams(params: IParams, request: IRequest): Promise<IItemChange> {
     return {
       ...await super.changeFromParams(params, request),
       kind: params.readString('kind'),
@@ -100,7 +101,7 @@ export class ItemRouter extends RouterBase<IItem, IItemChange> {
     };
   }
 
-  entityToModel(entity: IItem) {
+  entityToModel(entity: IItem): ItemModel {
     if (!entity)
       return undefined;
 

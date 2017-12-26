@@ -29,27 +29,27 @@ export default class CommandController extends React.PureComponent<ICommandContr
     this.state = {};
   }
 
-  componentWillMount() {
+  componentWillMount(): void {
     ServiceManager.Instance.registerService('ICommandController', this);
     this.commandManager.registerCommandProvider(this);
     document.addEventListener('keydown', this.handleDocumentKeyDown);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     document.removeEventListener('keydown', this.handleDocumentKeyDown);
     this.commandManager.unregisterCommandProvider(this);
     ServiceManager.Instance.unregisterService('ICommandController', this);
   }
 
-  disableCommandShortcuts() {
+  disableCommandShortcuts(): void {
     this.commandShortcutsDisabledCounter++;
   }
 
-  enableCommandShortcuts() {
+  enableCommandShortcuts(): void {
     this.commandShortcutsDisabledCounter--;
   }
 
-  showCommandPaletteWindow() {
+  showCommandPaletteWindow(): void {
     const commands = _.sortBy(this.commandManager.getCommands().filter(command => command.isAvailable && command.isVisible), command => command.title);
 
     this.commandPaletteWindow = {
@@ -61,13 +61,13 @@ export default class CommandController extends React.PureComponent<ICommandContr
     this.windowController.showWindow(this.commandPaletteWindow);
   }
 
-  getCommands() {
+  getCommands(): ICommand[] {
     return [
       new ShowCommandPaletteCommand(),
     ];
   }
 
-  private handleDocumentKeyDown(event: KeyboardEvent) {
+  private handleDocumentKeyDown(event: KeyboardEvent): void {
     if (this.commandShortcutsDisabledCounter > 0)
       return;
 
@@ -119,13 +119,13 @@ export default class CommandController extends React.PureComponent<ICommandContr
     }
   }
 
-  private handleCommandPaletteWindowSelect(command: ICommand) {
+  private handleCommandPaletteWindowSelect(command: ICommand): void {
     this.windowController.closeWindow(this.commandPaletteWindow, () => {
       this.commandManager.executeCommand(command.id);
     });
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <div className="command-controller-component">
       </div>

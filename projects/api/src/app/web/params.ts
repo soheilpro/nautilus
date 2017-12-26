@@ -6,7 +6,7 @@ export class Params implements IParams {
   constructor(private source: IObject = {}) {
   }
 
-  readString(name: string) {
+  readString(name: string): string {
     const value = this.source[name] as string;
 
     if (value === undefined)
@@ -15,7 +15,7 @@ export class Params implements IParams {
     return value;
   }
 
-  readInt(name: string) {
+  readInt(name: string): number {
     const value = this.source[name] as string;
 
     if (value === undefined)
@@ -32,7 +32,7 @@ export class Params implements IParams {
     return num1;
   }
 
-  readStringArray(name: string) {
+  readStringArray(name: string): string[] {
     const value = this.source[name] as string;
 
     if (value === undefined)
@@ -46,7 +46,7 @@ export class Params implements IParams {
     return items;
   }
 
-  async readEntity<TEntity extends IEntity>(name: string, manager: IManager<TEntity, any>, ignoreIfNotFound?: boolean) {
+  async readEntity<TEntity extends IEntity>(name: string, manager: IManager<TEntity, any>, ignoreIfNotFound?: boolean): Promise<TEntity> {
     const id = this.source[name] as string;
 
     if (id === undefined)
@@ -64,7 +64,7 @@ export class Params implements IParams {
     return entity;
   }
 
-  readId(name: string) {
+  readId(name: string): string {
     return this.source[name];
   }
 }
