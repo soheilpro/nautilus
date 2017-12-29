@@ -42,7 +42,7 @@ export class App extends React.PureComponent<IAppProps, IAppState> {
     this.forceUpdate();
   }
 
-  private handleApplicationLogIn(session: ISession): void {
+  private handleApplicationLogIn({ session }: { session: ISession }): void {
     this.localStorage.set('session', session);
 
     this.forceUpdate();
