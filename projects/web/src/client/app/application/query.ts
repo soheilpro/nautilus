@@ -1,6 +1,6 @@
-import * as NQL from '../../nql';
+import * as NQL from '../nql';
 
-export default class Query {
+export class Query {
   private types =  [
     { name: 'ItemState',    base: 'Entity' },
     { name: 'ItemType',     base: 'Entity' },

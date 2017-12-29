@@ -1,0 +1,64 @@
+@import '../../assets/stylesheets/common';
+
+.add-edit-user-window-component {
+  .errors {
+    margin-bottom: 20px;
+    margin-left: 20px;
+
+    .error {
+      display: inline-block;
+      padding: 4px 8px;
+      background-color: #ffe1e1;
+      margin-bottom: 2px;
+
+      .icon {
+        margin-right: 8px;
+        margin-left: 2px;
+      }
+    }
+  }
+
+  .form {
+    display: table;
+    width: 100%;
+
+    .field {
+      display: table-row;
+
+      .label {
+        display: table-cell;
+        padding-top: 8px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        text-align: right;
+      }
+
+      .value {
+        display: table-cell;
+        min-width: 250px;
+        padding-bottom: 10px;
+
+        .input-component {
+          width: 100%;
+        }
+      }
+
+      .description {
+        width: 100%;
+        display: table-cell;
+        padding-left: 10px;
+        color: @darkdarkgray;
+      }
+    }
+
+    .field:last-child {
+      .label {
+        padding-bottom: 0;
+      }
+
+      .value {
+        padding-bottom: 0;
+      }
+    }
+  }
+}

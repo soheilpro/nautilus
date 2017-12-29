@@ -25,6 +25,7 @@ export class UserService extends ServiceBase<IUser, IUserFilter, IUserChange, IU
   serializeEntity(entity: IUser): Object {
     return {
       username: entity.username,
+      password: entity.password,
       name: entity.name,
       email: entity.email,
     };
@@ -33,6 +34,7 @@ export class UserService extends ServiceBase<IUser, IUserFilter, IUserChange, IU
   serializeChange(change: IUserChange): Object {
     return {
       username: change.username,
+      password: change.password,
       name: change.name,
       email: change.email,
     };

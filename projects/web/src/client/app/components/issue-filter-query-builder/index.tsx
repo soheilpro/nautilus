@@ -46,7 +46,7 @@ export default class IssueFilterQueryBuilder extends React.PureComponent<IIssueF
       projects: this.application.projects.getAll(),
       itemTypes: this.application.itemTypes.getAll('issue'),
       itemStates: this.application.itemStates.getAll('issue'),
-      users: this.application.users.getAll(),
+      users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]),
       milestones: this.application.items.getAllMilestones(new NQL.ComparisonExpression(new NQL.LocalExpression('state'), new NQL.ConstantExpression(closedMilestoneState, 'ItemState'), 'neq'), [new NQL.SortExpression(new NQL.LocalExpression('fullTitle'))]),
     });
   }

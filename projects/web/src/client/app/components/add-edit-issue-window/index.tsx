@@ -18,8 +18,8 @@ interface IAddEditIssueWindowProps {
   mode: 'add' | 'edit';
   issue?: IIssue;
   parentIssue?: IIssue;
-  onAdd?(issue: IIssue): void;
-  onUpdate?(issueChange: IIssueChange): void;
+  onAdd?(issue: IIssue, window: AddEditIssueWindow): void;
+  onUpdate?(issueChange: IIssueChange, window: AddEditIssueWindow): void;
   onClose(): void;
 }
 
@@ -80,7 +80,7 @@ export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssu
         projects: this.application.projects.getAll(),
         itemTypes: this.application.itemTypes.getAll('issue'),
         itemStates: this.application.itemStates.getAll('issue'),
-        users: this.application.users.getAll(),
+        users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]),
         milestones: this.getMilestones(state.project),
       };
     });
@@ -101,7 +101,7 @@ export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssu
           milestone: this.state.milestone || undefined,
         };
 
-        this.props.onAdd(issue);
+        this.props.onAdd(issue, this);
         break;
 
       case 'edit':
@@ -115,7 +115,7 @@ export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssu
           milestone: (this.state.milestone !== this.props.issue.milestone ? this.state.milestone || null : undefined),
         };
 
-        this.props.onUpdate(issueChange);
+        this.props.onUpdate(issueChange, this);
         break;
     }
   }

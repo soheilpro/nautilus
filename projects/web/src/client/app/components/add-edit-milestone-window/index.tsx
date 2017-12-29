@@ -13,8 +13,8 @@ require('./index.less');
 interface IAddEditMilestoneWindowProps {
   mode: 'add' | 'edit';
   milestone?: IMilestone;
-  onAdd?(milestone: IMilestone): void;
-  onUpdate?(milestoneChange: IMilestoneChange): void;
+  onAdd?(milestone: IMilestone, window: AddEditMilestoneWindow): void;
+  onUpdate?(milestoneChange: IMilestoneChange, window: AddEditMilestoneWindow): void;
   onClose(): void;
 }
 
@@ -75,7 +75,7 @@ export default class AddEditMilestoneWindow extends React.PureComponent<IAddEdit
           state: this.state.state || undefined,
         };
 
-        this.props.onAdd(milestone);
+        this.props.onAdd(milestone, this);
         break;
 
       case 'edit':
@@ -86,7 +86,7 @@ export default class AddEditMilestoneWindow extends React.PureComponent<IAddEdit
           state: (this.state.state !== this.props.milestone.state ? this.state.state || null : undefined),
         };
 
-        this.props.onUpdate(milestoneChange);
+        this.props.onUpdate(milestoneChange, this);
         break;
     }
   }

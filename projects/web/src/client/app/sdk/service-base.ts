@@ -6,6 +6,7 @@ import { IClient } from './iclient';
 import { IEntity } from './ientity';
 import { IFilter } from './ifilter';
 import { IGetResult } from './iget-result';
+import { ArgumentError } from './argument-error';
 
 export interface IInvokeOptions {
   method: string;
@@ -87,7 +88,7 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
     return this.invoke(invokeOptions);
   }
 
-  protected invoke(options: IInvokeOptions): Promise<any> {
+  protected async invoke(options: IInvokeOptions): Promise<any> {
     const config: AxiosRequestConfig = {
       method: options.method,
       url: this.client.address + options.path,
@@ -103,15 +104,15 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
       };
     }
 
-    return new Promise<any>(async (resolve, reject): Promise<void> => {
-      try {
-        const result = await axios.request(config);
-        resolve(result);
-      }
-      catch (error) {
-        reject(error);
-      }
-    });
+    const result = await axios.request(config);
+
+    if (result.status === 422)
+      throw new ArgumentError(result.data.message);
+
+    if (result.status >= 400)
+      throw new Error(result.statusText);
+
+    return result;
   }
 
   protected toId(object: IEntity): string {

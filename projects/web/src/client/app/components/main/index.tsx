@@ -6,6 +6,7 @@ import { ServiceManager } from '../../services';
 import CommandController from '../../framework/components/command-controller';
 import DialogController from '../../framework/components/dialog-controller';
 import ItemController from '../active-item-controller';
+import UserController from '../user-controller';
 import IssueController from '../issue-controller';
 import MilestoneController from '../milestone-controller';
 import NotificationController from '../../framework/components/notification-controller';
@@ -13,7 +14,8 @@ import SearchController from '../search-controller';
 import WindowController from '../../framework/components/window-controller';
 import IssuesPage from '../issues-page';
 import MilestonesPage from '../milestones-page';
-import { RefreshCommand, GoToIssuesCommand, GoToMilestonesCommand } from './commands';
+import UsersPage from '../users-page';
+import { RefreshCommand, GoToIssuesCommand, GoToMilestonesCommand, GoToUsersCommand } from './commands';
 
 interface IMainProps {
 }
@@ -40,6 +42,7 @@ export default class Main extends React.PureComponent<IMainProps, IMainState> im
       new RefreshCommand(),
       new GoToIssuesCommand(history),
       new GoToMilestonesCommand(history),
+      new GoToUsersCommand(history),
     ];
   }
 
@@ -51,6 +54,7 @@ export default class Main extends React.PureComponent<IMainProps, IMainState> im
         <NotificationController />
         <CommandController />
         <SearchController />
+        <UserController />
         <ItemController />
         <IssueController />
         <MilestoneController />
@@ -58,6 +62,7 @@ export default class Main extends React.PureComponent<IMainProps, IMainState> im
           <div>
             <Route path="/" exact component={IssuesPage as any} />
             <Route path="/milestones" component={MilestonesPage as any} />
+            <Route path="/users" component={UsersPage as any} />
           </div>
         </BrowserRouter>
       </div>
