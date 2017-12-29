@@ -4,7 +4,7 @@ import { IValidationError, IFilter } from '../../framework';
 import { ManagerBase } from '../manager-base';
 
 const UsernameRegEx = /[a-zA-Z][a-zA-Z0-9.]{1,}/;
-const PasswordRegEx = /\w{8,}/;
+const PasswordRegEx = /.{8,}/;
 const NameRegEx = /.+/;
 const EMailRegEx = /\w+@\w+/;
 
