@@ -3,12 +3,20 @@ import * as React from 'react';
 require('../../assets/stylesheets/base.less');
 require('./index.less');
 
-export function Splash(): JSX.Element {
-  return (
-    <div className="splash-component">
-      <div className="container">
-        Loading...
+interface ISplashProps {
+}
+
+interface ISplashState {
+}
+
+export class Splash extends React.Component<ISplashProps, ISplashState> {
+  render(): JSX.Element {
+    return (
+      <div className="splash-component">
+        <div className="container">
+          Loading...
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
