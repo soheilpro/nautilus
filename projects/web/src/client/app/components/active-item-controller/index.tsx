@@ -3,13 +3,13 @@ import { ServiceManager } from '../../services';
 import { CopyItemIdCommand, EditItemCommand, DeleteItemCommand } from './commands';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 
-interface IItemControllerProps {
+interface IActiveItemControllerProps {
 }
 
-interface IItemControllerState {
+interface IActiveItemControllerState {
 }
 
-export class ItemController extends React.PureComponent<IItemControllerProps, IItemControllerState> implements ICommandProvider {
+export class ActiveItemController extends React.PureComponent<IActiveItemControllerProps, IActiveItemControllerState> implements ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
 
   constructor() {
@@ -36,7 +36,7 @@ export class ItemController extends React.PureComponent<IItemControllerProps, II
 
   render(): JSX.Element {
     return (
-      <div className="item-controller-component">
+      <div className="active-item-controller-component">
       </div>
     );
   }

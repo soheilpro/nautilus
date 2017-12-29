@@ -5,7 +5,7 @@ import { ICommandProvider, ICommandManager, ICommand } from '../../framework/com
 import { ServiceManager } from '../../services';
 import { CommandController } from '../../framework/components/command-controller';
 import { DialogController } from '../../framework/components/dialog-controller';
-import { ItemController } from '../active-item-controller';
+import { ActiveItemController } from '../active-item-controller';
 import { UserController } from '../user-controller';
 import { IssueController } from '../issue-controller';
 import { MilestoneController } from '../milestone-controller';
@@ -54,8 +54,8 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
         <NotificationController />
         <CommandController />
         <SearchController />
+        <ActiveItemController />
         <UserController />
-        <ItemController />
         <IssueController />
         <MilestoneController />
         <BrowserRouter ref={e => this.browserRouterRef = e}>
