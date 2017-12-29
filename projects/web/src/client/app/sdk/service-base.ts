@@ -104,15 +104,15 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
       };
     }
 
-    const result = await axios.request(config);
+    const response = await axios.request(config);
 
-    if (result.status === 422)
-      throw new ArgumentError(result.data.message);
+    if (response.status === 422)
+      throw new ArgumentError(response.data.message);
 
-    if (result.status >= 400)
-      throw new Error(result.statusText);
+    if (response.status >= 400)
+      throw new Error(response.statusText);
 
-    return result;
+    return response;
   }
 
   protected toId(object: IEntity): string {
