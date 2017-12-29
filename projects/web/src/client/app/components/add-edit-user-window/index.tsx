@@ -136,7 +136,7 @@ export class AddEditUserWindow extends React.PureComponent<IAddEditUserWindowPro
               <div className="value">
                 <Input className="username" value={this.state.username} autoFocus={true} selectOnFocus={true} onChange={this.handleUsernameInputChange} />
               </div>
-              <div className="description">
+              <div className="hint">
                 2 characters min. Starting with a letter.
               </div>
             </div>
@@ -147,7 +147,7 @@ export class AddEditUserWindow extends React.PureComponent<IAddEditUserWindowPro
               <div className="value">
                 <Input className="password" value={this.state.password} secret={true} selectOnFocus={true} onChange={this.handlePasswordInputChange} />
               </div>
-              <div className="description">
+              <div className="hint">
                 8 characters min.
               </div>
             </div>
@@ -158,6 +158,8 @@ export class AddEditUserWindow extends React.PureComponent<IAddEditUserWindowPro
               <div className="value">
                 <Input className="name" value={this.state.name} selectOnFocus={true} onChange={this.handleNameInputChange} />
               </div>
+              <div className="hint">
+              </div>
             </div>
             <div className="field">
               <div className="label">
@@ -165,6 +167,8 @@ export class AddEditUserWindow extends React.PureComponent<IAddEditUserWindowPro
               </div>
               <div className="value">
                 <Input className="email" value={this.state.email} selectOnFocus={true} onChange={this.handleEMailSelectChange} />
+              </div>
+              <div className="hint">
               </div>
             </div>
           </form>

@@ -43,7 +43,7 @@ export class IssueFilterQueryBuilder extends React.PureComponent<IIssueFilterQue
     const closedMilestoneState = _.find(this.application.itemStates.getAll('milestone'), itemState => itemState.key === 'closed');
 
     this.setState({
-      projects: this.application.projects.getAll(),
+      projects: this.application.projects.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('name'))]),
       itemTypes: this.application.itemTypes.getAll('issue'),
       itemStates: this.application.itemStates.getAll('issue'),
       users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]),

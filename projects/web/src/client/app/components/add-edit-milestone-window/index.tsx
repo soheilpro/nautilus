@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as NQL from '../../nql';
 import { IProject, IItemState, IMilestone, IMilestoneChange, IApplication } from '../../application';
 import { ServiceManager } from '../../services';
 import { Window, WindowHeader, WindowContent, WindowActionBar } from '../../framework/components/window';
@@ -57,7 +58,7 @@ export class AddEditMilestoneWindow extends React.PureComponent<IAddEditMileston
   componentDidMount(): void {
     this.setState(state => {
       return {
-        projects: this.application.projects.getAll(),
+        projects: this.application.projects.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('name'))]),
         itemStates: this.application.itemStates.getAll('milestone'),
       };
     });

@@ -16,6 +16,7 @@ export class Navigation extends React.PureComponent<INavigationProps, INavigatio
       <div className="navigation-component">
         <NavLink to="/" exact activeClassName="active">Issues</NavLink>
         <NavLink to="/milestones" activeClassName="active">Milestones</NavLink>
+        <NavLink to="/projects" className="right" activeClassName="active">Projects</NavLink>
         <NavLink to="/users" className="right" activeClassName="active">Users</NavLink>
       </div>
     );

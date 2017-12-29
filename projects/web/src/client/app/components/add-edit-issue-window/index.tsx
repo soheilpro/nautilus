@@ -77,7 +77,7 @@ export class AddEditIssueWindow extends React.PureComponent<IAddEditIssueWindowP
   componentDidMount(): void {
     this.setState(state => {
       return {
-        projects: this.application.projects.getAll(),
+        projects: this.application.projects.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('name'))]),
         itemTypes: this.application.itemTypes.getAll('issue'),
         itemStates: this.application.itemStates.getAll('issue'),
         users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]),

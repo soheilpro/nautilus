@@ -34,7 +34,7 @@ export class MilestoneFilterQueryBuilder extends React.PureComponent<IMilestoneF
 
   componentDidMount(): void {
     this.setState({
-      projects: this.application.projects.getAll(),
+      projects: this.application.projects.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('name'))]),
       itemStates: this.application.itemStates.getAll('milestone'),
       users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]),
     });

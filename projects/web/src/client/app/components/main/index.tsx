@@ -7,6 +7,7 @@ import { CommandController } from '../../framework/components/command-controller
 import { DialogController } from '../../framework/components/dialog-controller';
 import { ActiveItemController } from '../active-item-controller';
 import { UserController } from '../user-controller';
+import { ProjectController } from '../project-controller';
 import { IssueController } from '../issue-controller';
 import { MilestoneController } from '../milestone-controller';
 import { NotificationController } from '../../framework/components/notification-controller';
@@ -15,7 +16,8 @@ import { WindowController } from '../../framework/components/window-controller';
 import { IssuesPage } from '../issues-page';
 import { MilestonesPage } from '../milestones-page';
 import { UsersPage } from '../users-page';
-import { RefreshCommand, GoToIssuesCommand, GoToMilestonesCommand, GoToUsersCommand } from './commands';
+import { ProjectsPage } from '../projects-page';
+import { RefreshCommand, GoToIssuesCommand, GoToMilestonesCommand, GoToUsersCommand, GoToProjectsCommand } from './commands';
 
 interface IMainProps {
 }
@@ -43,6 +45,7 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
       new GoToIssuesCommand(history),
       new GoToMilestonesCommand(history),
       new GoToUsersCommand(history),
+      new GoToProjectsCommand(history),
     ];
   }
 
@@ -56,6 +59,7 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
         <SearchController />
         <ActiveItemController />
         <UserController />
+        <ProjectController />
         <IssueController />
         <MilestoneController />
         <BrowserRouter ref={e => this.browserRouterRef = e}>
@@ -63,6 +67,7 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
             <Route path="/" exact component={IssuesPage as any} />
             <Route path="/milestones" component={MilestonesPage as any} />
             <Route path="/users" component={UsersPage as any} />
+            <Route path="/projects" component={ProjectsPage as any} />
           </div>
         </BrowserRouter>
       </div>
