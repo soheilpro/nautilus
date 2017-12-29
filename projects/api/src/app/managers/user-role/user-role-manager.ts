@@ -1,6 +1,6 @@
 import { IUserRole, IUserRoleChange, IUserRoleManager, IUserRoleRepository } from '../../framework/user-role';
 import { IValidationError } from '../../framework';
-import ManagerBase from '../manager-base';
+import { ManagerBase } from '../manager-base';
 
 const NameRegEx = /.+/;
 

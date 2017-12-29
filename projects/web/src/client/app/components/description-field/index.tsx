@@ -3,14 +3,14 @@ import * as React from 'react';
 require('../../assets/stylesheets/base.less');
 require('./index.less');
 
-interface IIssueDescriptionFieldProps {
+interface IDescriptionFieldProps {
   description: string;
 }
 
-interface IIssueDescriptionFieldState {
+interface IDescriptionFieldState {
 }
 
-export default class IssueDescriptionField extends React.PureComponent<IIssueDescriptionFieldProps, IIssueDescriptionFieldState> {
+export class DescriptionField extends React.PureComponent<IDescriptionFieldProps, IDescriptionFieldState> {
   render(): JSX.Element {
     return (
       <span className="description-field-component">

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Window, { WindowHeader, WindowContent, WindowActionBar } from '../window';
-import Button from '../button';
-import Input from '../input';
+import { Window, WindowHeader, WindowContent, WindowActionBar } from '../window';
+import { Button } from '../button';
+import { Input } from '../input';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -19,7 +19,7 @@ interface IPromptWindowState {
   inputText?: string;
 }
 
-export default class PromptWindow extends React.PureComponent<IPromptWindowProps, IPromptWindowState> {
+export class PromptWindow extends React.PureComponent<IPromptWindowProps, IPromptWindowState> {
   constructor() {
     super();
 

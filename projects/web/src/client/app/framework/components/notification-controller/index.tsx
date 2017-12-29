@@ -18,7 +18,7 @@ interface INotificationControllerState {
   notifications?: IExtendedNotification[];
 }
 
-export default class NotificationController extends React.PureComponent<INotificationControllerProps, INotificationControllerState> implements INotificationController {
+export class NotificationController extends React.PureComponent<INotificationControllerProps, INotificationControllerState> implements INotificationController {
   private notificationKeyCounter = 0;
 
   private get commandController(): ICommandController {

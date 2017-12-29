@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import Icon from '../../framework/components/icon';
+import { Icon } from '../../framework/components/icon';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -13,7 +13,7 @@ interface IItemPriorityIndicatorProps {
 interface IItemPriorityIndicatorState {
 }
 
-export default class ItemPriorityIndicator extends React.PureComponent<IItemPriorityIndicatorProps, IItemPriorityIndicatorState> {
+export class ItemPriorityIndicator extends React.PureComponent<IItemPriorityIndicatorProps, IItemPriorityIndicatorState> {
   render(): JSX.Element {
     if (!this.props.itemPriority)
       return null;

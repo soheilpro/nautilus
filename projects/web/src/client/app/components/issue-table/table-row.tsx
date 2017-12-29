@@ -2,14 +2,14 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { IIssue } from '../../application';
 import { ITableRow } from '../../framework/components/table';
-import ItemPriorityIndicator from '../item-priority-indicator';
-import ItemStateField from '../item-state-field';
-import ItemTypeField from '../item-type-field';
-import MilestoneField from '../milestone-field';
-import ProjectField from '../project-field';
-import SidField from '../sid-field';
-import TitleField from '../title-field';
-import UserField from '../user-field';
+import { ItemPriorityIndicator } from '../item-priority-indicator';
+import { ItemStateField } from '../item-state-field';
+import { ItemTypeField } from '../item-type-field';
+import { MilestoneField } from '../milestone-field';
+import { ProjectField } from '../project-field';
+import { SidField } from '../sid-field';
+import { TitleField } from '../title-field';
+import { UserField } from '../user-field';
 
 require('../../assets/stylesheets/base.less');
 require('./table-row.less');
@@ -25,7 +25,7 @@ interface ITableRowProps {
 interface ITableRowState {
 }
 
-export default class TableRow extends React.PureComponent<ITableRowProps, ITableRowState> implements ITableRow {
+export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState> implements ITableRow {
   private static stateToStatus: { [key: string]: string } = {
     'todo': 'pending',
     'doing': 'inprogress',

@@ -9,7 +9,7 @@ import { IWindowController } from '../../framework/windows';
 import { NewUserCommand } from './commands';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { IItemControllerManager } from '../../framework/items';
-import AddEditUserWindow from '../add-edit-user-window';
+import { AddEditUserWindow } from '../add-edit-user-window';
 
 interface IUserControllerProps {
 }
@@ -17,7 +17,7 @@ interface IUserControllerProps {
 interface IUserControllerState {
 }
 
-export default class UserController extends React.PureComponent<IUserControllerProps, IUserControllerState> implements IUserController, ICommandProvider {
+export class UserController extends React.PureComponent<IUserControllerProps, IUserControllerState> implements IUserController, ICommandProvider {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
   private dialogController = ServiceManager.Instance.getService<IDialogController>('IDialogController');

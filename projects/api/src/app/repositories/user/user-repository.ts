@@ -2,7 +2,7 @@ import { IFilter } from '../../framework';
 import { IUser, IUserChange, IUserRepository, UserFilter, DuplicateUserFilter } from '../../framework/user';
 import { IDB, IUpdate } from '../../db';
 import { IUserDocument } from './iuser-document';
-import RepositoryBase from '../repository-base';
+import { RepositoryBase } from '../repository-base';
 
 export class UserRepository extends RepositoryBase<IUser, IUserChange, IUserDocument> implements IUserRepository {
   constructor(db: IDB) {

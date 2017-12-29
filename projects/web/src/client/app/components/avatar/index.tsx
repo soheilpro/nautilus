@@ -13,7 +13,7 @@ interface IAvatarProps {
 interface IAvatarState {
 }
 
-export default class Avatar extends React.PureComponent<IAvatarProps, IAvatarState> {
+export class Avatar extends React.PureComponent<IAvatarProps, IAvatarState> {
   public static defaultProps: IAvatarProps = {
     size: 50,
   };

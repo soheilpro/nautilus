@@ -3,9 +3,9 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { ICommand } from '../../commands';
 import { KeyCode } from '../../../framework/keyboard';
-import Window from '../window';
-import Input from '../input';
-import Shortcut from '../shortcut';
+import { Window } from '../window';
+import { Input } from '../input';
+import { Shortcut } from '../shortcut';
 
 require('../../assets/stylesheets/base.less');
 require ('./index.less');
@@ -21,7 +21,7 @@ interface ICommandPaletteWindowState {
   searchText?: string;
 }
 
-export default class CommandPaletteWindow extends React.PureComponent<ICommandPaletteWindowProps, ICommandPaletteWindowState> {
+export class CommandPaletteWindow extends React.PureComponent<ICommandPaletteWindowProps, ICommandPaletteWindowState> {
   constructor(props: ICommandPaletteWindowProps) {
     super(props);
 

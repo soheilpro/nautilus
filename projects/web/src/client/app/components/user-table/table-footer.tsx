@@ -11,7 +11,7 @@ interface ITableFooterProps {
 interface ITableFooterState {
 }
 
-export default class TableFooter extends React.PureComponent<ITableFooterProps, ITableFooterState> {
+export class TableFooter extends React.PureComponent<ITableFooterProps, ITableFooterState> {
   render(): JSX.Element {
     return (
       <tr className="table-footer-component table-row">

@@ -11,7 +11,7 @@ import { IWindowController } from '../../framework/windows';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, UpdateIssueCommand } from './commands';
 import { IItemControllerManager } from '../../framework/items';
-import AddEditIssueWindow from '../add-edit-issue-window';
+import { AddEditIssueWindow } from '../add-edit-issue-window';
 
 interface IIssueControllerProps {
 }
@@ -19,7 +19,7 @@ interface IIssueControllerProps {
 interface IIssueControllerState {
 }
 
-export default class IssueController extends React.PureComponent<IIssueControllerProps, IIssueControllerState> implements IIssueController, ICommandProvider  {
+export class IssueController extends React.PureComponent<IIssueControllerProps, IIssueControllerState> implements IIssueController, ICommandProvider  {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private actionManager = ServiceManager.Instance.getService<IActionManager>('IActionManager');
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');

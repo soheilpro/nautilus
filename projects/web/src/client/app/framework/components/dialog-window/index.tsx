@@ -1,8 +1,8 @@
 import * as _ from 'underscore';
 import * as React from 'react';
 import { IDialog, IDialogButton } from '../../dialog';
-import Window, { WindowHeader, WindowContent, WindowActionBar } from '../window';
-import Button, { ButtonType } from '../button';
+import { Window, WindowHeader, WindowContent, WindowActionBar } from '../window';
+import { Button, ButtonType } from '../button';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -15,7 +15,7 @@ interface IDialogWindowProps {
 interface IDialogWindowState {
 }
 
-export default class DialogWindow extends React.PureComponent<IDialogWindowProps, IDialogWindowState> {
+export class DialogWindow extends React.PureComponent<IDialogWindowProps, IDialogWindowState> {
   private getButtonType(button: IDialogButton): ButtonType {
     if (button.type === 'default')
       return 'primary';

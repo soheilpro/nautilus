@@ -19,7 +19,7 @@ interface IInputProps {
 interface IInputState {
 }
 
-export default class Input extends React.PureComponent<IInputProps, IInputState> {
+export class Input extends React.PureComponent<IInputProps, IInputState> {
   static defaultProps = {
     value: '',
     style: 'default',

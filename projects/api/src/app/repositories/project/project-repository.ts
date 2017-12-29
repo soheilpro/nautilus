@@ -2,7 +2,7 @@ import { IFilter } from '../../framework';
 import { IProject, IProjectChange, IProjectRepository, DuplicateProjectFilter } from '../../framework/project';
 import { IDB, IUpdate } from '../../db';
 import { IProjectDocument } from './iproject-document';
-import RepositoryBase from '../repository-base';
+import { RepositoryBase } from '../repository-base';
 
 export class ProjectRepository extends RepositoryBase<IProject, IProjectChange, IProjectDocument> implements IProjectRepository {
   constructor(db: IDB) {

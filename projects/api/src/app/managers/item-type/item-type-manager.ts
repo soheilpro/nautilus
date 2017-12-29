@@ -1,6 +1,6 @@
 import { IItemType, IItemTypeChange, IItemTypeManager, IItemTypeRepository, DuplicateItemTypeFilter } from '../../framework/item-type';
 import { IValidationError, IFilter } from '../../framework';
-import ManagerBase from '../manager-base';
+import { ManagerBase } from '../manager-base';
 
 const ItemKindRegEx = /.+/;
 const TitleRegEx = /.+/;

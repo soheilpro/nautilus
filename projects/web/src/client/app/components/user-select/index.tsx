@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { IUser } from '../../application';
-import Select from '../../framework/components/select';
+import { Select } from '../../framework/components/select';
 
 interface IUserSelectProps {
   users: IUser[];
@@ -13,7 +13,7 @@ interface IUserSelectProps {
 interface IUserSelectState {
 }
 
-export default class UserSelect extends React.PureComponent<IUserSelectProps, IUserSelectState> {
+export class UserSelect extends React.PureComponent<IUserSelectProps, IUserSelectState> {
   constructor() {
     super();
 

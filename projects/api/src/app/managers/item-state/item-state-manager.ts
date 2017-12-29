@@ -1,6 +1,6 @@
 import { IItemState, IItemStateChange, IItemStateManager, IItemStateRepository, DuplicateItemStateFilter } from '../../framework/item-state';
 import { IValidationError, IFilter } from '../../framework';
-import ManagerBase from '../manager-base';
+import { ManagerBase } from '../manager-base';
 
 const ItemKindRegEx = /.+/;
 const TitleRegEx = /.+/;

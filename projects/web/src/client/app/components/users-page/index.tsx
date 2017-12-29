@@ -2,13 +2,13 @@ import * as React from 'react';
 import * as NQL from '../../nql';
 import { IUser, entityComparer, IApplication } from '../../application';
 import { ServiceManager } from '../../services';
-import ArrayHelper from '../../utilities/array-helper';
-import UserViewSettings, { IView, View } from '../user-view-settings';
-import UserDetail from '../user-detail';
-import UserTable from '../user-table';
-import MasterPage from '../master-page';
-import CommandButton from '../../framework/components/command-button';
-import Icon from '../../framework/components/icon';
+import { ArrayHelper } from '../../utilities/array-helper';
+import { UserViewSettings, IView, View } from '../user-view-settings';
+import { UserDetail } from '../user-detail';
+import { UserTable } from '../user-table';
+import { MasterPage } from '../master-page';
+import { CommandButton } from '../../framework/components/command-button';
+import { Icon } from '../../framework/components/icon';
 import { ILocalStorage } from '../../framework/storage';
 import { IContextProvider, IContextManager, IContext } from '../../framework/context';
 import { UserType } from '../../modules/users';
@@ -25,7 +25,7 @@ interface IUsersPageState {
   view?: IView;
 }
 
-export default class UsersPage extends React.Component<IUsersPageProps, IUsersPageState> implements IContextProvider {
+export class UsersPage extends React.Component<IUsersPageProps, IUsersPageState> implements IContextProvider {
   private localStorage = ServiceManager.Instance.getService<ILocalStorage>('ILocalStorage');
   private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');

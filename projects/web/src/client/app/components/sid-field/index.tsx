@@ -12,7 +12,7 @@ interface ISidFieldProps {
 interface ISidFieldState {
 }
 
-export default class SidField extends React.PureComponent<ISidFieldProps, ISidFieldState> {
+export class SidField extends React.PureComponent<ISidFieldProps, ISidFieldState> {
   render(): JSX.Element {
     return (
       <span className={classNames('sid-field-component', { 'bold': this.props.bold })}>

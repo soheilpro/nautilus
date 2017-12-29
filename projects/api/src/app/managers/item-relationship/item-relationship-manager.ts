@@ -1,6 +1,6 @@
 import { IItemRelationship, IItemRelationshipChange, IItemRelationshipManager, IItemRelationshipRepository } from '../../framework/item-relationship';
 import { IValidationError } from '../../framework';
-import ManagerBase from '../manager-base';
+import { ManagerBase } from '../manager-base';
 
 const TypeRegEx = /.+/;
 

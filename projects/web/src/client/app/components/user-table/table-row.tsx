@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { IUser } from '../../application';
 import { ITableRow } from '../../framework/components/table';
-import NumberField from '../number-field';
-import TextField from '../text-field';
+import { NumberField } from '../number-field';
+import { TextField } from '../text-field';
 
 require('../../assets/stylesheets/base.less');
 require('./table-row.less');
@@ -19,7 +19,7 @@ interface ITableRowProps {
 interface ITableRowState {
 }
 
-export default class TableRow extends React.PureComponent<ITableRowProps, ITableRowState> implements ITableRow {
+export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState> implements ITableRow {
   private componentElement: HTMLElement;
 
   constructor() {

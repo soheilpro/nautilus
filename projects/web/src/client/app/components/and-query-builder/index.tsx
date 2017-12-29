@@ -2,7 +2,7 @@ import * as _ from 'underscore';
 import * as React from 'react';
 import * as classNames from 'classnames';
 import * as NQL from '../../nql';
-import Dropdown from '../../framework/components/dropdown';
+import { Dropdown } from '../../framework/components/dropdown';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -39,7 +39,7 @@ interface IAndQueryBuilderState {
   queries?: IQueryObject;
 }
 
-export default class AndQueryBuilder extends React.PureComponent<IAndQueryBuilderProps, IAndQueryBuilderState> {
+export class AndQueryBuilder extends React.PureComponent<IAndQueryBuilderProps, IAndQueryBuilderState> {
   private dropdownComponents: { [key: string]: Dropdown } = {};
 
   constructor(props: IAndQueryBuilderProps) {

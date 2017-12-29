@@ -2,7 +2,7 @@ import { IFilter } from '../../framework';
 import { IUserRole, IUserRoleChange, IUserRoleRepository, UserRoleFilter } from '../../framework/user-role';
 import { IDB, IUpdate } from '../../db';
 import { IUserRoleDocument } from './iuser-role-document';
-import RepositoryBase from '../repository-base';
+import { RepositoryBase } from '../repository-base';
 
 export class UserRoleRepository extends RepositoryBase<IUserRole, IUserRoleChange, IUserRoleDocument> implements IUserRoleRepository {
   constructor(db: IDB) {

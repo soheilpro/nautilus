@@ -13,7 +13,7 @@ interface IUserFieldProps {
 interface IUserFieldState {
 }
 
-export default class UserField extends React.PureComponent<IUserFieldProps, IUserFieldState> {
+export class UserField extends React.PureComponent<IUserFieldProps, IUserFieldState> {
   render(): JSX.Element {
     if (!this.props.user)
       return null;

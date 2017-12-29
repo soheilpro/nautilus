@@ -3,12 +3,12 @@ import * as React from 'react';
 import * as NQL from '../../nql';
 import { IProject, IItemType, IItemState, IUser, IMilestone, IApplication } from '../../application';
 import { ServiceManager } from '../../services';
-import AndQueryBuilder, { IQueryBuilder } from '../and-query-builder';
-import MilestoneQueryBuilder from '../milestone-query-builder';
-import ProjectQueryBuilder from '../project-query-builder';
-import ItemTypeQueryBuilder from '../item-type-query-builder';
-import ItemStateQueryBuilder from '../item-state-query-builder';
-import UserQueryBuilder from '../user-query-builder';
+import { AndQueryBuilder, IQueryBuilder } from '../and-query-builder';
+import { MilestoneQueryBuilder } from '../milestone-query-builder';
+import { ProjectQueryBuilder } from '../project-query-builder';
+import { ItemTypeQueryBuilder } from '../item-type-query-builder';
+import { ItemStateQueryBuilder } from '../item-state-query-builder';
+import { UserQueryBuilder } from '../user-query-builder';
 
 interface IIssueFilterQueryBuilderProps {
   query: NQL.IExpression;
@@ -23,7 +23,7 @@ interface IIssueFilterQueryBuilderState {
   milestones?: IMilestone[];
 }
 
-export default class IssueFilterQueryBuilder extends React.PureComponent<IIssueFilterQueryBuilderProps, IIssueFilterQueryBuilderState> {
+export class IssueFilterQueryBuilder extends React.PureComponent<IIssueFilterQueryBuilderProps, IIssueFilterQueryBuilderState> {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private andQueryBuilderComponent: AndQueryBuilder;
 

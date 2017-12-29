@@ -6,5 +6,5 @@ interface ITableHeaderProps {
 interface ITableHeaderState {
 }
 
-export default class TableHeader extends React.Component<ITableHeaderProps, ITableHeaderState> {
+export class TableHeader extends React.Component<ITableHeaderProps, ITableHeaderState> {
 }

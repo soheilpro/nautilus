@@ -2,7 +2,7 @@ import { IItem, IItemState, IProject, IUser, IEntityMeta } from '../../sdk';
 import { IApplication } from '../iapplication';
 import { IMilestone } from './imilestone';
 
-export default class Milestone implements IMilestone {
+export class Milestone implements IMilestone {
   constructor(private item: IItem, private application: IApplication) {
   }
 

@@ -1,6 +1,6 @@
 import { IProject, IProjectChange, IProjectManager, IProjectRepository, DuplicateProjectFilter } from '../../framework/project';
 import { IValidationError, IFilter } from '../../framework';
-import ManagerBase from '../manager-base';
+import { ManagerBase } from '../manager-base';
 
 const NameRegEx = /.+/;
 

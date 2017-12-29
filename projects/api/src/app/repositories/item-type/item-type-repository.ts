@@ -2,7 +2,7 @@ import { IFilter } from '../../framework';
 import { IItemType, IItemTypeChange, IItemTypeRepository, DuplicateItemTypeFilter } from '../../framework/item-type';
 import { IDB, IUpdate } from '../../db';
 import { IItemTypeDocument } from './iitem-type-document';
-import RepositoryBase from '../repository-base';
+import { RepositoryBase } from '../repository-base';
 
 export class ItemTypeRepository extends RepositoryBase<IItemType, IItemTypeChange, IItemTypeDocument> implements IItemTypeRepository {
   constructor(db: IDB) {

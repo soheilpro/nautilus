@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { IMilestone } from '../../application';
-import DescriptionField from '../description-field';
-import UserField from '../user-field';
-import DateTimeField from '../date-time-field';
+import { DescriptionField } from '../description-field';
+import { UserField } from '../user-field';
+import { DateTimeField } from '../date-time-field';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -14,7 +14,7 @@ interface IMilestoneDetailProps {
 interface IMilestoneDetailState {
 }
 
-export default class MilestoneDetail extends React.PureComponent<IMilestoneDetailProps, IMilestoneDetailState> {
+export class MilestoneDetail extends React.PureComponent<IMilestoneDetailProps, IMilestoneDetailState> {
   render(): JSX.Element {
     return (
       <div className="milestone-detail-component">

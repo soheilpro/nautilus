@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as NQL from '../../nql';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { ServiceManager } from '../../services';
-import Button from '../../framework/components/button';
-import UserFilterQueryBuilder from '../user-filter-query-builder';
-import Expression from '../expression';
+import { Button } from '../../framework/components/button';
+import { UserFilterQueryBuilder } from '../user-filter-query-builder';
+import { Expression } from '../expression';
 import { IView } from './iview';
 import { View } from './view';
 import { ResetViewCommand } from './commands';
@@ -21,7 +21,7 @@ interface IUserViewSettingsState {
   filterExpression?: NQL.IExpression;
 }
 
-export default class UserViewSettings extends React.PureComponent<IUserViewSettingsProps, IUserViewSettingsState> implements ICommandProvider {
+export class UserViewSettings extends React.PureComponent<IUserViewSettingsProps, IUserViewSettingsState> implements ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private queryBuilderComponent: UserFilterQueryBuilder;
 

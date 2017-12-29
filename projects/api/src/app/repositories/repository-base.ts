@@ -1,7 +1,7 @@
 import { IEntity, IFilter, IChange, IRepository, EntityFilter } from '../framework';
 import { IDB, IDocument, IUpdate, Update, ObjectId } from '../db';
 
-export default abstract class RepositoryBase<TEntity extends IEntity, TChange extends IChange, TDocument extends IDocument> implements IRepository<TEntity, TChange> {
+export abstract class RepositoryBase<TEntity extends IEntity, TChange extends IChange, TDocument extends IDocument> implements IRepository<TEntity, TChange> {
   constructor(private db: IDB) {
     this.collectionName = this.collectionName.bind(this);
     this.filterToQuery = this.filterToQuery.bind(this);

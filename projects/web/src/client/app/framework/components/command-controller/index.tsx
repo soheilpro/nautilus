@@ -4,7 +4,7 @@ import { ICommandProvider, ICommand, ICommandController, ICommandManager } from 
 import { IWindow, IWindowController } from '../../windows';
 import { KeyCombination, isInputEvent } from '../../../framework/keyboard';
 import { ServiceManager } from '../../../services';
-import CommandPaletteWindow from '../command-palette-window';
+import { CommandPaletteWindow } from '../command-palette-window';
 import { ShowCommandPaletteCommand } from './commands';
 
 interface ICommandControllerProps {
@@ -13,7 +13,7 @@ interface ICommandControllerProps {
 interface ICommandControllerState {
 }
 
-export default class CommandController extends React.PureComponent<ICommandControllerProps, ICommandControllerState> implements ICommandController, ICommandProvider {
+export class CommandController extends React.PureComponent<ICommandControllerProps, ICommandControllerState> implements ICommandController, ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
   private commandShortcutsDisabledCounter: number = 0;

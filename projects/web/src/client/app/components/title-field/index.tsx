@@ -4,15 +4,15 @@ import * as classNames from 'classnames';
 require('../../assets/stylesheets/base.less');
 require('./index.less');
 
-interface IIssueTitleFieldProps {
+interface ITitleFieldProps {
   title: string;
   status?: string;
 }
 
-interface IIssueTitleFieldState {
+interface ITitleFieldState {
 }
 
-export default class IssueTitleField extends React.PureComponent<IIssueTitleFieldProps, IIssueTitleFieldState> {
+export class TitleField extends React.PureComponent<ITitleFieldProps, ITitleFieldState> {
   render(): JSX.Element {
     return (
       <span className={classNames('title-field-component', this.props.status ? `status-${this.props.status}` : null)}>

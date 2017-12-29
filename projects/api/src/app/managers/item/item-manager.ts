@@ -1,6 +1,6 @@
 import { IItem, IItemChange, IItemManager, IItemRepository } from '../../framework/item';
 import { IValidationError } from '../../framework';
-import ManagerBase from '../manager-base';
+import { ManagerBase } from '../manager-base';
 
 const KindRegEx = /.+/;
 

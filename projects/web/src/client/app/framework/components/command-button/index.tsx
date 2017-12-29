@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ServiceManager } from '../../../services';
-import Button from '../button';
+import { Button } from '../button';
 import { ICommandManager } from '../../commands';
 
 interface ICommandButtonProps {
@@ -15,7 +15,7 @@ interface ICommandButtonProps {
 interface ICommandButtonState {
 }
 
-export default class CommandButton extends React.PureComponent<ICommandButtonProps, ICommandButtonState> {
+export class CommandButton extends React.PureComponent<ICommandButtonProps, ICommandButtonState> {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
 
   constructor() {

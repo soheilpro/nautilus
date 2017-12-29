@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { IIssue } from '../../application';
-import DescriptionField from '../description-field';
-import UserField from '../user-field';
-import DateTimeField from '../date-time-field';
+import { DescriptionField } from '../description-field';
+import { UserField } from '../user-field';
+import { DateTimeField } from '../date-time-field';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -14,7 +14,7 @@ interface IIssueDetailProps {
 interface IIssueDetailState {
 }
 
-export default class IssueDetail extends React.PureComponent<IIssueDetailProps, IIssueDetailState> {
+export class IssueDetail extends React.PureComponent<IIssueDetailProps, IIssueDetailState> {
   render(): JSX.Element {
     return (
       <div className="issue-detail-component">

@@ -3,7 +3,7 @@ import { IApplication } from '../iapplication';
 import { IIssue } from './iissue';
 import { IMilestone } from './imilestone';
 
-export default class Issue implements IIssue {
+export class Issue implements IIssue {
   constructor(private item: IItem, private application: IApplication) {
   }
 

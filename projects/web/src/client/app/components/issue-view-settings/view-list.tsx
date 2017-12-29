@@ -2,8 +2,8 @@ import * as _ from 'underscore';
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { KeyCode } from '../../framework/keyboard';
-import Input from '../../framework/components/input';
-import Icon from '../../framework/components/icon';
+import { Input } from '../../framework/components/input';
+import { Icon } from '../../framework/components/icon';
 import { IView } from './iview';
 
 require('../../assets/stylesheets/base.less');
@@ -21,7 +21,7 @@ interface IViewListState {
   searchText?: string;
 }
 
-export default class ViewList extends React.PureComponent<IViewListProps, IViewListState> {
+export class ViewList extends React.PureComponent<IViewListProps, IViewListState> {
   constructor(props: IViewListProps) {
     super(props);
 

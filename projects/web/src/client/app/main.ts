@@ -8,7 +8,7 @@ import { CommandManager } from './framework/commands';
 import { ItemControllerManager } from './framework/items';
 import { ServiceManager } from './services';
 import { ILocalStorage, LocalStorage, SessionStorage } from './framework/storage';
-import App from './components/app';
+import { App } from './components/app';
 
 declare var config: {
   api: {

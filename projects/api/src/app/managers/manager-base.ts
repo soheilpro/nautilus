@@ -1,6 +1,6 @@
 import { IEntity, IFilter, IChange, IManager, IValidationError, IRepository, DuplicateEntityError } from '../framework';
 
-export default abstract class ManagerBase<TEntity extends IEntity, TChange extends IChange> implements IManager<TEntity, TChange> {
+export abstract class ManagerBase<TEntity extends IEntity, TChange extends IChange> implements IManager<TEntity, TChange> {
   constructor(protected repository: IRepository<TEntity, TChange>) {
   }
 

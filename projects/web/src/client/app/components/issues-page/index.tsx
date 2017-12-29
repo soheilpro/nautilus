@@ -3,13 +3,13 @@ import * as _ from 'underscore';
 import { IIssue, entityComparer, IApplication } from '../../application';
 import * as NQL from '../../nql';
 import { ServiceManager } from '../../services';
-import ArrayHelper from '../../utilities/array-helper';
-import CommandButton from '../../framework/components/command-button';
-import Icon from '../../framework/components/icon';
-import IssueDetail from '../issue-detail';
-import IssueTable from '../issue-table';
-import IssueViewSettings, { IView, View } from '../issue-view-settings';
-import MasterPage from '../master-page';
+import { ArrayHelper } from '../../utilities/array-helper';
+import { CommandButton } from '../../framework/components/command-button';
+import { Icon } from '../../framework/components/icon';
+import { IssueDetail } from '../issue-detail';
+import { IssueTable } from '../issue-table';
+import { IssueViewSettings, IView, View } from '../issue-view-settings';
+import { MasterPage } from '../master-page';
 import { ILocalStorage } from '../../framework/storage';
 import { IRoamingStorage } from '../../modules/storage';
 import { IContextProvider, IContextManager, IContext } from '../../framework/context';
@@ -28,7 +28,7 @@ interface IIssuesPageState {
   savedViews?: IView[];
 }
 
-export default class IssuesPage extends React.Component<IIssuesPageProps, IIssuesPageState> implements IContextProvider {
+export class IssuesPage extends React.Component<IIssuesPageProps, IIssuesPageState> implements IContextProvider {
   private localStorage = ServiceManager.Instance.getService<ILocalStorage>('ILocalStorage');
   private roamingStorage = ServiceManager.Instance.getService<IRoamingStorage>('IRoamingStorage');
   private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');

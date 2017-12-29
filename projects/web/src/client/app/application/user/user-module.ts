@@ -1,10 +1,10 @@
 import * as NQL from '../../nql';
 import { IClient, IUser, IUserChange } from '../../sdk';
 import { IApplication } from '../iapplication';
-import ArrayHelper from '../../utilities/array-helper';
+import { ArrayHelper } from '../../utilities/array-helper';
 import { BaseModule } from '../base-module';
 import { IUserModule } from './iuser-module';
-import UserExpressionNormalizer from './user-expression-normalizer';
+import { UserExpressionNormalizer } from './user-expression-normalizer';
 
 export class UserModule extends BaseModule implements IUserModule {
   private users: IUser[];

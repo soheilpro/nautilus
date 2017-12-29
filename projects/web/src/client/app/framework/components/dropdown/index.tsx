@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as classNames from 'classnames';
 import { KeyCode } from '../../../framework/keyboard';
-import Icon from '../icon';
-import Window, { WindowContainer } from '../window';
+import { Icon } from '../icon';
+import { Window, WindowContainer } from '../window';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -19,7 +19,7 @@ interface IDropdownState {
   isOpen?: boolean;
 }
 
-export default class Dropdown extends React.PureComponent<IDropdownProps, IDropdownState> {
+export class Dropdown extends React.PureComponent<IDropdownProps, IDropdownState> {
   private componentElement: HTMLElement;
   private buttonElement: HTMLElement;
   private windowContainerComponent: WindowContainer;

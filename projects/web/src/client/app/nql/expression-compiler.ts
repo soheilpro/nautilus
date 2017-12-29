@@ -10,7 +10,7 @@ import { LocalExpression } from './expressions/local';
 import { MethodCallExpression } from './expressions/method-call';
 import { OrExpression } from './expressions/or';
 import { PropertyExpression } from './expressions/property';
-import TypeSystem from './type-system';
+import { TypeSystem } from './type-system';
 
 interface IContext {
 }

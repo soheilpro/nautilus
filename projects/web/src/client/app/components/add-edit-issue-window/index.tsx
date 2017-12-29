@@ -2,14 +2,14 @@ import * as React from 'react';
 import * as NQL from '../../nql';
 import { IProject, IItemState, IItemType, IIssue, IIssueChange, IMilestone, IUser, entityComparer, IApplication } from '../../application';
 import { ServiceManager } from '../../services';
-import Window, { WindowHeader, WindowContent, WindowActionBar } from '../../framework/components/window';
-import Input from '../../framework/components/input';
-import ProjectSelect from '../project-select';
-import ItemTypeSelect from '../item-type-select';
-import ItemStateSelect from '../item-state-select';
-import MilestoneSelect from '../milestone-select';
-import UserSelect from '../user-select';
-import Button from '../../framework/components/button';
+import { Window, WindowHeader, WindowContent, WindowActionBar } from '../../framework/components/window';
+import { Input } from '../../framework/components/input';
+import { ProjectSelect } from '../project-select';
+import { ItemTypeSelect } from '../item-type-select';
+import { ItemStateSelect } from '../item-state-select';
+import { MilestoneSelect } from '../milestone-select';
+import { UserSelect } from '../user-select';
+import { Button } from '../../framework/components/button';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -38,7 +38,7 @@ interface IAddEditIssueWindowState {
   milestone?: IMilestone;
 }
 
-export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssueWindowProps, IAddEditIssueWindowState> {
+export class AddEditIssueWindow extends React.PureComponent<IAddEditIssueWindowProps, IAddEditIssueWindowState> {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
 
   constructor(props: IAddEditIssueWindowProps) {

@@ -1,7 +1,7 @@
 import * as NQL from '../../nql';
 import { IApplication } from '../../application';
 
-export default class HTMLExpressionFormatter extends NQL.ExpressionVisitor<string, {}> {
+export class HTMLExpressionFormatter extends NQL.ExpressionVisitor<string, {}> {
   constructor(private application: IApplication) {
     super();
   }

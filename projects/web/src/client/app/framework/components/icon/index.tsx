@@ -14,7 +14,7 @@ interface IIconProps {
 interface IIconState {
 }
 
-export default class Icon extends React.PureComponent<IIconProps, IIconState> {
+export class Icon extends React.PureComponent<IIconProps, IIconState> {
   render(): JSX.Element {
     return (
       <i className={classNames('icon-component fa', 'fa-' + this.props.name, this.props.position, this.props.className)} aria-hidden="true"></i>

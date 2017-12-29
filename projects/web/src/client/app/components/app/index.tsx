@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ServiceManager } from '../../services';
-import Login from '../login';
-import Main from '../main';
-import Splash from '../splash';
+import { Login } from '../login';
+import { Main } from '../main';
+import { Splash } from '../splash';
 import { IApplication, ISession } from '../../application';
 import { ILocalStorage } from '../../framework/storage';
 
@@ -12,7 +12,7 @@ interface IAppProps {
 interface IAppState {
 }
 
-export default class App extends React.PureComponent<IAppProps, IAppState> {
+export class App extends React.PureComponent<IAppProps, IAppState> {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private localStorage = ServiceManager.Instance.getService<ILocalStorage>('ILocalStorage');
 

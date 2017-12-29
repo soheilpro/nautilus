@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as NQL from '../../nql';
 import { IProject, asEntity, entityComparer } from '../../application';
-import ListQueryBuilder from '../list-query-builder';
+import { ListQueryBuilder } from '../list-query-builder';
 
 interface IProjectQueryBuilderProps {
   projects: IProject[];
@@ -13,7 +13,7 @@ interface IProjectQueryBuilderProps {
 interface IProjectQueryBuilderState {
 }
 
-export default class ProjectQueryBuilder extends React.PureComponent<IProjectQueryBuilderProps, IProjectQueryBuilderState> {
+export class ProjectQueryBuilder extends React.PureComponent<IProjectQueryBuilderProps, IProjectQueryBuilderState> {
   static canParseQuery(query: NQL.IExpression, queryItem: string): boolean {
     return ListQueryBuilder.canParseQuery(query, queryItem, 'Project');
   }

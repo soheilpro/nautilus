@@ -9,7 +9,7 @@ interface IItemControllerProps {
 interface IItemControllerState {
 }
 
-export default class ItemController extends React.PureComponent<IItemControllerProps, IItemControllerState> implements ICommandProvider {
+export class ItemController extends React.PureComponent<IItemControllerProps, IItemControllerState> implements ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
 
   constructor() {

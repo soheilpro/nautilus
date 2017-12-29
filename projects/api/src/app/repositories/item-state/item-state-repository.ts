@@ -2,7 +2,7 @@ import { IFilter } from '../../framework';
 import { IItemState, IItemStateChange, IItemStateRepository, DuplicateItemStateFilter } from '../../framework/item-state';
 import { IDB, IUpdate } from '../../db';
 import { IItemStateDocument } from './iitem-state-document';
-import RepositoryBase from '../repository-base';
+import { RepositoryBase } from '../repository-base';
 
 export class ItemStateRepository extends RepositoryBase<IItemState, IItemStateChange, IItemStateDocument> implements IItemStateRepository {
   constructor(db: IDB) {

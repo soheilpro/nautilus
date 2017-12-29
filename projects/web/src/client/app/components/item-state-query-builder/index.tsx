@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as NQL from '../../nql';
 import { IItemState, asEntity, entityComparer } from '../../application';
-import ListQueryBuilder from '../list-query-builder';
+import { ListQueryBuilder } from '../list-query-builder';
 
 interface IItemStateQueryBuilderProps {
   itemStates: IItemState[];
@@ -13,7 +13,7 @@ interface IItemStateQueryBuilderProps {
 interface IItemStateQueryBuilderState {
 }
 
-export default class ItemStateQueryBuilder extends React.PureComponent<IItemStateQueryBuilderProps, IItemStateQueryBuilderState> {
+export class ItemStateQueryBuilder extends React.PureComponent<IItemStateQueryBuilderProps, IItemStateQueryBuilderState> {
   static canParseQuery(query: NQL.IExpression, queryItem: string): boolean {
     return ListQueryBuilder.canParseQuery(query, queryItem, 'ItemState');
   }

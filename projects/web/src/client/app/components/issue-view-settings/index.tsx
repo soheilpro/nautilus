@@ -4,12 +4,12 @@ import * as NQL from '../../nql';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { ServiceManager } from '../../services';
 import { IWindow, IWindowController } from '../../framework/windows';
-import Button from '../../framework/components/button';
-import Dropdown from '../../framework/components/dropdown';
-import PromptWindow from '../../framework/components/prompt-window';
-import IssueFilterQueryBuilder from '../issue-filter-query-builder';
-import Expression from '../expression';
-import ViewList from './view-list';
+import { Button } from '../../framework/components/button';
+import { Dropdown } from '../../framework/components/dropdown';
+import { PromptWindow } from '../../framework/components/prompt-window';
+import { IssueFilterQueryBuilder } from '../issue-filter-query-builder';
+import { Expression } from '../expression';
+import { ViewList } from './view-list';
 import { IView } from './iview';
 import { View } from './view';
 import { FilterIssuesByMilestoneCommand, FilterIssuesByProjectCommand, FilterIssuesByTypeCommand, FilterIssuesByStateCommand, FilterIssuesByAssignedToCommand, FilterIssuesByCreatedByCommand, ResetViewCommand, SaveViewCommand, LoadViewCommand } from './commands';
@@ -29,7 +29,7 @@ interface IIssueViewSettingsState {
   savedViews?: IView[];
 }
 
-export default class IssueViewSettings extends React.PureComponent<IIssueViewSettingsProps, IIssueViewSettingsState> implements ICommandProvider {
+export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsProps, IIssueViewSettingsState> implements ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
   private queryBuilderComponent: IssueFilterQueryBuilder;

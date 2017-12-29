@@ -11,7 +11,7 @@ interface IUserDetailProps {
 interface IUserDetailState {
 }
 
-export default class UserDetail extends React.PureComponent<IUserDetailProps, IUserDetailState> {
+export class UserDetail extends React.PureComponent<IUserDetailProps, IUserDetailState> {
   render(): JSX.Element {
     return (
       <div className="user-detail-component">

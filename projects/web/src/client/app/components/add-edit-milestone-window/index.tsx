@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { IProject, IItemState, IMilestone, IMilestoneChange, IApplication } from '../../application';
 import { ServiceManager } from '../../services';
-import Window, { WindowHeader, WindowContent, WindowActionBar } from '../../framework/components/window';
-import Input from '../../framework/components/input';
-import ProjectSelect from '../project-select';
-import ItemStateSelect from '../item-state-select';
-import Button from '../../framework/components/button';
+import { Window, WindowHeader, WindowContent, WindowActionBar } from '../../framework/components/window';
+import { Input } from '../../framework/components/input';
+import { ProjectSelect } from '../project-select';
+import { ItemStateSelect } from '../item-state-select';
+import { Button } from '../../framework/components/button';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -27,7 +27,7 @@ interface IAddEditMilestoneWindowState {
   state?: IItemState;
 }
 
-export default class AddEditMilestoneWindow extends React.PureComponent<IAddEditMilestoneWindowProps, IAddEditMilestoneWindowState> {
+export class AddEditMilestoneWindow extends React.PureComponent<IAddEditMilestoneWindowProps, IAddEditMilestoneWindowState> {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
 
   constructor(props: IAddEditMilestoneWindowProps) {

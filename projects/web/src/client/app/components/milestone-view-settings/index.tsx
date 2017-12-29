@@ -3,9 +3,9 @@ import * as React from 'react';
 import * as NQL from '../../nql';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { ServiceManager } from '../../services';
-import Button from '../../framework/components/button';
-import MilestoneFilterQueryBuilder from '../milestone-filter-query-builder';
-import Expression from '../expression';
+import { Button } from '../../framework/components/button';
+import { MilestoneFilterQueryBuilder } from '../milestone-filter-query-builder';
+import { Expression } from '../expression';
 import { IView } from './iview';
 import { View } from './view';
 import { FilterMilestonesByProjectCommand, FilterMilestonesByStateCommand, FilterMilestonesByCreatedByCommand, ResetViewCommand } from './commands';
@@ -22,7 +22,7 @@ interface IMilestoneViewSettingsState {
   filterExpression?: NQL.IExpression;
 }
 
-export default class MilestoneViewSettings extends React.PureComponent<IMilestoneViewSettingsProps, IMilestoneViewSettingsState> implements ICommandProvider {
+export class MilestoneViewSettings extends React.PureComponent<IMilestoneViewSettingsProps, IMilestoneViewSettingsState> implements ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private queryBuilderComponent: MilestoneFilterQueryBuilder;
 

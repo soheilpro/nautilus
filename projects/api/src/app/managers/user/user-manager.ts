@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcryptjs';
 import { IUser, IUserChange, IUserManager, IUserRepository, DuplicateUserFilter } from '../../framework/user';
 import { IValidationError, IFilter } from '../../framework';
-import ManagerBase from '../manager-base';
+import { ManagerBase } from '../manager-base';
 
 const UsernameRegEx = /[a-zA-Z][a-zA-Z0-9.]{1,}/;
 const PasswordRegEx = /\w{8,}/;

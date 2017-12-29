@@ -3,8 +3,8 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import * as NQL from '../../nql';
 import { KeyCode } from '../../framework/keyboard';
-import Input from '../../framework/components/input';
-import Icon from '../../framework/components/icon';
+import { Input } from '../../framework/components/input';
+import { Icon } from '../../framework/components/icon';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -33,7 +33,7 @@ interface IListQueryBuilderState {
   excludedItems?: IItem[];
 }
 
-export default class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps, IListQueryBuilderState> {
+export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps, IListQueryBuilderState> {
   constructor(props: IListQueryBuilderProps) {
     super(props);
 

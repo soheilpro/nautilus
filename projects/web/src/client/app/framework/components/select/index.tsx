@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import Dropdown from '../dropdown';
-import ItemList from './item-list';
+import { Dropdown } from '../dropdown';
+import { ItemList } from './item-list';
 import { ISelectItem } from './iselect-item';
 
 require('../../assets/stylesheets/base.less');
@@ -20,7 +20,7 @@ interface ISelectState {
   selectedItem: ISelectItem;
 }
 
-export default class Select extends React.PureComponent<ISelectProps, ISelectState> {
+export class Select extends React.PureComponent<ISelectProps, ISelectState> {
   private dropdownComponent: Dropdown;
 
   constructor(props: ISelectProps) {

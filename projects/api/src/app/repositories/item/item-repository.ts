@@ -1,7 +1,7 @@
 import { IItem, IItemChange, IItemRepository } from '../../framework/item';
 import { IDB, IUpdate } from '../../db';
 import { IItemDocument } from './iitem-document';
-import RepositoryBase from '../repository-base';
+import { RepositoryBase } from '../repository-base';
 
 export class ItemRepository extends RepositoryBase<IItem, IItemChange, IItemDocument> implements IItemRepository {
   constructor(db: IDB) {

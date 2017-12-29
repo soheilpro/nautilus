@@ -2,10 +2,10 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { IMilestone } from '../../application';
 import { ServiceManager } from '../../services';
-import Table from '../../framework/components/table';
-import TableHeader from './table-header';
-import TableRow from './table-row';
-import TableFooter from './table-footer';
+import { Table } from '../../framework/components/table';
+import { TableHeader } from './table-header';
+import { TableRow } from './table-row';
+import { TableFooter } from './table-footer';
 import { IMilestoneController } from '../../modules/milestones';
 
 interface IMilestoneTableProps {
@@ -19,7 +19,7 @@ interface IMilestoneTableState {
   selectedMilestone?: IMilestone;
 }
 
-export default class MilestoneTable extends React.PureComponent<IMilestoneTableProps, IMilestoneTableState> {
+export class MilestoneTable extends React.PureComponent<IMilestoneTableProps, IMilestoneTableState> {
   private milestoneController = ServiceManager.Instance.getService<IMilestoneController>('IMilestoneController');
 
   constructor(props: IMilestoneTableProps) {

@@ -3,18 +3,18 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { History } from 'history';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { ServiceManager } from '../../services';
-import CommandController from '../../framework/components/command-controller';
-import DialogController from '../../framework/components/dialog-controller';
-import ItemController from '../active-item-controller';
-import UserController from '../user-controller';
-import IssueController from '../issue-controller';
-import MilestoneController from '../milestone-controller';
-import NotificationController from '../../framework/components/notification-controller';
-import SearchController from '../search-controller';
-import WindowController from '../../framework/components/window-controller';
-import IssuesPage from '../issues-page';
-import MilestonesPage from '../milestones-page';
-import UsersPage from '../users-page';
+import { CommandController } from '../../framework/components/command-controller';
+import { DialogController } from '../../framework/components/dialog-controller';
+import { ItemController } from '../active-item-controller';
+import { UserController } from '../user-controller';
+import { IssueController } from '../issue-controller';
+import { MilestoneController } from '../milestone-controller';
+import { NotificationController } from '../../framework/components/notification-controller';
+import { SearchController } from '../search-controller';
+import { WindowController } from '../../framework/components/window-controller';
+import { IssuesPage } from '../issues-page';
+import { MilestonesPage } from '../milestones-page';
+import { UsersPage } from '../users-page';
 import { RefreshCommand, GoToIssuesCommand, GoToMilestonesCommand, GoToUsersCommand } from './commands';
 
 interface IMainProps {
@@ -23,7 +23,7 @@ interface IMainProps {
 interface IMainState {
 }
 
-export default class Main extends React.PureComponent<IMainProps, IMainState> implements ICommandProvider {
+export class Main extends React.PureComponent<IMainProps, IMainState> implements ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private browserRouterComponent: BrowserRouter;
 

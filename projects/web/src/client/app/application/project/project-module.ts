@@ -1,7 +1,7 @@
 import * as _ from 'underscore';
 import { IClient, IProject } from '../../sdk';
 import { IApplication } from '../iapplication';
-import ArrayHelper from '../../utilities/array-helper';
+import { ArrayHelper } from '../../utilities/array-helper';
 import { BaseModule } from '../base-module';
 import { IProjectModule } from './iproject-module';
 

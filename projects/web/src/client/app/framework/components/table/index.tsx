@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { KeyCode } from '../../../framework/keyboard';
 import { IItem } from './iitem';
-import TableHeader from './table-header';
-import TableRow from './table-row';
-import TableFooter from './table-footer';
+import { TableHeader } from './table-header';
+import { TableRow } from './table-row';
+import { TableFooter } from './table-footer';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -32,7 +32,7 @@ interface ITableState {
   selectedItem?: IItem;
 }
 
-export default class Table extends React.PureComponent<ITableProps, ITableState> {
+export class Table extends React.PureComponent<ITableProps, ITableState> {
   private componentElement: HTMLElement;
   private selectedChunkComponent: Chunk;
 

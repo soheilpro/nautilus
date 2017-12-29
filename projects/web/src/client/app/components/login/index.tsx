@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ServiceManager } from '../../services';
-import Input from '../../framework/components/input';
-import Button from '../../framework/components/button';
+import { Input } from '../../framework/components/input';
+import { Button } from '../../framework/components/button';
 import { IApplication } from '../../application';
 
 require('../../assets/stylesheets/base.less');
@@ -16,7 +16,7 @@ interface ILoginState {
   error?: string;
 }
 
-export default class Login extends React.PureComponent<ILoginProps, ILoginState> {
+export class Login extends React.PureComponent<ILoginProps, ILoginState> {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
 
   constructor() {

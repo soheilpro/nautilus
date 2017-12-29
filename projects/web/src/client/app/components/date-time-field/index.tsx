@@ -13,7 +13,7 @@ interface IDateTimeFieldProps {
 interface IDateTimeFieldState {
 }
 
-export default class DateTimeField extends React.PureComponent<IDateTimeFieldProps, IDateTimeFieldState> {
+export class DateTimeField extends React.PureComponent<IDateTimeFieldProps, IDateTimeFieldState> {
   render(): JSX.Element {
     if (!this.props.dateTime)
       return null;

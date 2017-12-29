@@ -2,10 +2,10 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { IIssue } from '../../application';
 import { ServiceManager } from '../../services';
-import Table from '../../framework/components/table';
-import TableHeader from './table-header';
-import TableRow from './table-row';
-import TableFooter from './table-footer';
+import { Table } from '../../framework/components/table';
+import { TableHeader } from './table-header';
+import { TableRow } from './table-row';
+import { TableFooter } from './table-footer';
 import { IIssueController } from '../../modules/issues';
 
 require('../../assets/stylesheets/base.less');
@@ -23,7 +23,7 @@ interface IIssueTableState {
   selectedIssue?: IIssue;
 }
 
-export default class IssueTable extends React.PureComponent<IIssueTableProps, IIssueTableState> {
+export class IssueTable extends React.PureComponent<IIssueTableProps, IIssueTableState> {
   private issueController = ServiceManager.Instance.getService<IIssueController>('IIssueController');
 
   constructor(props: IIssueTableProps) {

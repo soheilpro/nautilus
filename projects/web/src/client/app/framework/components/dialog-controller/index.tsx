@@ -3,7 +3,7 @@ import * as React from 'react';
 import { ServiceManager } from '../../../services';
 import { IDialog, IDialogButton, IDialogController } from '../../dialog';
 import { IWindow, IWindowController } from '../../windows';
-import DialogWindow from '../dialog-window';
+import { DialogWindow } from '../dialog-window';
 
 interface IDialogControllerProps {
 }
@@ -11,7 +11,7 @@ interface IDialogControllerProps {
 interface IDialogControllerState {
 }
 
-export default class DialogController extends React.PureComponent<IDialogControllerProps, IDialogControllerState> implements IDialogController {
+export class DialogController extends React.PureComponent<IDialogControllerProps, IDialogControllerState> implements IDialogController {
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
   private dialogWindow: IWindow;
 

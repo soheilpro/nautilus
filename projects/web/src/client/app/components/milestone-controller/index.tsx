@@ -4,7 +4,7 @@ import * as NQL from '../../nql';
 import { IMilestone, IMilestoneChange, IApplication } from '../../application';
 import { IMilestoneController, MilestoneType } from '../../modules/milestones';
 import { ServiceManager } from '../../services';
-import AddEditMilestoneWindow from '../add-edit-milestone-window';
+import { AddEditMilestoneWindow } from '../add-edit-milestone-window';
 import { AddMilestoneAction, UpdateMilestoneAction, DeleteMilestoneAction } from '../../actions/milestones';
 import { IActionManager } from '../../framework/actions';
 import { IDialogController } from '../../framework/dialog';
@@ -20,7 +20,7 @@ interface IMilestoneControllerProps {
 interface IMilestoneControllerState {
 }
 
-export default class MilestoneController extends React.PureComponent<IMilestoneControllerProps, IMilestoneControllerState> implements IMilestoneController, ICommandProvider {
+export class MilestoneController extends React.PureComponent<IMilestoneControllerProps, IMilestoneControllerState> implements IMilestoneController, ICommandProvider {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private actionManager = ServiceManager.Instance.getService<IActionManager>('IActionManager');
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');

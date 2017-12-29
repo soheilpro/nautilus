@@ -2,13 +2,13 @@ import * as React from 'react';
 import * as NQL from '../../nql';
 import { IMilestone, entityComparer, IApplication } from '../../application';
 import { ServiceManager } from '../../services';
-import ArrayHelper from '../../utilities/array-helper';
-import MilestoneViewSettings, { IView, View } from '../milestone-view-settings';
-import MilestoneDetail from '../milestone-detail';
-import MilestoneTable from '../milestone-table';
-import MasterPage from '../master-page';
-import CommandButton from '../../framework/components/command-button';
-import Icon from '../../framework/components/icon';
+import { ArrayHelper } from '../../utilities/array-helper';
+import { MilestoneViewSettings, IView, View } from '../milestone-view-settings';
+import { MilestoneDetail } from '../milestone-detail';
+import { MilestoneTable } from '../milestone-table';
+import { MasterPage } from '../master-page';
+import { CommandButton } from '../../framework/components/command-button';
+import { Icon } from '../../framework/components/icon';
 import { ILocalStorage } from '../../framework/storage';
 import { IContextProvider, IContextManager, IContext } from '../../framework/context';
 import { MilestoneType } from '../../modules/milestones';
@@ -25,7 +25,7 @@ interface IMilestonesPageState {
   view?: IView;
 }
 
-export default class MilestonesPage extends React.Component<IMilestonesPageProps, IMilestonesPageState> implements IContextProvider {
+export class MilestonesPage extends React.Component<IMilestonesPageProps, IMilestonesPageState> implements IContextProvider {
   private localStorage = ServiceManager.Instance.getService<ILocalStorage>('ILocalStorage');
   private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');

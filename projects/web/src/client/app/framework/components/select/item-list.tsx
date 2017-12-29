@@ -2,8 +2,8 @@ import * as _ from 'underscore';
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { KeyCode } from '../../../framework/keyboard';
-import Icon from '../icon';
-import Input from '../input';
+import { Icon } from '../icon';
+import { Input } from '../input';
 import { ISelectItem } from './iselect-item';
 
 require('../../assets/stylesheets/base.less');
@@ -26,7 +26,7 @@ interface ISelectItemListState {
   searchText?: string;
 }
 
-export default class ItemList extends React.PureComponent<ISelectItemListProps, ISelectItemListState> {
+export class ItemList extends React.PureComponent<ISelectItemListProps, ISelectItemListState> {
   constructor(props: ISelectItemListProps) {
     super(props);
 

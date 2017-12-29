@@ -4,7 +4,7 @@ import { ICommandProvider, ICommand, ICommandManager } from '../../framework/com
 import { ISearchController } from '../../modules/search';
 import { ServiceManager } from '../../services';
 import { IWindow, IWindowController } from '../../framework/windows';
-import SearchWindow from '../search-window';
+import { SearchWindow } from '../search-window';
 
 interface ISearchControllerProps {
 }
@@ -12,7 +12,7 @@ interface ISearchControllerProps {
 interface ISearchControllerState {
 }
 
-export default class SearchController extends React.PureComponent<ISearchControllerProps, ISearchControllerState> implements ISearchController, ICommandProvider {
+export class SearchController extends React.PureComponent<ISearchControllerProps, ISearchControllerState> implements ISearchController, ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
   private searchWindow: IWindow;

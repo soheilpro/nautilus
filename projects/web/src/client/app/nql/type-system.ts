@@ -2,7 +2,7 @@ import * as _ from 'underscore';
 import { IType } from './itype';
 import { ITypeSystem } from './itype-system';
 
-export default class TypeSystem implements ITypeSystem {
+export class TypeSystem implements ITypeSystem {
   private types: IType[] = [];
 
   constructor() {

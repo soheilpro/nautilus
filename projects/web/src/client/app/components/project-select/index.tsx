@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { IProject } from '../../application';
-import Select from '../../framework/components/select';
+import { Select } from '../../framework/components/select';
 
 interface IProjectSelectProps {
   projects: IProject[];
@@ -13,7 +13,7 @@ interface IProjectSelectProps {
 interface IProjectSelectState {
 }
 
-export default class ProjectSelect extends React.PureComponent<IProjectSelectProps, IProjectSelectState> {
+export class ProjectSelect extends React.PureComponent<IProjectSelectProps, IProjectSelectState> {
   constructor() {
     super();
 

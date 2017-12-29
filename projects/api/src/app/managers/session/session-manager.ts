@@ -1,7 +1,7 @@
 import * as crypto from 'crypto';
 import { ISession, ISessionChange, ISessionManager, ISessionRepository } from '../../framework/session';
 import { IValidationError } from '../../framework';
-import ManagerBase from '../manager-base';
+import { ManagerBase } from '../manager-base';
 
 export class SessionManager extends ManagerBase<ISession, ISessionChange> implements ISessionManager {
   constructor(repository: ISessionRepository) {

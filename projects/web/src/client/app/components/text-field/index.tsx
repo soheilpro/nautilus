@@ -12,7 +12,7 @@ interface ITextFieldProps {
 interface ITextFieldState {
 }
 
-export default class TextField extends React.PureComponent<ITextFieldProps, ITextFieldState> {
+export class TextField extends React.PureComponent<ITextFieldProps, ITextFieldState> {
   render(): JSX.Element {
     return (
       <span className={classNames('text-field-component', { 'bold': this.props.bold })}>

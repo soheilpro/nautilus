@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as NQL from '../../nql';
-import AndQueryBuilder, { IQueryBuilder } from '../and-query-builder';
+import { AndQueryBuilder, IQueryBuilder } from '../and-query-builder';
 
 interface IUserFilterQueryBuilderProps {
   query: NQL.IExpression;
@@ -10,7 +10,7 @@ interface IUserFilterQueryBuilderProps {
 interface IUserFilterQueryBuilderState {
 }
 
-export default class UserFilterQueryBuilder extends React.PureComponent<IUserFilterQueryBuilderProps, IUserFilterQueryBuilderState> {
+export class UserFilterQueryBuilder extends React.PureComponent<IUserFilterQueryBuilderProps, IUserFilterQueryBuilderState> {
   private andQueryBuilderComponent: AndQueryBuilder;
 
   constructor() {

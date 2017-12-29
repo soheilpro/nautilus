@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { IUser, IUserChange } from '../../application';
-import Window, { WindowHeader, WindowContent, WindowActionBar } from '../../framework/components/window';
+import { Window, WindowHeader, WindowContent, WindowActionBar } from '../../framework/components/window';
 import { IFormError } from '../../framework/forms';
-import Icon from '../../framework/components/icon';
-import Input from '../../framework/components/input';
-import Button from '../../framework/components/button';
+import { Icon } from '../../framework/components/icon';
+import { Input } from '../../framework/components/input';
+import { Button } from '../../framework/components/button';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -25,7 +25,7 @@ interface IAddEditUserWindowState {
   errors?: IFormError[];
 }
 
-export default class AddEditUserWindow extends React.PureComponent<IAddEditUserWindowProps, IAddEditUserWindowState> {
+export class AddEditUserWindow extends React.PureComponent<IAddEditUserWindowProps, IAddEditUserWindowState> {
   constructor(props: IAddEditUserWindowProps) {
     super(props);
 

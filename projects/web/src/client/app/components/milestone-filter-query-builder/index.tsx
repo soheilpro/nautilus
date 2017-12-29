@@ -2,10 +2,10 @@ import * as React from 'react';
 import * as NQL from '../../nql';
 import { IProject, IItemState, IUser, IApplication } from '../../application';
 import { ServiceManager } from '../../services';
-import AndQueryBuilder, { IQueryBuilder } from '../and-query-builder';
-import ProjectQueryBuilder from '../project-query-builder';
-import ItemStateQueryBuilder from '../item-state-query-builder';
-import UserQueryBuilder from '../user-query-builder';
+import { AndQueryBuilder, IQueryBuilder } from '../and-query-builder';
+import { ProjectQueryBuilder } from '../project-query-builder';
+import { ItemStateQueryBuilder } from '../item-state-query-builder';
+import { UserQueryBuilder } from '../user-query-builder';
 
 interface IMilestoneFilterQueryBuilderProps {
   query: NQL.IExpression;
@@ -18,7 +18,7 @@ interface IMilestoneFilterQueryBuilderState {
   users?: IUser[];
 }
 
-export default class MilestoneFilterQueryBuilder extends React.PureComponent<IMilestoneFilterQueryBuilderProps, IMilestoneFilterQueryBuilderState> {
+export class MilestoneFilterQueryBuilder extends React.PureComponent<IMilestoneFilterQueryBuilderProps, IMilestoneFilterQueryBuilderState> {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private andQueryBuilderComponent: AndQueryBuilder;
 

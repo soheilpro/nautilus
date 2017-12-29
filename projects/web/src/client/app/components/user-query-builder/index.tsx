@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as NQL from '../../nql';
 import { IUser, asEntity, entityComparer } from '../../application';
-import ListQueryBuilder from '../list-query-builder';
+import { ListQueryBuilder } from '../list-query-builder';
 
 interface IUserQueryBuilderProps {
   users: IUser[];
@@ -13,7 +13,7 @@ interface IUserQueryBuilderProps {
 interface IUserQueryBuilderState {
 }
 
-export default class UserQueryBuilder extends React.PureComponent<IUserQueryBuilderProps, IUserQueryBuilderState> {
+export class UserQueryBuilder extends React.PureComponent<IUserQueryBuilderProps, IUserQueryBuilderState> {
   static canParseQuery(query: NQL.IExpression, queryItem: string): boolean {
     return ListQueryBuilder.canParseQuery(query, queryItem, 'User');
   }

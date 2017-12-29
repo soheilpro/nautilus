@@ -1,6 +1,6 @@
 import * as _ from 'underscore';
 
-export default class ArrayHelper {
+export class ArrayHelper {
   static replaceElement<T>(items: T[], oldItem: T, newItem: T, comparer: (item1: T, item2: T) => boolean): T[] {
     items = [...items];
     items.splice(_.findIndex(items, _.partial(comparer, oldItem)), 1, newItem);

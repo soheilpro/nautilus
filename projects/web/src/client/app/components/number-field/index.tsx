@@ -12,7 +12,7 @@ interface INumberFieldProps {
 interface INumberFieldState {
 }
 
-export default class NumberField extends React.PureComponent<INumberFieldProps, INumberFieldState> {
+export class NumberField extends React.PureComponent<INumberFieldProps, INumberFieldState> {
   render(): JSX.Element {
     return (
       <span className={classNames('number-field-component', { 'bold': this.props.bold })}>

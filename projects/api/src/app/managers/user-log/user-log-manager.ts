@@ -1,6 +1,6 @@
 import { IUserLog, IUserLogChange, IUserLogManager, IUserLogRepository } from '../../framework/user-log';
 import { IValidationError } from '../../framework';
-import ManagerBase from '../manager-base';
+import { ManagerBase } from '../manager-base';
 
 const ActionRegEx = /.+/;
 

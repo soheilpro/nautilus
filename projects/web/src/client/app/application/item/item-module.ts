@@ -8,10 +8,10 @@ import { IIssue } from './iissue';
 import { IIssueChange } from './iissue-change';
 import { IMilestone } from './imilestone';
 import { IMilestoneChange } from './imilestone-change';
-import Milestone from './milestone';
-import Issue from './issue';
-import MilestoneExpressionNormalizer from './milestone-expression-normalizer';
-import IssueExpressionNormalizer from './issue-expression-normalizer';
+import { Milestone } from './milestone';
+import { Issue } from './issue';
+import { MilestoneExpressionNormalizer } from './milestone-expression-normalizer';
+import { IssueExpressionNormalizer } from './issue-expression-normalizer';
 
 export class ItemModule extends BaseModule implements IItemModule {
   private issues: IIssue[];

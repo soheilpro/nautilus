@@ -2,7 +2,7 @@ import { IFilter } from '../../framework';
 import { ISession, ISessionChange, ISessionRepository, SessionFilter } from '../../framework/session';
 import { IDB } from '../../db';
 import { ISessionDocument } from './isession-document';
-import RepositoryBase from '../repository-base';
+import { RepositoryBase } from '../repository-base';
 
 export class SessionRepository extends RepositoryBase<ISession, ISessionChange, ISessionDocument> implements ISessionRepository {
   constructor(db: IDB) {

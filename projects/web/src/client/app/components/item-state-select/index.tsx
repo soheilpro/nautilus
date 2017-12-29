@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { IItemState } from '../../application';
-import Select from '../../framework/components/select';
+import { Select } from '../../framework/components/select';
 
 interface IItemStateSelectProps {
   itemStates?: IItemState[];
@@ -13,7 +13,7 @@ interface IItemStateSelectProps {
 interface IItemStateSelectState {
 }
 
-export default class ItemStateSelect extends React.PureComponent<IItemStateSelectProps, IItemStateSelectState> {
+export class ItemStateSelect extends React.PureComponent<IItemStateSelectProps, IItemStateSelectState> {
   constructor() {
     super();
 

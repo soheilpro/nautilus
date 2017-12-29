@@ -2,7 +2,7 @@ import { IFilter } from '../../framework';
 import { IItemRelationship, IItemRelationshipChange, IItemRelationshipRepository, ItemItemRelationshipFilter } from '../../framework/item-relationship';
 import { IDB, IUpdate } from '../../db';
 import { IItemRelationshipDocument } from './iitem-relationship-document';
-import RepositoryBase from '../repository-base';
+import { RepositoryBase } from '../repository-base';
 
 export class ItemRelationshipRepository extends RepositoryBase<IItemRelationship, IItemRelationshipChange, IItemRelationshipDocument> implements IItemRelationshipRepository {
   constructor(db: IDB) {

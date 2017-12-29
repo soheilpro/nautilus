@@ -2,10 +2,10 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { IUser } from '../../application';
 import { ServiceManager } from '../../services';
-import Table from '../../framework/components/table';
-import TableHeader from './table-header';
-import TableRow from './table-row';
-import TableFooter from './table-footer';
+import { Table } from '../../framework/components/table';
+import { TableHeader } from './table-header';
+import { TableRow } from './table-row';
+import { TableFooter } from './table-footer';
 import { IUserController } from '../../modules/users';
 
 interface IUserTableProps {
@@ -19,7 +19,7 @@ interface IUserTableState {
   selectedUser?: IUser;
 }
 
-export default class UserTable extends React.PureComponent<IUserTableProps, IUserTableState> {
+export class UserTable extends React.PureComponent<IUserTableProps, IUserTableState> {
   private userController = ServiceManager.Instance.getService<IUserController>('IUserController');
 
   constructor(props: IUserTableProps) {

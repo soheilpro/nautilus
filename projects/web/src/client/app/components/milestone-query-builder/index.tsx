@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as NQL from '../../nql';
 import { IMilestone, asEntity, entityComparer } from '../../application';
-import ListQueryBuilder from '../list-query-builder';
+import { ListQueryBuilder } from '../list-query-builder';
 
 interface IMilestoneQueryBuilderProps {
   milestones: IMilestone[];
@@ -13,7 +13,7 @@ interface IMilestoneQueryBuilderProps {
 interface IMilestoneQueryBuilderState {
 }
 
-export default class MilestoneQueryBuilder extends React.PureComponent<IMilestoneQueryBuilderProps, IMilestoneQueryBuilderState> {
+export class MilestoneQueryBuilder extends React.PureComponent<IMilestoneQueryBuilderProps, IMilestoneQueryBuilderState> {
   static canParseQuery(query: NQL.IExpression, queryItem: string): boolean {
     return ListQueryBuilder.canParseQuery(query, queryItem, 'Milestone');
   }

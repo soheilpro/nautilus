@@ -8,5 +8,5 @@ interface ITableFooterProps {
 interface ITableFooterState {
 }
 
-export default class TableFooter extends React.Component<ITableFooterProps, ITableFooterState> {
+export class TableFooter extends React.Component<ITableFooterProps, ITableFooterState> {
 }

@@ -2,10 +2,10 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import { IMilestone } from '../../application';
 import { ITableRow } from '../../framework/components/table';
-import ItemStateField from '../item-state-field';
-import ProjectField from '../project-field';
-import SidField from '../sid-field';
-import TitleField from '../title-field';
+import { ItemStateField } from '../item-state-field';
+import { ProjectField } from '../project-field';
+import { SidField } from '../sid-field';
+import { TitleField } from '../title-field';
 
 require('../../assets/stylesheets/base.less');
 require('./table-row.less');
@@ -21,7 +21,7 @@ interface ITableRowProps {
 interface ITableRowState {
 }
 
-export default class TableRow extends React.PureComponent<ITableRowProps, ITableRowState> implements ITableRow {
+export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState> implements ITableRow {
   private static stateToStatus: { [key: string]: string } = {
     'planned': 'pending',
     'inprogress': 'inprogress',
