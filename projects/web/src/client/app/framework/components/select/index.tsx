@@ -21,7 +21,7 @@ interface ISelectState {
 }
 
 export class Select extends React.PureComponent<ISelectProps, ISelectState> {
-  private dropdownComponent: Dropdown;
+  private dropdownRef: Dropdown;
 
   constructor(props: ISelectProps) {
     super();
@@ -47,8 +47,8 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
   }
 
   private handleItemListSelect(item: ISelectItem): void {
-    this.dropdownComponent.close();
-    this.dropdownComponent.focus();
+    this.dropdownRef.close();
+    this.dropdownRef.focus();
     this.props.onChange(item);
   }
 
@@ -72,7 +72,7 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
   render(): JSX.Element {
     return (
       <div className={classNames('select-component', this.props.className)}>
-        <Dropdown className="dropdown" title={this.getDropdownTitle()} ref={e => this.dropdownComponent = e}>
+        <Dropdown className="dropdown" title={this.getDropdownTitle()} ref={e => this.dropdownRef = e}>
           <ItemList items={this.props.items} selectedItem={this.state.selectedItem} displayProperty={this.props.displayProperty} onSelect={this.handleItemListSelect} />
         </Dropdown>
       </div>

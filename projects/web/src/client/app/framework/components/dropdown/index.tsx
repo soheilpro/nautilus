@@ -20,9 +20,9 @@ interface IDropdownState {
 }
 
 export class Dropdown extends React.PureComponent<IDropdownProps, IDropdownState> {
-  private componentElement: HTMLElement;
-  private buttonElement: HTMLElement;
-  private windowContainerComponent: WindowContainer;
+  private componentRef: HTMLElement;
+  private buttonRef: HTMLElement;
+  private windowContainerRef: WindowContainer;
 
   constructor() {
     super();
@@ -36,12 +36,12 @@ export class Dropdown extends React.PureComponent<IDropdownProps, IDropdownState
   }
 
   componentDidUpdate(): void {
-    if (this.windowContainerComponent) {
-      const windowContainerElement = ReactDOM.findDOMNode(this.windowContainerComponent) as HTMLElement;
+    if (this.windowContainerRef) {
+      const windowContainerElement = ReactDOM.findDOMNode(this.windowContainerRef) as HTMLElement;
       const windowContainerElementRect = windowContainerElement.getBoundingClientRect();
 
       if (windowContainerElementRect.right > window.innerWidth)
-        windowContainerElement.style.left = (this.buttonElement.offsetLeft + this.buttonElement.offsetWidth - windowContainerElementRect.width) + 'px';
+        windowContainerElement.style.left = (this.buttonRef.offsetLeft + this.buttonRef.offsetWidth - windowContainerElementRect.width) + 'px';
     }
   }
 
@@ -64,7 +64,7 @@ export class Dropdown extends React.PureComponent<IDropdownProps, IDropdownState
   }
 
   focus(): void {
-    this.buttonElement.focus();
+    this.buttonRef.focus();
   }
 
   private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
@@ -88,7 +88,7 @@ export class Dropdown extends React.PureComponent<IDropdownProps, IDropdownState
 
   private handleButtonKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
     if (event.which === KeyCode.Enter) {
-      const form = $(this.componentElement).closest('form')[0];
+      const form = $(this.componentRef).closest('form')[0];
 
       if (form) {
         // Because calling form.submit() will not trigger events
@@ -113,14 +113,14 @@ export class Dropdown extends React.PureComponent<IDropdownProps, IDropdownState
 
   render(): JSX.Element {
     return (
-      <div className={classNames('dropdown-component', this.props.className, { 'open': this.state.isOpen })} onKeyDown={this.handleKeyDown} ref={e => this.componentElement = e}>
-        <div className="button" tabIndex={0} onClick={this.handleButtonClick} onKeyDown={this.handleButtonKeyDown} ref={e => this.buttonElement = e}>
+      <div className={classNames('dropdown-component', this.props.className, { 'open': this.state.isOpen })} onKeyDown={this.handleKeyDown} ref={e => this.componentRef = e}>
+        <div className="button" tabIndex={0} onClick={this.handleButtonClick} onKeyDown={this.handleButtonKeyDown} ref={e => this.buttonRef = e}>
           {this.props.title}
           <Icon className="caret" name={this.state.isOpen ? 'caret-up' : 'caret-down'} />
         </div>
         {
           this.state.isOpen &&
-            <WindowContainer position="absolute" blurCheckElement={this.componentElement} onClose={this.handleWindowContainerClose} ref={e => this.windowContainerComponent = e}>
+            <WindowContainer position="absolute" blurCheckElement={this.componentRef} onClose={this.handleWindowContainerClose} ref={e => this.windowContainerRef = e}>
               <Window className="window">
                 {this.props.children}
               </Window>

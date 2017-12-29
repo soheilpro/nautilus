@@ -40,7 +40,7 @@ interface IAndQueryBuilderState {
 }
 
 export class AndQueryBuilder extends React.PureComponent<IAndQueryBuilderProps, IAndQueryBuilderState> {
-  private dropdownComponents: { [key: string]: Dropdown } = {};
+  private dropdownRefs: { [key: string]: Dropdown } = {};
 
   constructor(props: IAndQueryBuilderProps) {
     super(props);
@@ -61,7 +61,7 @@ export class AndQueryBuilder extends React.PureComponent<IAndQueryBuilderProps, 
   }
 
   open(key: string): void {
-    this.dropdownComponents[key].open();
+    this.dropdownRefs[key].open();
   }
 
   private getQueryObject(query: NQL.IExpression): IQueryObject {
@@ -96,7 +96,7 @@ export class AndQueryBuilder extends React.PureComponent<IAndQueryBuilderProps, 
     });
 
     if (done)
-      this.dropdownComponents[key].close();
+      this.dropdownRefs[key].close();
 
     this.props.onChange(this.getQuery(queries));
   }
@@ -117,7 +117,7 @@ export class AndQueryBuilder extends React.PureComponent<IAndQueryBuilderProps, 
           {
             this.props.queryBuilders.map(queryBuilder => {
               return (
-                <Dropdown className={classNames('query-builder', { 'active': !!this.state.queries[queryBuilder.key] })} title={queryBuilder.title} ref={e => this.dropdownComponents[queryBuilder.key] = e} key={queryBuilder.key}>
+                <Dropdown className={classNames('query-builder', { 'active': !!this.state.queries[queryBuilder.key] })} title={queryBuilder.title} ref={e => this.dropdownRefs[queryBuilder.key] = e} key={queryBuilder.key}>
                   <div className="container">
                     <queryBuilder.Component query={this.state.queries[queryBuilder.key]} queryItem={queryBuilder.queryItem} onChange={_.partial(this.handleFilterChange, queryBuilder.key)} {...queryBuilder.props} />
                   </div>

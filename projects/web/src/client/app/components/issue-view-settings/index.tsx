@@ -32,8 +32,8 @@ interface IIssueViewSettingsState {
 export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsProps, IIssueViewSettingsState> implements ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
-  private queryBuilderComponent: IssueFilterQueryBuilder;
-  private savedViewListDropdownComponent: Dropdown;
+  private queryBuilderRef: IssueFilterQueryBuilder;
+  private savedViewListDropdownRef: Dropdown;
   private promptWindow: IWindow;
 
   constructor(props: IIssueViewSettingsProps) {
@@ -98,7 +98,7 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
   }
 
   private handleOpenFilterCommandExecute(itemKind: string, key: string): void {
-    this.queryBuilderComponent.open(key);
+    this.queryBuilderRef.open(key);
   }
 
   private handleResetViewCommandExecute(): void {
@@ -121,7 +121,7 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
   }
 
   private handleLoadViewCommandExecute(): void {
-    this.savedViewListDropdownComponent.open();
+    this.savedViewListDropdownRef.open();
   }
 
   private handleIssueFilterQueryBuilderChange(query: NQL.IExpression): void {
@@ -187,7 +187,7 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
   }
 
   private handleViewListSelect(view: IView): void {
-    this.savedViewListDropdownComponent.close();
+    this.savedViewListDropdownRef.close();
     this.props.onChange(view);
   }
 
@@ -196,7 +196,7 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
       <div className="issue-view-settings-component">
         <div className="query">
           <div className="query-builder">
-            <IssueFilterQueryBuilder query={this.state.filterExpression} onChange={this.handleIssueFilterQueryBuilderChange} ref={e => this.queryBuilderComponent = e} />
+            <IssueFilterQueryBuilder query={this.state.filterExpression} onChange={this.handleIssueFilterQueryBuilderChange} ref={e => this.queryBuilderRef = e} />
           </div>
           <div className="reset">
             {
@@ -209,7 +209,7 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
               !this.props.view.isDefault() &&
                 <Button className="save-button" type="secondary" onClick={this.handleSaveButtonClick}>Save</Button>
             }
-            <Dropdown className="load-button" title="Load" ref={e => this.savedViewListDropdownComponent = e}>
+            <Dropdown className="load-button" title="Load" ref={e => this.savedViewListDropdownRef = e}>
               <ViewList views={this.state.savedViews} onDelete={this.handleViewListDelete} onSelect={this.handleViewListSelect} />
             </Dropdown>
           </div>

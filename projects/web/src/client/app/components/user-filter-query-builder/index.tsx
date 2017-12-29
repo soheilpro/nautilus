@@ -11,7 +11,7 @@ interface IUserFilterQueryBuilderState {
 }
 
 export class UserFilterQueryBuilder extends React.PureComponent<IUserFilterQueryBuilderProps, IUserFilterQueryBuilderState> {
-  private andQueryBuilderComponent: AndQueryBuilder;
+  private andQueryBuilderRef: AndQueryBuilder;
 
   constructor() {
     super();
@@ -24,14 +24,14 @@ export class UserFilterQueryBuilder extends React.PureComponent<IUserFilterQuery
   }
 
   open(key: string): void {
-    this.andQueryBuilderComponent.open(key);
+    this.andQueryBuilderRef.open(key);
   }
 
   render(): JSX.Element {
     const queryBuilders: IQueryBuilder[] = [];
 
     return (
-      <AndQueryBuilder queryBuilders={queryBuilders} query={this.props.query} onChange={this.props.onChange} ref={e => this.andQueryBuilderComponent = e} />
+      <AndQueryBuilder queryBuilders={queryBuilders} query={this.props.query} onChange={this.props.onChange} ref={e => this.andQueryBuilderRef = e} />
     );
   }
 }

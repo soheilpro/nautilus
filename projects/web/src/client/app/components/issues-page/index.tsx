@@ -33,7 +33,7 @@ export class IssuesPage extends React.Component<IIssuesPageProps, IIssuesPageSta
   private roamingStorage = ServiceManager.Instance.getService<IRoamingStorage>('IRoamingStorage');
   private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
-  private issueDetailContainerElement: HTMLElement;
+  private issueDetailContainerRef: HTMLElement;
 
   constructor() {
     super();
@@ -62,7 +62,7 @@ export class IssuesPage extends React.Component<IIssuesPageProps, IIssuesPageSta
   }
 
   async componentDidMount(): Promise<void> {
-    ($(this.issueDetailContainerElement) as any).sticky({
+    ($(this.issueDetailContainerRef) as any).sticky({
       topSpacing: 10,
     });
 
@@ -182,7 +182,7 @@ export class IssuesPage extends React.Component<IIssuesPageProps, IIssuesPageSta
             </div>
             <div className="divider"></div>
             <div className="issue-detail">
-              <div className="issue-detail-container" ref={e => this.issueDetailContainerElement = e}>
+              <div className="issue-detail-container" ref={e => this.issueDetailContainerRef = e}>
               {
                 this.state.selectedIssue &&
                   <IssueDetail issue={this.state.selectedIssue} />

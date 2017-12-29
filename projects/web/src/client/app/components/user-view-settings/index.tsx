@@ -23,7 +23,7 @@ interface IUserViewSettingsState {
 
 export class UserViewSettings extends React.PureComponent<IUserViewSettingsProps, IUserViewSettingsState> implements ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
-  private queryBuilderComponent: UserFilterQueryBuilder;
+  private queryBuilderRef: UserFilterQueryBuilder;
 
   constructor(props: IUserViewSettingsProps) {
     super(props);
@@ -65,7 +65,7 @@ export class UserViewSettings extends React.PureComponent<IUserViewSettingsProps
   }
 
   private handleOpenFilterCommandExecute(key: string): void {
-    this.queryBuilderComponent.open(key);
+    this.queryBuilderRef.open(key);
   }
 
   private handleResetViewCommandExecute(): void {
@@ -101,7 +101,7 @@ export class UserViewSettings extends React.PureComponent<IUserViewSettingsProps
       <div className="user-view-settings-component">
         <div className="query">
           <div className="query-builder">
-            <UserFilterQueryBuilder query={this.state.filterExpression} onChange={this.handleUserFilterQueryBuilderChange} ref={e => this.queryBuilderComponent = e} />
+            <UserFilterQueryBuilder query={this.state.filterExpression} onChange={this.handleUserFilterQueryBuilderChange} ref={e => this.queryBuilderRef = e} />
           </div>
           <div className="reset">
             {

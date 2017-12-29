@@ -25,7 +25,7 @@ interface IIssueFilterQueryBuilderState {
 
 export class IssueFilterQueryBuilder extends React.PureComponent<IIssueFilterQueryBuilderProps, IIssueFilterQueryBuilderState> {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
-  private andQueryBuilderComponent: AndQueryBuilder;
+  private andQueryBuilderRef: AndQueryBuilder;
 
   constructor() {
     super();
@@ -52,7 +52,7 @@ export class IssueFilterQueryBuilder extends React.PureComponent<IIssueFilterQue
   }
 
   open(key: string): void {
-    this.andQueryBuilderComponent.open(key);
+    this.andQueryBuilderRef.open(key);
   }
 
   render(): JSX.Element {
@@ -66,7 +66,7 @@ export class IssueFilterQueryBuilder extends React.PureComponent<IIssueFilterQue
     ];
 
     return (
-      <AndQueryBuilder queryBuilders={queryBuilders} query={this.props.query} onChange={this.props.onChange} ref={e => this.andQueryBuilderComponent = e} />
+      <AndQueryBuilder queryBuilders={queryBuilders} query={this.props.query} onChange={this.props.onChange} ref={e => this.andQueryBuilderRef = e} />
     );
   }
 }

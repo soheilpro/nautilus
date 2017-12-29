@@ -29,7 +29,7 @@ export class MilestonesPage extends React.Component<IMilestonesPageProps, IMiles
   private localStorage = ServiceManager.Instance.getService<ILocalStorage>('ILocalStorage');
   private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
-  private milestoneDetailContainerElement: HTMLElement;
+  private milestoneDetailContainerRef: HTMLElement;
 
   constructor() {
     super();
@@ -56,7 +56,7 @@ export class MilestonesPage extends React.Component<IMilestonesPageProps, IMiles
   }
 
   async componentDidMount(): Promise<void> {
-    ($(this.milestoneDetailContainerElement) as any).sticky({
+    ($(this.milestoneDetailContainerRef) as any).sticky({
       topSpacing: 10,
     });
 
@@ -161,7 +161,7 @@ export class MilestonesPage extends React.Component<IMilestonesPageProps, IMiles
             </div>
             <div className="divider"></div>
             <div className="milestone-detail">
-              <div className="milestone-detail-container" ref={e => this.milestoneDetailContainerElement = e}>
+              <div className="milestone-detail-container" ref={e => this.milestoneDetailContainerRef = e}>
               {
                 this.state.selectedMilestone &&
                   <MilestoneDetail milestone={this.state.selectedMilestone} />

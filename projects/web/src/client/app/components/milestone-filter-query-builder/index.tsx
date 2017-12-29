@@ -20,7 +20,7 @@ interface IMilestoneFilterQueryBuilderState {
 
 export class MilestoneFilterQueryBuilder extends React.PureComponent<IMilestoneFilterQueryBuilderProps, IMilestoneFilterQueryBuilderState> {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
-  private andQueryBuilderComponent: AndQueryBuilder;
+  private andQueryBuilderRef: AndQueryBuilder;
 
   constructor() {
     super();
@@ -41,7 +41,7 @@ export class MilestoneFilterQueryBuilder extends React.PureComponent<IMilestoneF
   }
 
   open(key: string): void {
-    this.andQueryBuilderComponent.open(key);
+    this.andQueryBuilderRef.open(key);
   }
 
   render(): JSX.Element {
@@ -52,7 +52,7 @@ export class MilestoneFilterQueryBuilder extends React.PureComponent<IMilestoneF
     ];
 
     return (
-      <AndQueryBuilder queryBuilders={queryBuilders} query={this.props.query} onChange={this.props.onChange} ref={e => this.andQueryBuilderComponent = e} />
+      <AndQueryBuilder queryBuilders={queryBuilders} query={this.props.query} onChange={this.props.onChange} ref={e => this.andQueryBuilderRef = e} />
     );
   }
 }

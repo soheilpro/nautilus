@@ -33,8 +33,8 @@ interface ITableState {
 }
 
 export class Table extends React.PureComponent<ITableProps, ITableState> {
-  private componentElement: HTMLElement;
-  private selectedChunkComponent: Chunk;
+  private componentRef: HTMLElement;
+  private selectedChunk: Chunk;
 
   constructor(props: ITableProps) {
     super(props);
@@ -51,8 +51,8 @@ export class Table extends React.PureComponent<ITableProps, ITableState> {
   }
 
   componentDidUpdate(): void {
-    if (this.componentElement.contains(document.activeElement) && this.selectedChunkComponent)
-      this.selectedChunkComponent.focus();
+    if (this.componentRef.contains(document.activeElement) && this.selectedChunk)
+      this.selectedChunk.focus();
   }
 
   componentWillReceiveProps(props: ITableProps): void {
@@ -175,7 +175,7 @@ export class Table extends React.PureComponent<ITableProps, ITableState> {
     const selectedChunk = this.getSelectedChunk(this.state.chunks, this.state.selectedItem);
 
     return (
-      <table className={classNames('table-component', this.props.className)} onKeyDown={this.handleKeyDown} ref={e => this.componentElement = e}>
+      <table className={classNames('table-component', this.props.className)} onKeyDown={this.handleKeyDown} ref={e => this.componentRef = e}>
         <thead className="table-header">
           {
             this.props.Header &&
@@ -187,7 +187,7 @@ export class Table extends React.PureComponent<ITableProps, ITableState> {
             const isSelected = (selectedChunk === chunk);
 
             return (
-              <Chunk index={index} items={chunk.items} selectedItem={isSelected ? this.state.selectedItem : null} Row={this.props.Row} onItemSelect={this.handleItemSelect} onItemAction={this.handleItemAction} ref={e => this.selectedChunkComponent = isSelected ? e : this.selectedChunkComponent} key={index} />
+              <Chunk index={index} items={chunk.items} selectedItem={isSelected ? this.state.selectedItem : null} Row={this.props.Row} onItemSelect={this.handleItemSelect} onItemAction={this.handleItemAction} ref={e => this.selectedChunk = isSelected ? e : this.selectedChunk} key={index} />
             );
           })
         }

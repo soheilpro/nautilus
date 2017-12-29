@@ -29,7 +29,7 @@ export class UsersPage extends React.Component<IUsersPageProps, IUsersPageState>
   private localStorage = ServiceManager.Instance.getService<ILocalStorage>('ILocalStorage');
   private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
-  private userDetailContainerElement: HTMLElement;
+  private userDetailContainerRef: HTMLElement;
 
   constructor() {
     super();
@@ -56,7 +56,7 @@ export class UsersPage extends React.Component<IUsersPageProps, IUsersPageState>
   }
 
   async componentDidMount(): Promise<void> {
-    ($(this.userDetailContainerElement) as any).sticky({
+    ($(this.userDetailContainerRef) as any).sticky({
       topSpacing: 10,
     });
 
@@ -161,7 +161,7 @@ export class UsersPage extends React.Component<IUsersPageProps, IUsersPageState>
             </div>
             <div className="divider"></div>
             <div className="user-detail">
-              <div className="user-detail-container" ref={e => this.userDetailContainerElement = e}>
+              <div className="user-detail-container" ref={e => this.userDetailContainerRef = e}>
               {
                 this.state.selectedUser &&
                   <UserDetail user={this.state.selectedUser} />

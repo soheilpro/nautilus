@@ -20,7 +20,7 @@ interface ITableRowState {
 }
 
 export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState> implements ITableRow {
-  private componentElement: HTMLElement;
+  private componentRef: HTMLElement;
 
   constructor() {
     super();
@@ -30,7 +30,7 @@ export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState
   }
 
   focus(): void {
-    this.componentElement.focus();
+    this.componentRef.focus();
   }
 
   private handleClick(): void {
@@ -45,7 +45,7 @@ export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState
 
   render(): JSX.Element {
     return (
-      <tr className={classNames('table-row-component', 'table-row', { 'selected': this.props.isSelected })} tabIndex={0} onClick={this.handleClick} onDoubleClick={this.handleDoubleClick} ref={e => this.componentElement = e}>
+      <tr className={classNames('table-row-component', 'table-row', { 'selected': this.props.isSelected })} tabIndex={0} onClick={this.handleClick} onDoubleClick={this.handleDoubleClick} ref={e => this.componentRef = e}>
         <td className="table-cell index">
           <NumberField number={this.props.index + 1} />
         </td>

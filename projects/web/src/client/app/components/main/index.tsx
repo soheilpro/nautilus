@@ -25,7 +25,7 @@ interface IMainState {
 
 export class Main extends React.PureComponent<IMainProps, IMainState> implements ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
-  private browserRouterComponent: BrowserRouter;
+  private browserRouterRef: BrowserRouter;
 
   componentWillMount(): void {
     this.commandManager.registerCommandProvider(this);
@@ -36,7 +36,7 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
   }
 
   getCommands(): ICommand[] {
-    const history: History = (this.browserRouterComponent as any).history;
+    const history: History = (this.browserRouterRef as any).history;
 
     return [
       new RefreshCommand(),
@@ -58,7 +58,7 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
         <ItemController />
         <IssueController />
         <MilestoneController />
-        <BrowserRouter ref={e => this.browserRouterComponent = e}>
+        <BrowserRouter ref={e => this.browserRouterRef = e}>
           <div>
             <Route path="/" exact component={IssuesPage as any} />
             <Route path="/milestones" component={MilestonesPage as any} />

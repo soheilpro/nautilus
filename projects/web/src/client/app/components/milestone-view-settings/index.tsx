@@ -24,7 +24,7 @@ interface IMilestoneViewSettingsState {
 
 export class MilestoneViewSettings extends React.PureComponent<IMilestoneViewSettingsProps, IMilestoneViewSettingsState> implements ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
-  private queryBuilderComponent: MilestoneFilterQueryBuilder;
+  private queryBuilderRef: MilestoneFilterQueryBuilder;
 
   constructor(props: IMilestoneViewSettingsProps) {
     super(props);
@@ -69,7 +69,7 @@ export class MilestoneViewSettings extends React.PureComponent<IMilestoneViewSet
   }
 
   private handleOpenFilterCommandExecute(itemKind: string, key: string): void {
-    this.queryBuilderComponent.open(key);
+    this.queryBuilderRef.open(key);
   }
 
   private handleResetViewCommandExecute(): void {
@@ -105,7 +105,7 @@ export class MilestoneViewSettings extends React.PureComponent<IMilestoneViewSet
       <div className="milestone-view-settings-component">
         <div className="query">
           <div className="query-builder">
-            <MilestoneFilterQueryBuilder query={this.state.filterExpression} onChange={this.handleMilestoneFilterQueryBuilderChange} ref={e => this.queryBuilderComponent = e} />
+            <MilestoneFilterQueryBuilder query={this.state.filterExpression} onChange={this.handleMilestoneFilterQueryBuilderChange} ref={e => this.queryBuilderRef = e} />
           </div>
           <div className="reset">
             {

@@ -33,7 +33,7 @@ export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState
     'closed': 'closed',
   };
 
-  private componentElement: HTMLElement;
+  private componentRef: HTMLElement;
 
   constructor() {
     super();
@@ -43,7 +43,7 @@ export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState
   }
 
   focus(): void {
-    this.componentElement.focus();
+    this.componentRef.focus();
   }
 
   private handleClick(): void {
@@ -73,7 +73,7 @@ export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState
     let indentationLevel = this.getIndentationLevel();
 
     return (
-      <tr className={classNames('table-row-component', 'table-row', { 'selected': this.props.isSelected })} tabIndex={0} onClick={this.handleClick} onDoubleClick={this.handleDoubleClick} ref={e => this.componentElement = e}>
+      <tr className={classNames('table-row-component', 'table-row', { 'selected': this.props.isSelected })} tabIndex={0} onClick={this.handleClick} onDoubleClick={this.handleDoubleClick} ref={e => this.componentRef = e}>
         <td className="table-cell sid">
           <SidField sid={this.props.item.sid} bold={this.props.isSelected} />
         </td>
