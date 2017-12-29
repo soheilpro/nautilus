@@ -69,7 +69,7 @@ export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssu
       state.state = props.issue.state;
       state.assignedTo = props.issue.assignedTo;
       state.milestone = props.issue.milestone;
-    };
+    }
 
     this.state = state;
   }
@@ -272,4 +272,4 @@ export default class AddEditIssueWindow extends React.PureComponent<IAddEditIssu
       </Window>
     );
   }
-};
+}

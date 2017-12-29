@@ -137,4 +137,4 @@ export default class UserController extends React.PureComponent<IUserControllerP
       </div>
     );
   }
-};
+}

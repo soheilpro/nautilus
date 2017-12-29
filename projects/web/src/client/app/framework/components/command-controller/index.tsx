@@ -131,4 +131,4 @@ export default class CommandController extends React.PureComponent<ICommandContr
       </div>
     );
   }
-};
+}

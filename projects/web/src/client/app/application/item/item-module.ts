@@ -185,7 +185,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     for (const relationship of this.relationships.filter(relationship => relationship.item1.id === issue.id || relationship.item2.id === issue.id))
       this.deleteRelationship(relationship);
 
-    this.emit('issue.delete', { issue });
+    this.emit('issue.delete', { issue: issue });
   }
 
   getAllMilestones(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]): IMilestone[] {
@@ -251,7 +251,7 @@ export class ItemModule extends BaseModule implements IItemModule {
     this.milestones.splice(this.milestones.indexOf(milestone), 1);
     delete this.milestonesMap[milestone.id];
 
-    this.emit('milestone.delete', { milestone });
+    this.emit('milestone.delete', { milestone: milestone });
   }
 
   private async addRelationship(relationship: IItemRelationship): Promise<void> {

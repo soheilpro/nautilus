@@ -23,4 +23,4 @@ export default class UserQueryBuilder extends React.PureComponent<IUserQueryBuil
       <ListQueryBuilder items={this.props.users} displayProperty="name" query={this.props.query} queryItem={this.props.queryItem} queryItemType="User" itemToQueryItem={asEntity} itemComparer={entityComparer} onChange={this.props.onChange} />
     );
   }
-};
+}

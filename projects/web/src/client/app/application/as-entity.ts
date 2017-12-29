@@ -5,6 +5,6 @@ export function asEntity(entity: IEntity): IEntity {
     return undefined;
 
   return {
-    id: entity.id
+    id: entity.id,
   };
 }

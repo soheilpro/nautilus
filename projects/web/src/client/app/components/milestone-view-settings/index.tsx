@@ -124,7 +124,7 @@ export default class MilestoneViewSettings extends React.PureComponent<IMileston
       </div>
     );
   }
-};
+}
 
 export * from './iview';
 export * from './view';

@@ -18,4 +18,4 @@ export class WindowActionBar extends React.PureComponent<IWindowActionBarProps, 
       </div>
     );
   }
-};
+}

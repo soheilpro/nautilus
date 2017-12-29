@@ -35,4 +35,4 @@ export default class CommandButton extends React.PureComponent<ICommandButtonPro
       </Button>
     );
   }
-};
+}

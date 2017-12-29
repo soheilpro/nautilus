@@ -6,7 +6,7 @@
     "build": "buno tsc",
     "clean": "rm -rf ./out",
     "config": "node ./out/config.js",
-    "lint": "tslint \"app/**/*.ts\"",
+    "lint": "tslint -p .",
     "start": "node ./out/www.js",
     "watch:app": "tsc --watch",
     "watch": "nodemon www.js"
@@ -26,7 +26,7 @@
     "@types/node": "^7.0.32",
     "buno": "^1.0.0",
     "nodemon": "^1.11.0",
-    "tslint": "^4.5.1",
+    "tslint": "^5.8.0",
     "typescript": "^2.4.0"
   }
 }

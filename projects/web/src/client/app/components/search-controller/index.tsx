@@ -59,4 +59,4 @@ export default class SearchController extends React.PureComponent<ISearchControl
       </div>
     );
   }
-};
+}

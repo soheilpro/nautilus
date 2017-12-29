@@ -24,8 +24,8 @@ export class ExpressionJSONConverter extends ExpressionVisitor<IExpressionJSON, 
     return {
       type: 'And',
       args: [
-        expression.children.map(e => this.visit(e, context))
-      ]
+        expression.children.map(e => this.visit(e, context)),
+      ],
     };
   }
 
@@ -34,8 +34,8 @@ export class ExpressionJSONConverter extends ExpressionVisitor<IExpressionJSON, 
       type: 'Cast',
       args: [
         this.visit(expression.child, context),
-        expression.type
-      ]
+        expression.type,
+      ],
     };
   }
 
@@ -45,8 +45,8 @@ export class ExpressionJSONConverter extends ExpressionVisitor<IExpressionJSON, 
       args: [
         this.visit(expression.left, context),
         this.visit(expression.right, context),
-        expression.operator
-      ]
+        expression.operator,
+      ],
     };
   }
 
@@ -55,8 +55,8 @@ export class ExpressionJSONConverter extends ExpressionVisitor<IExpressionJSON, 
       type: 'Constant',
       args: [
         expression.value,
-        expression.type
-      ]
+        expression.type,
+      ],
     };
   }
 
@@ -64,8 +64,8 @@ export class ExpressionJSONConverter extends ExpressionVisitor<IExpressionJSON, 
     return {
       type: 'List',
       args: [
-        expression.children.map(e => this.visit(e, context))
-      ]
+        expression.children.map(e => this.visit(e, context)),
+      ],
     };
   }
 
@@ -73,8 +73,8 @@ export class ExpressionJSONConverter extends ExpressionVisitor<IExpressionJSON, 
     return {
       type: 'Local',
       args: [
-        expression.name
-      ]
+        expression.name,
+      ],
     };
   }
 
@@ -84,8 +84,8 @@ export class ExpressionJSONConverter extends ExpressionVisitor<IExpressionJSON, 
       args: [
         this.visit(expression.target, context),
         expression.name,
-        expression.args.map(e => this.visit(e, context))
-      ]
+        expression.args.map(e => this.visit(e, context)),
+      ],
     };
   }
 
@@ -93,8 +93,8 @@ export class ExpressionJSONConverter extends ExpressionVisitor<IExpressionJSON, 
     return {
       type: 'Or',
       args: [
-        expression.children.map(e => this.visit(e, context))
-      ]
+        expression.children.map(e => this.visit(e, context)),
+      ],
     };
   }
 
@@ -103,8 +103,8 @@ export class ExpressionJSONConverter extends ExpressionVisitor<IExpressionJSON, 
       type: 'Property',
       args: [
         this.visit(expression.target, context),
-        expression.name
-      ]
+        expression.name,
+      ],
     };
   }
 

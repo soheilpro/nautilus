@@ -23,4 +23,4 @@ export default class TableHeader extends React.PureComponent<ITableHeaderProps, 
       </tr>
     );
   }
-};
+}

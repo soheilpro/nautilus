@@ -17,4 +17,4 @@ export class WindowContent extends React.PureComponent<IWindowContentProps, IWin
       </div>
     );
   }
-};
+}

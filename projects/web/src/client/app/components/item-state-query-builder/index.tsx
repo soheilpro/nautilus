@@ -23,4 +23,4 @@ export default class ItemStateQueryBuilder extends React.PureComponent<IItemStat
       <ListQueryBuilder items={this.props.itemStates} displayProperty="title" query={this.props.query} queryItem={this.props.queryItem} queryItemType="ItemState" itemToQueryItem={asEntity} itemComparer={entityComparer} onChange={this.props.onChange} />
     );
   }
-};
+}

@@ -29,4 +29,4 @@ export default class ProjectSelect extends React.PureComponent<IProjectSelectPro
       <Select className={classNames('project-select-component', this.props.className)} selectedItem={this.props.project} items={this.props.projects} displayProperty="name" onChange={this.handleSelectChange} />
     );
   }
-};
+}

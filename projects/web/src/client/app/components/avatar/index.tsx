@@ -15,7 +15,7 @@ interface IAvatarState {
 
 export default class Avatar extends React.PureComponent<IAvatarProps, IAvatarState> {
   public static defaultProps: IAvatarProps = {
-    size: 50
+    size: 50,
   };
 
   render(): JSX.Element {
@@ -29,4 +29,4 @@ export default class Avatar extends React.PureComponent<IAvatarProps, IAvatarSta
       </div>
     );
   }
-};
+}

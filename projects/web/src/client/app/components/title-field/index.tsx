@@ -20,4 +20,4 @@ export default class IssueTitleField extends React.PureComponent<IIssueTitleFiel
       </span>
     );
   }
-};
+}

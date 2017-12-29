@@ -18,7 +18,7 @@ export class GoToIssuesCommand extends BaseCommand {
   get shortcut(): IShortcut {
     return [
       { keyCode: KeyCode.G },
-      { keyCode: KeyCode.I }
+      { keyCode: KeyCode.I },
     ];
   }
 

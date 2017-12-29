@@ -24,4 +24,4 @@ export default class ProjectField extends React.PureComponent<IProjectFieldProps
       </span>
     );
   }
-};
+}

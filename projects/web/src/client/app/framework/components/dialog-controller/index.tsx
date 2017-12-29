@@ -47,7 +47,7 @@ export default class DialogController extends React.PureComponent<IDialogControl
       buttons: [
         { key: 'ok', title: 'OK', type: 'default' },
       ],
-      onButtonClick: button => {
+      onButtonClick: (button: IDialogButton): void => {
         this.windowController.closeWindow(this.dialogWindow);
       },
     };
@@ -63,7 +63,7 @@ export default class DialogController extends React.PureComponent<IDialogControl
         { key: 'ok', title: options.buttonTitle || 'OK', type: options.destructive ? 'destructive' : 'default' },
         { key: 'cancel', title: 'Cancel', type: 'cancel' },
       ],
-      onButtonClick: button => {
+      onButtonClick: (button: IDialogButton): void => {
         this.windowController.closeWindow(this.dialogWindow, () => {
           if (button.key === 'ok')
             options.onConfirm();

@@ -19,9 +19,9 @@ export default class Window extends React.PureComponent<IWindowProps, IWindowSta
       </div>
     );
   }
-};
+}
 
-export * from './window-action-bar'
-export * from './window-content'
-export * from './window-container'
-export * from './window-header'
+export * from './window-action-bar';
+export * from './window-content';
+export * from './window-container';
+export * from './window-header';

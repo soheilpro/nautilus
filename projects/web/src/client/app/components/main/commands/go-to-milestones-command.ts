@@ -18,7 +18,7 @@ export class GoToMilestonesCommand extends BaseCommand {
   get shortcut(): IShortcut {
     return [
       { keyCode: KeyCode.G },
-      { keyCode: KeyCode.M }
+      { keyCode: KeyCode.M },
     ];
   }
 

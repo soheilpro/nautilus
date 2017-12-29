@@ -22,4 +22,4 @@ export default class TableFooter extends React.PureComponent<ITableFooterProps, 
       </tr>
     );
   }
-};
+}

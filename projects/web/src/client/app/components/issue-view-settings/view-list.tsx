@@ -148,4 +148,4 @@ export default class ViewList extends React.PureComponent<IViewListProps, IViewL
       </div>
     );
   }
-};
+}

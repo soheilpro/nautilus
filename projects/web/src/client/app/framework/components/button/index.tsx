@@ -41,6 +41,6 @@ export default class Button extends React.PureComponent<IButtonProps, IButtonSta
       </button>
     );
   }
-};
+}
 
 export * from './button-type';

@@ -32,4 +32,4 @@ export default class Header extends React.PureComponent<IHeaderProps, IHeaderSta
       </div>
     );
   }
-};
+}

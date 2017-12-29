@@ -48,4 +48,4 @@ export default class Shortcut extends React.PureComponent<IShortcutProps, IShort
       </div>
     );
   }
-};
+}

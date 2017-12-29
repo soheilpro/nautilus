@@ -43,7 +43,7 @@ export class UserService extends ServiceBase<IUser, IUserFilter, IUserChange, IU
   getUserPermissions(user: IUser): Promise<IUserPermission[]> {
     const options = {
       method: 'GET',
-      path: `${this.basePath()}/${user.id}/permissions`
+      path: `${this.basePath()}/${user.id}/permissions`,
     };
 
     return this.invoke(options);

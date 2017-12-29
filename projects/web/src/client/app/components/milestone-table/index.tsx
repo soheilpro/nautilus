@@ -64,4 +64,4 @@ export default class MilestoneTable extends React.PureComponent<IMilestoneTableP
       <Table className={classNames('milestone-table-component', this.props.className)} items={this.props.milestones} selectedItem={this.state.selectedMilestone} Header={TableHeader} Row={TableRow} Footer={TableFooter} onItemSelect={this.handleTableItemSelect} onItemAction={this.handleTableItemAction} onItemDelete={this.handleTableItemDelete} />
     );
   }
-};
+}

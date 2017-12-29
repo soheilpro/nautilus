@@ -59,7 +59,7 @@ export class DB implements IDB {
   async counter(name: string): Promise<number> {
     const db = await this.dbConnection.getDB();
     const collection = db.collection<ICounterDocument>('counters');
-    const query = { name };
+    const query = { name: name };
     const update = { $inc: { value: 1 } };
 
     return (await collection.findOneAndUpdate(query, update, { returnOriginal: false, upsert: false })).value.value;

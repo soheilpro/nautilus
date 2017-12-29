@@ -23,4 +23,4 @@ export default class ProjectQueryBuilder extends React.PureComponent<IProjectQue
       <ListQueryBuilder items={this.props.projects} displayProperty="name" query={this.props.query} queryItem={this.props.queryItem} queryItemType="Project" itemToQueryItem={asEntity} itemComparer={entityComparer} onChange={this.props.onChange} />
     );
   }
-};
+}

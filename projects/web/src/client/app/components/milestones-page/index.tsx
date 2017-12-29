@@ -63,7 +63,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     const view = View.fromJSON(await this.localStorage.get('milestones.view', View.create().toJSON()));
 
     this.setState({
-      view,
+      view: view,
     });
 
     this.loadMilestones(view.filterExpression, view.sortExpressions);
@@ -82,7 +82,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     const milestones = this.application.items.getAllMilestones(filterExpression, sortExpressions);
 
     this.setState({
-      milestones,
+      milestones: milestones,
       selectedMilestone: milestones[0],
     });
   }
@@ -132,7 +132,7 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
     this.localStorage.set('milestones.view', view.toJSON());
 
     this.setState({
-      view,
+      view: view,
     });
 
     this.loadMilestones(view.filterExpression, view.sortExpressions);
@@ -173,4 +173,4 @@ export default class MilestonesPage extends React.Component<IMilestonesPageProps
       </MasterPage>
     );
   }
-};
+}

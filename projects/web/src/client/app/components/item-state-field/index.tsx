@@ -24,4 +24,4 @@ export default class ItemStateField extends React.PureComponent<IItemStateFieldP
       </span>
     );
   }
-};
+}

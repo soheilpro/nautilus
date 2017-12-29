@@ -24,4 +24,4 @@ export default class UserField extends React.PureComponent<IUserFieldProps, IUse
       </span>
     );
   }
-};
+}

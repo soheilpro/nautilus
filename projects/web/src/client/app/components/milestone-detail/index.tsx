@@ -46,4 +46,4 @@ export default class MilestoneDetail extends React.PureComponent<IMilestoneDetai
       </div>
     );
   }
-};
+}

@@ -41,7 +41,7 @@ export default class Select extends React.PureComponent<ISelectProps, ISelectSta
         this.props.onChange(null);
 
       this.setState({
-        selectedItem,
+        selectedItem: selectedItem,
       });
     }
   }
@@ -78,4 +78,4 @@ export default class Select extends React.PureComponent<ISelectProps, ISelectSta
       </div>
     );
   }
-};
+}

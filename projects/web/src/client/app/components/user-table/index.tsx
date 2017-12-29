@@ -64,4 +64,4 @@ export default class UserTable extends React.PureComponent<IUserTableProps, IUse
       <Table className={classNames('user-table-component', this.props.className)} items={this.props.users} selectedItem={this.state.selectedUser} Header={TableHeader} Row={TableRow} Footer={TableFooter} onItemSelect={this.handleTableItemSelect} onItemAction={this.handleTableItemAction} onItemDelete={this.handleTableItemDelete} />
     );
   }
-};
+}

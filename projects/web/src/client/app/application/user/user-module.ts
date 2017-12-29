@@ -84,6 +84,6 @@ export class UserModule extends BaseModule implements IUserModule {
     this.users.splice(this.users.indexOf(user), 1);
     delete this.usersMap[user.id];
 
-    this.emit('user.delete', { user });
+    this.emit('user.delete', { user: user });
   }
 }

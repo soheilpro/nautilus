@@ -18,4 +18,4 @@ export default class UserDetail extends React.PureComponent<IUserDetailProps, IU
       </div>
     );
   }
-};
+}

@@ -5,7 +5,7 @@
   "scripts": {
     "build": "buno webpack",
     "clean": "rm -rf ./out",
-    "lint": "tslint \"app/**/*.ts\"",
+    "lint": "tslint -p .",
     "release": "buno -- webpack -p",
     "watch": "webpack --watch"
   },
@@ -51,7 +51,7 @@
     "source-map-loader": "^0.1.6",
     "style-loader": "^0.13.2",
     "stylelint": "^7.11.1",
-    "tslint": "^4.5.1",
+    "tslint": "^5.8.0",
     "typescript": "^2.4.0",
     "url-loader": "^0.5.9",
     "webpack": "^2.6.1",

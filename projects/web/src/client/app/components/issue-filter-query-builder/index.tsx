@@ -69,4 +69,4 @@ export default class IssueFilterQueryBuilder extends React.PureComponent<IIssueF
       <AndQueryBuilder queryBuilders={queryBuilders} query={this.props.query} onChange={this.props.onChange} ref={e => this.andQueryBuilderComponent = e} />
     );
   }
-};
+}

@@ -18,4 +18,4 @@ export default class IssueDescriptionField extends React.PureComponent<IIssueDes
       </span>
     );
   }
-};
+}

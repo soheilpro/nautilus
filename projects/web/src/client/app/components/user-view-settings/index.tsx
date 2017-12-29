@@ -120,7 +120,7 @@ export default class UserViewSettings extends React.PureComponent<IUserViewSetti
       </div>
     );
   }
-};
+}
 
 export * from './iview';
 export * from './view';

@@ -20,4 +20,4 @@ export default class NumberField extends React.PureComponent<INumberFieldProps, 
       </span>
     );
   }
-};
+}

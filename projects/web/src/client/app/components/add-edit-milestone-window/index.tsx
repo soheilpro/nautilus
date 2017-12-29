@@ -172,4 +172,4 @@ export default class AddEditMilestoneWindow extends React.PureComponent<IAddEdit
       </Window>
     );
   }
-};
+}

@@ -27,4 +27,4 @@ export default class MasterPage extends React.PureComponent<IMasterPageProps, IM
       </div>
     );
   }
-};
+}

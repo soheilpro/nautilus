@@ -183,4 +183,4 @@ export default class AddEditUserWindow extends React.PureComponent<IAddEditUserW
       </Window>
     );
   }
-};
+}

@@ -20,4 +20,4 @@ export default class TextField extends React.PureComponent<ITextFieldProps, ITex
       </span>
     );
   }
-};
+}

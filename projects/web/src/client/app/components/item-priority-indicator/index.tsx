@@ -34,4 +34,4 @@ export default class ItemPriorityIndicator extends React.PureComponent<IItemPrio
       </span>
     );
   }
-};
+}

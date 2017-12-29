@@ -10,7 +10,7 @@ require('../../assets/stylesheets/base.less');
 require('./item-list.less');
 
 const emptySelectItem: ISelectItem = {
-  id: ''
+  id: '',
 };
 
 interface ISelectItemListProps {
@@ -151,4 +151,4 @@ export default class ItemList extends React.PureComponent<ISelectItemListProps, 
       </div>
     );
   }
-};
+}

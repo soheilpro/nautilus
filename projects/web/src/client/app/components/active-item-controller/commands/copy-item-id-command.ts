@@ -45,7 +45,7 @@ export class CopyItemIdCommand extends BaseCommand {
       type: 'success',
     },
     {
-      hideAfter: 2000
+      hideAfter: 2000,
     });
   }
 }

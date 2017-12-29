@@ -40,4 +40,4 @@ export default class ItemController extends React.PureComponent<IItemControllerP
       </div>
     );
   }
-};
+}

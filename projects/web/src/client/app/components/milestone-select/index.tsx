@@ -29,4 +29,4 @@ export default class MilestoneSelect extends React.PureComponent<IMilestoneSelec
       <Select className={classNames('milestone-select-component', this.props.className)} selectedItem={this.props.milestone} items={this.props.milestones} displayProperty="fullTitle" onChange={this.handleSelectChange} />
     );
   }
-};
+}

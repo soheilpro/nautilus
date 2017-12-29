@@ -6,7 +6,7 @@
     "build": "buno tsc",
     "clean": "rm -rf ./out",
     "config": "node ./out/config.js",
-    "lint": "tslint \"app/**/*.ts\"",
+    "lint": "tslint -p .",
     "start": "node ./out/www.js",
     "test": "buno jest",
     "update": "node ./out/update.js",
@@ -42,7 +42,7 @@
     "nodemon": "^1.11.0",
     "supertest": "^3.0.0",
     "ts-jest": "^21.0.1",
-    "tslint": "^5.4.3",
+    "tslint": "^5.8.0",
     "typescript": "^2.4.0"
   }
 }

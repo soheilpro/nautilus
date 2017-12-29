@@ -26,4 +26,4 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
       </span>
     );
   }
-};
+}

@@ -31,7 +31,7 @@ export class ExpressionInterpreter extends ExpressionVisitor<any, IInterpretatio
 
   evaluate(expression: IExpression, locals: ILocals): any {
     const context: IInterpretationContext = {
-      locals
+      locals: locals,
     };
 
     return this.visit(expression, context);

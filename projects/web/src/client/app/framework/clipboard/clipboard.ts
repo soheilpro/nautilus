@@ -10,5 +10,5 @@ export class Clipboard implements IClipboard {
     document.addEventListener('copy', listener);
     document.execCommand('copy');
     document.removeEventListener('copy', listener);
-  };
+  }
 }

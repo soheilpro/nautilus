@@ -110,4 +110,4 @@ export default class TableRow extends React.PureComponent<ITableRowProps, ITable
       </tr>
     );
   }
-};
+}

@@ -27,4 +27,4 @@ export default class Expression extends React.PureComponent<IExpressionProps, IE
       </div>
     );
   }
-};
+}

@@ -34,4 +34,4 @@ export default class UserFilterQueryBuilder extends React.PureComponent<IUserFil
       <AndQueryBuilder queryBuilders={queryBuilders} query={this.props.query} onChange={this.props.onChange} ref={e => this.andQueryBuilderComponent = e} />
     );
   }
-};
+}

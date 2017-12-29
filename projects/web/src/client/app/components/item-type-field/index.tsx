@@ -24,4 +24,4 @@ export default class ItemTypeField extends React.PureComponent<IItemTypeFieldPro
       </span>
     );
   }
-};
+}

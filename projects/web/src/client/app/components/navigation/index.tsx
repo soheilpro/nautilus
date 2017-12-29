@@ -20,4 +20,4 @@ export default class Navigation extends React.PureComponent<INavigationProps, IN
       </div>
     );
   }
-};
+}

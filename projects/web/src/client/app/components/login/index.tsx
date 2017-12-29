@@ -49,13 +49,13 @@ export default class Login extends React.PureComponent<ILoginProps, ILoginState>
 
     if (this.state.username.trim().length === 0) {
       return this.setState({
-        error: 'Plese enter your username.'
+        error: 'Plese enter your username.',
       });
     }
 
     if (this.state.password.trim().length === 0) {
       return this.setState({
-        error: 'Plese enter your password.'
+        error: 'Plese enter your password.',
       });
     }
 
@@ -63,7 +63,7 @@ export default class Login extends React.PureComponent<ILoginProps, ILoginState>
 
     if (!session) {
       this.setState({
-        error: 'Wrong username and/or password.'
+        error: 'Wrong username and/or password.',
       });
     }
   }
@@ -86,4 +86,4 @@ export default class Login extends React.PureComponent<ILoginProps, ILoginState>
       </div>
     );
   }
-};
+}

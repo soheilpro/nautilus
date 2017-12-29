@@ -12,7 +12,7 @@ require('./index.less');
 interface IItem {
   id?: string;
   [key: string]: any;
-};
+}
 
 interface IListQueryBuilderProps {
   items: IItem[];
@@ -50,8 +50,8 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     this.state = {
       items: props.items,
       activeItemIndex: -1,
-      includedItems,
-      excludedItems,
+      includedItems: includedItems,
+      excludedItems: excludedItems,
     };
   }
 
@@ -62,8 +62,8 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
       this.setState(state => {
         return {
           items: this.filterItems(props.items, state.searchText),
-          includedItems,
-          excludedItems,
+          includedItems: includedItems,
+          excludedItems: excludedItems,
         };
       });
     }
@@ -191,8 +191,8 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), true, true);
 
     this.setState({
-      includedItems,
-      excludedItems,
+      includedItems: includedItems,
+      excludedItems: excludedItems,
     });
   }
 
@@ -203,8 +203,8 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), false, false);
 
     this.setState({
-      includedItems,
-      excludedItems,
+      includedItems: includedItems,
+      excludedItems: excludedItems,
     });
   }
 
@@ -215,8 +215,8 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
     this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), false, false);
 
     this.setState({
-      includedItems,
-      excludedItems,
+      includedItems: includedItems,
+      excludedItems: excludedItems,
     });
   }
 
@@ -364,4 +364,4 @@ export default class ListQueryBuilder extends React.PureComponent<IListQueryBuil
       </div>
     );
   }
-};
+}

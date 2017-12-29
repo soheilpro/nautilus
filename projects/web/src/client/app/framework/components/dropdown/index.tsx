@@ -129,4 +129,4 @@ export default class Dropdown extends React.PureComponent<IDropdownProps, IDropd
       </div>
     );
   }
-};
+}

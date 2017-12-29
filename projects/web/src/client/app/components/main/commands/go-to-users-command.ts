@@ -18,7 +18,7 @@ export class GoToUsersCommand extends BaseCommand {
   get shortcut(): IShortcut {
     return [
       { keyCode: KeyCode.G },
-      { keyCode: KeyCode.U }
+      { keyCode: KeyCode.U },
     ];
   }
 

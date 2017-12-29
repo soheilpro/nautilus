@@ -17,4 +17,4 @@ export class WindowHeader extends React.PureComponent<IWindowHeaderProps, IWindo
       </div>
     );
   }
-};
+}

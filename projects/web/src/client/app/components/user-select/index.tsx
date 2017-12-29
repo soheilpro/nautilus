@@ -29,4 +29,4 @@ export default class UserSelect extends React.PureComponent<IUserSelectProps, IU
       <Select className={classNames('user-select-component', this.props.className)} selectedItem={this.props.user} items={this.props.users} displayProperty="name" onChange={this.handleSelectChange} />
     );
   }
-};
+}

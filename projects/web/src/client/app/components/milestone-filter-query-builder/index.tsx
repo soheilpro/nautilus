@@ -55,4 +55,4 @@ export default class MilestoneFilterQueryBuilder extends React.PureComponent<IMi
       <AndQueryBuilder queryBuilders={queryBuilders} query={this.props.query} onChange={this.props.onChange} ref={e => this.andQueryBuilderComponent = e} />
     );
   }
-};
+}

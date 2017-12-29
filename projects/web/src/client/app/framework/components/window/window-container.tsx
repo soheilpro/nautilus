@@ -69,4 +69,4 @@ export class WindowContainer extends React.PureComponent<IWindowContainerProps, 
       </div>
     );
   }
-};
+}

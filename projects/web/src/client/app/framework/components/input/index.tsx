@@ -64,4 +64,4 @@ export default class Input extends React.PureComponent<IInputProps, IInputState>
         <input className={classNames('input-component', this.props.style, this.props.className)} type={this.props.secret ? 'password' : 'text'} value={this.props.value} placeholder={this.props.placeholder} autoFocus={this.props.autoFocus} onFocus={this.handleInputFocus} onChange={this.handleInputChange} />
     );
   }
-};
+}

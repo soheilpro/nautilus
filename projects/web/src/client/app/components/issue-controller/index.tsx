@@ -151,4 +151,4 @@ export default class IssueController extends React.PureComponent<IIssueControlle
       </div>
     );
   }
-};
+}

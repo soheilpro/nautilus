@@ -79,7 +79,7 @@ export default class WindowController extends React.PureComponent<IWindowControl
       this.commandController.enableCommandShortcuts();
   }
 
-  private handleWindowContainerClose(window: IExtendedWindow) {
+  private handleWindowContainerClose(window: IExtendedWindow): void {
     this.closeWindow(window);
   }
 
@@ -104,4 +104,4 @@ export default class WindowController extends React.PureComponent<IWindowControl
       </div>
     );
   }
-};
+}

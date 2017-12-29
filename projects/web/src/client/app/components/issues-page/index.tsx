@@ -69,7 +69,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     const view = View.fromJSON(await this.localStorage.get('issues.view', View.create().toJSON()));
 
     this.setState({
-      view,
+      view: view,
     });
 
     this.loadIssues(view.filterExpression, view.sortExpressions);
@@ -94,7 +94,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     const issues = await this.application.items.getAllIssues(filterExpression, sortExpressions);
 
     this.setState({
-      issues,
+      issues: issues,
       selectedIssue: _.find(issues, issue => !issue.parent),
     });
   }
@@ -144,7 +144,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     this.localStorage.set('issues.view', view.toJSON());
 
     this.setState({
-      view,
+      view: view,
     });
 
     this.loadIssues(view.filterExpression, view.sortExpressions);
@@ -154,7 +154,7 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
     this.roamingStorage.set('issues.savedViews', savedViews.map(view => view.toJSON()));
 
     this.setState({
-      savedViews,
+      savedViews: savedViews,
     });
   }
 
@@ -194,4 +194,4 @@ export default class IssuesPage extends React.Component<IIssuesPageProps, IIssue
       </MasterPage>
     );
   }
-};
+}

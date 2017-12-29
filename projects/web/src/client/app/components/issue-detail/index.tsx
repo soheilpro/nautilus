@@ -46,4 +46,4 @@ export default class IssueDetail extends React.PureComponent<IIssueDetailProps, 
       </div>
     );
   }
-};
+}

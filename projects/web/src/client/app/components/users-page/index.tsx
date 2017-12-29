@@ -63,7 +63,7 @@ export default class UsersPage extends React.Component<IUsersPageProps, IUsersPa
     const view = View.fromJSON(await this.localStorage.get('users.view', View.create().toJSON()));
 
     this.setState({
-      view,
+      view: view,
     });
 
     this.loadUsers(view.filterExpression, view.sortExpressions);
@@ -82,7 +82,7 @@ export default class UsersPage extends React.Component<IUsersPageProps, IUsersPa
     const users = this.application.users.getAll(filterExpression, sortExpressions);
 
     this.setState({
-      users,
+      users: users,
       selectedUser: users[0],
     });
   }
@@ -132,7 +132,7 @@ export default class UsersPage extends React.Component<IUsersPageProps, IUsersPa
     this.localStorage.set('users.view', view.toJSON());
 
     this.setState({
-      view,
+      view: view,
     });
 
     this.loadUsers(view.filterExpression, view.sortExpressions);
@@ -173,4 +173,4 @@ export default class UsersPage extends React.Component<IUsersPageProps, IUsersPa
       </MasterPage>
     );
   }
-};
+}

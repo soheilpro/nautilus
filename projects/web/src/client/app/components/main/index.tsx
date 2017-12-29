@@ -68,4 +68,4 @@ export default class Main extends React.PureComponent<IMainProps, IMainState> im
       </div>
     );
   }
-};
+}

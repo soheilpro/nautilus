@@ -77,4 +77,4 @@ export default class NotificationController extends React.PureComponent<INotific
       </div>
     );
   }
-};
+}

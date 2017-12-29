@@ -159,7 +159,7 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     this.windowController.closeWindow(this.promptWindow);
 
     const view = View.create({
-      name,
+      name: name,
       filterExpression: this.state.filterExpression,
     });
 
@@ -168,7 +168,7 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     this.props.onSavedViewsChange(savedViews);
 
     this.setState({
-      savedViews,
+      savedViews: savedViews,
     });
   }
 
@@ -176,13 +176,13 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
     this.windowController.closeWindow(this.promptWindow);
   }
 
-  private handleViewListDelete(view: IView) {
+  private handleViewListDelete(view: IView): void {
     const savedViews = this.state.savedViews.filter(x => x !== view);
 
     this.props.onSavedViewsChange(savedViews);
 
     this.setState({
-      savedViews,
+      savedViews: savedViews,
     });
   }
 
@@ -224,7 +224,7 @@ export default class IssueViewSettings extends React.PureComponent<IIssueViewSet
       </div>
     );
   }
-};
+}
 
 export * from './iview';
 export * from './view';

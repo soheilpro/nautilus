@@ -23,4 +23,4 @@ export default class ItemTypeQueryBuilder extends React.PureComponent<IItemTypeQ
       <ListQueryBuilder items={this.props.itemTypes} displayProperty="title" query={this.props.query} queryItem={this.props.queryItem} queryItemType="ItemType" itemToQueryItem={asEntity} itemComparer={entityComparer} onChange={this.props.onChange} />
     );
   }
-};
+}

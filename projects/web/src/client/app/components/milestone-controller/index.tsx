@@ -160,4 +160,4 @@ export default class MilestoneController extends React.PureComponent<IMilestoneC
       </div>
     );
   }
-};
+}

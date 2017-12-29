@@ -84,7 +84,7 @@ export default class Table extends React.PureComponent<ITableProps, ITableState>
       }
 
       this.setState({
-        selectedItem,
+        selectedItem: selectedItem,
       });
     }
   }
@@ -200,7 +200,7 @@ export default class Table extends React.PureComponent<ITableProps, ITableState>
       </table>
     );
   }
-};
+}
 
 interface IChunkProps {
   index: number;
@@ -236,6 +236,6 @@ class Chunk extends React.PureComponent<IChunkProps, IChunkState> {
       </tbody>
     );
   }
-};
+}
 
 export { ITableRow } from './table-row';

@@ -20,4 +20,4 @@ export default class Icon extends React.PureComponent<IIconProps, IIconState> {
       <i className={classNames('icon-component fa', 'fa-' + this.props.name, this.props.position, this.props.className)} aria-hidden="true"></i>
     );
   }
-};
+}

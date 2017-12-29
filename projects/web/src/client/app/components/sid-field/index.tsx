@@ -20,4 +20,4 @@ export default class SidField extends React.PureComponent<ISidFieldProps, ISidFi
       </span>
     );
   }
-};
+}

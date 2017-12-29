@@ -24,4 +24,4 @@ export class Notification extends React.PureComponent<INotificationProps, INotif
       </div>
     );
   }
-};
+}

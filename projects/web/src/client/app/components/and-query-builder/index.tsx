@@ -27,7 +27,7 @@ export interface IQueryBuilder {
 
 interface IQueryObject {
   [key: string]: NQL.IExpression;
-};
+}
 
 interface IAndQueryBuilderProps {
   queryBuilders: IQueryBuilder[];
@@ -129,4 +129,4 @@ export default class AndQueryBuilder extends React.PureComponent<IAndQueryBuilde
       </div>
     );
   }
-};
+}

@@ -22,4 +22,4 @@ export default class MilestoneField extends React.PureComponent<IMilestoneFieldP
       </span>
     );
   }
-};
+}

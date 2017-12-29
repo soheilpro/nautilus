@@ -64,4 +64,4 @@ export default class App extends React.PureComponent<IAppProps, IAppState> {
 
     return <Main />;
   }
-};
+}
