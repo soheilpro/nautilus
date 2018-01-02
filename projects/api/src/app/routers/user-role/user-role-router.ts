@@ -46,8 +46,8 @@ export class UserRoleRouter extends RouterBase<IUserRole, IUserRoleChange> {
     return {
       ...await super.entityFromParams(params, request),
       user: await params.readEntity('user_id', this.userManager),
+      role: params.readString('role'),
       project: await params.readEntity('project_id', this.projectManager),
-      name: params.readString('name'),
     };
   }
 
@@ -55,8 +55,8 @@ export class UserRoleRouter extends RouterBase<IUserRole, IUserRoleChange> {
     return {
       ...await super.changeFromParams(params, request),
       user: await params.readEntity('user_id', this.userManager),
+      role: params.readString('role'),
       project: await params.readEntity('project_id', this.projectManager),
-      name: params.readString('name'),
     };
   }
 

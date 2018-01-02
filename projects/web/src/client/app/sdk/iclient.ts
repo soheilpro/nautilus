@@ -4,16 +4,19 @@ import { IItemStateService } from './item-state';
 import { IItemTypeService } from './item-type';
 import { IProjectService } from './project';
 import { ISessionService, ISession } from './session';
+import { IUserRoleService } from './user-role';
 import { IUserService } from './user';
 
 export interface IClient {
   address: string;
   session: ISession;
-  users: IUserService;
-  sessions: ISessionService;
-  projects: IProjectService;
+
+  itemRelationships: IItemRelationshipService;
+  items: IItemService;
   itemStates: IItemStateService;
   itemTypes: IItemTypeService;
-  items: IItemService;
-  itemRelationships: IItemRelationshipService;
+  projects: IProjectService;
+  sessions: ISessionService;
+  userRoles: IUserRoleService;
+  users: IUserService;
 }

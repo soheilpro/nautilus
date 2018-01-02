@@ -6,6 +6,8 @@ import { IItemStateModule, ItemStateModule } from './item-state';
 import { IItemTypeModule, ItemTypeModule } from './item-type';
 import { IProjectModule, ProjectModule } from './project';
 import { IUserModule, UserModule } from './user';
+import { IUserRoleModule, UserRoleModule } from './user-role';
+import { IRoleModule, RoleModule } from './role';
 
 export interface IApplicationConfig {
   address: string;
@@ -17,11 +19,13 @@ export class Application extends EventEmitter implements IApplication {
   private isInitializedState: boolean;
   private isLoadedState: boolean;
 
-  users: IUserModule;
-  projects: IProjectModule;
   items: IItemModule;
   itemStates: IItemStateModule;
   itemTypes: IItemTypeModule;
+  projects: IProjectModule;
+  roles: IRoleModule;
+  userRoles: IUserRoleModule;
+  users: IUserModule;
 
   constructor({ address }: IApplicationConfig) {
     super();
@@ -29,11 +33,13 @@ export class Application extends EventEmitter implements IApplication {
     const client = new Client({ address: address });
 
     this.client = client;
-    this.users = new UserModule(this, client);
-    this.projects = new ProjectModule(this, client);
     this.items = new ItemModule(this, client);
     this.itemStates = new ItemStateModule(this, client);
     this.itemTypes = new ItemTypeModule(this, client);
+    this.projects = new ProjectModule(this, client);
+    this.userRoles = new UserRoleModule(this, client);
+    this.users = new UserModule(this, client);
+    this.roles = new RoleModule(this);
   }
 
   isInitialized(): boolean {
@@ -85,8 +91,10 @@ export class Application extends EventEmitter implements IApplication {
       this.items.load(),
       this.users.load(),
       this.projects.load(),
+      this.userRoles.load(),
       this.itemStates.load(),
       this.itemTypes.load(),
+      this.roles.load(),
     ]);
 
     this.isLoadedState = true;

@@ -34,8 +34,8 @@ test('Create: Missing user_id', async () => {
     .auth(context.adminSession.user.id, context.adminSession.accessToken)
     .send({
       'user_id': undefined,
+      'role': 'project.member',
       'project_id': context.project.id,
-      'name': 'myrole',
     })
     .expect(422);
 });
@@ -46,8 +46,8 @@ test('Create: Empty user_id', async () => {
     .auth(context.adminSession.user.id, context.adminSession.accessToken)
     .send({
       'user_id': '',
+      'role': 'project.member',
       'project_id': context.project.id,
-      'name': 'myrole',
     })
     .expect(422);
 });
@@ -58,8 +58,8 @@ test('Create: Invalid user_id', async () => {
     .auth(context.adminSession.user.id, context.adminSession.accessToken)
     .send({
       'user_id': 'foo',
+      'role': 'project.member',
       'project_id': context.project.id,
-      'name': 'myrole',
     })
     .expect(422);
 });
@@ -70,8 +70,8 @@ test('Create: Empty project_id', async () => {
     .auth(context.adminSession.user.id, context.adminSession.accessToken)
     .send({
       'user_id': context.user.id,
+      'role': 'project.member',
       'project_id': '',
-      'name': 'myrole',
     })
     .expect(422);
 });
@@ -82,57 +82,57 @@ test('Create: Invalid project_id', async () => {
     .auth(context.adminSession.user.id, context.adminSession.accessToken)
     .send({
       'user_id': context.user.id,
+      'role': 'project.member',
       'project_id': 'foo',
-      'name': 'myrole',
     })
     .expect(422);
 });
 
-test('Create: Missing name', async () => {
+test('Create: Missing role', async () => {
   await request(context.server)
     .post('/user-roles')
     .auth(context.adminSession.user.id, context.adminSession.accessToken)
     .send({
       'user_id': context.user.id,
+      'role': undefined,
       'project_id': context.project.id,
-      'name': undefined,
     })
     .expect(422);
 });
 
-test('Create: Empty name', async () => {
+test('Create: Empty role', async () => {
   await request(context.server)
     .post('/user-roles')
     .auth(context.adminSession.user.id, context.adminSession.accessToken)
     .send({
       'user_id': context.user.id,
+      'role': '',
       'project_id': context.project.id,
-      'name': '',
     })
     .expect(422);
 });
 
-test('Create: Minimum fields', async () => {
+test('Create: No project_id for project.member role', async () => {
   await request(context.server)
     .post('/user-roles')
     .auth(context.adminSession.user.id, context.adminSession.accessToken)
     .send({
       'user_id': context.user.id,
-      'name': 'myrole',
+      'role': 'project.member',
     })
-    .expect(201)
-    .expect((response: request.Response) => {
-      expect(response.body).toMatchObject({
-        'data': {
-          'user': {
-            'id': context.user.id,
-          },
-          'name': 'myrole',
-        },
-      });
+    .expect(422);
+});
 
-      expect(response.body).not.toHaveProperty('data.project');
-    });
+test('Create: project_id for system.admin role', async () => {
+  await request(context.server)
+    .post('/user-roles')
+    .auth(context.adminSession.user.id, context.adminSession.accessToken)
+    .send({
+      'user_id': context.user.id,
+      'role': 'system.admin',
+      'project_id': context.project.id,
+    })
+    .expect(422);
 });
 
 test('Create', async () => {
@@ -141,8 +141,8 @@ test('Create', async () => {
     .auth(context.adminSession.user.id, context.adminSession.accessToken)
     .send({
       'user_id': context.user.id,
+      'role': 'project.member',
       'project_id': context.project.id,
-      'name': 'myrole',
     })
     .expect(201)
     .expect((response: request.Response) => {
@@ -151,10 +151,10 @@ test('Create', async () => {
           'user': {
             'id': context.user.id,
           },
+          'role': 'project.member',
           'project': {
             'id': context.project.id,
           },
-          'name': 'myrole',
         },
       });
     });
@@ -163,8 +163,8 @@ test('Create', async () => {
 test('Update: Nothing', async () => {
   const entity = await context.createEntity(context.adminSession, 'user-roles', {
     'user_id': context.user.id,
+    'role': 'project.member',
     'project_id': context.project.id,
-    'name': 'myrole',
   });
 
   await request(context.server)
@@ -177,10 +177,10 @@ test('Update: Nothing', async () => {
           'user': {
             'id': context.user.id,
           },
+          'role': 'project.member',
           'project': {
             'id': context.project.id,
           },
-          'name': 'myrole',
         },
       });
     });
@@ -189,8 +189,8 @@ test('Update: Nothing', async () => {
 test('Update: Set user_id', async () => {
   const entity = await context.createEntity(context.adminSession, 'user-roles', {
     'user_id': context.user.id,
+    'role': 'project.member',
     'project_id': context.project.id,
-    'name': 'myrole',
   });
 
   const user = await context.createEntity(context.adminSession, 'users', {
@@ -213,10 +213,10 @@ test('Update: Set user_id', async () => {
           'user': {
             'id': user.id,
           },
+          'role': 'project.member',
           'project': {
             'id': context.project.id,
           },
-          'name': 'myrole',
         },
       });
     });
@@ -225,8 +225,8 @@ test('Update: Set user_id', async () => {
 test('Update: Unset user_id', async () => {
   const entity = await context.createEntity(context.adminSession, 'user-roles', {
     'user_id': context.user.id,
+    'role': 'project.member',
     'project_id': context.project.id,
-    'name': 'myrole',
   });
 
   await request(context.server)
@@ -241,8 +241,8 @@ test('Update: Unset user_id', async () => {
 test('Update: Invalid user_id', async () => {
   const entity = await context.createEntity(context.adminSession, 'user-roles', {
     'user_id': context.user.id,
+    'role': 'project.member',
     'project_id': context.project.id,
-    'name': 'myrole',
   });
 
   await request(context.server)
@@ -257,8 +257,8 @@ test('Update: Invalid user_id', async () => {
 test('Update: Set project_id', async () => {
   const entity = await context.createEntity(context.adminSession, 'user-roles', {
     'user_id': context.user.id,
+    'role': 'project.member',
     'project_id': context.project.id,
-    'name': 'myrole',
   });
 
   const project = await context.createEntity(context.adminSession, 'projects', {
@@ -278,10 +278,10 @@ test('Update: Set project_id', async () => {
           'user': {
             'id': context.user.id,
           },
+          'role': 'project.member',
           'project': {
             'id': project.id,
           },
-          'name': 'myrole',
         },
       });
     });
@@ -290,8 +290,8 @@ test('Update: Set project_id', async () => {
 test('Update: Unset project_id', async () => {
   const entity = await context.createEntity(context.adminSession, 'user-roles', {
     'user_id': context.user.id,
+    'role': 'project.member',
     'project_id': context.project.id,
-    'name': 'myrole',
   });
 
   await request(context.server)
@@ -307,7 +307,7 @@ test('Update: Unset project_id', async () => {
           'user': {
             'id': context.user.id,
           },
-          'name': 'myrole',
+          'role': 'project.member',
         },
       });
 
@@ -318,8 +318,8 @@ test('Update: Unset project_id', async () => {
 test('Update: Invalid project_id', async () => {
   const entity = await context.createEntity(context.adminSession, 'user-roles', {
     'user_id': context.user.id,
+    'role': 'project.member',
     'project_id': context.project.id,
-    'name': 'myrole',
   });
 
   await request(context.server)
@@ -331,18 +331,18 @@ test('Update: Invalid project_id', async () => {
     .expect(422);
 });
 
-test('Update: Set name', async () => {
+test('Update: Set role', async () => {
   const entity = await context.createEntity(context.adminSession, 'user-roles', {
     'user_id': context.user.id,
+    'role': 'project.member',
     'project_id': context.project.id,
-    'name': 'myrole',
   });
 
   await request(context.server)
     .patch(`/user-roles/${entity.id}`)
     .auth(context.adminSession.user.id, context.adminSession.accessToken)
     .send({
-      'name': 'newrole',
+      'role': 'newrole',
     })
     .expect(200)
     .expect((response: request.Response) => {
@@ -351,27 +351,27 @@ test('Update: Set name', async () => {
           'user': {
             'id': context.user.id,
           },
+          'role': 'newrole',
           'project': {
             'id': context.project.id,
           },
-          'name': 'newrole',
         },
       });
     });
 });
 
-test('Update: Unset name', async () => {
+test('Update: Unset role', async () => {
   const entity = await context.createEntity(context.adminSession, 'user-roles', {
     'user_id': context.user.id,
+    'role': 'project.member',
     'project_id': context.project.id,
-    'name': 'myrole',
   });
 
   await request(context.server)
     .patch(`/user-roles/${entity.id}`)
     .auth(context.adminSession.user.id, context.adminSession.accessToken)
     .send({
-      'name': '',
+      'role': '',
     })
     .expect(422);
 });
@@ -379,8 +379,8 @@ test('Update: Unset name', async () => {
 test('Delete', async () => {
   const entity = await context.createEntity(context.adminSession, 'user-roles', {
     'user_id': context.user.id,
+    'role': 'project.member',
     'project_id': context.project.id,
-    'name': 'myrole',
   });
 
   await request(context.server)

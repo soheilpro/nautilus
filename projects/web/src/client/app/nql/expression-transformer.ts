@@ -20,7 +20,7 @@ export class ExpressionTransformer<TContext> extends ExpressionVisitor<IExpressi
   }
 
   visitCast(expression: CastExpression, context: TContext): IExpression {
-    return new CastExpression(expression.child, expression.type);
+    return new CastExpression(this.visit(expression.child, context), expression.type);
   }
 
   visitComparison(expression: ComparisonExpression, context: TContext): IExpression {

@@ -26,7 +26,7 @@ export class ProjectSelect extends React.PureComponent<IProjectSelectProps, IPro
 
   render(): JSX.Element {
     return (
-      <Select className={classNames('project-select-component', this.props.className)} selectedItem={this.props.project} items={this.props.projects} displayProperty="name" onChange={this.handleSelectChange} />
+      <Select className={classNames('project-select-component', this.props.className)} selectedItem={this.props.project} items={this.props.projects} itemKeyGetter={(item: IProject) => item.id} itemTitleGetter={(item: IProject) => item.name} onChange={this.handleSelectChange} />
     );
   }
 }

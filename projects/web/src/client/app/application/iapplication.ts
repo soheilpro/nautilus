@@ -3,7 +3,9 @@ import { IItemModule } from './item';
 import { IItemStateModule } from './item-state';
 import { IItemTypeModule } from './item-type';
 import { IProjectModule } from './project';
+import { IRoleModule } from './role';
 import { IUserModule } from './user';
+import { IUserRoleModule } from './user-role';
 
 export interface IApplication extends EventEmitter {
   isInitialized(): boolean;
@@ -17,9 +19,11 @@ export interface IApplication extends EventEmitter {
 
   getSession(): ISession;
 
-  users: IUserModule;
-  projects: IProjectModule;
   items: IItemModule;
   itemStates: IItemStateModule;
   itemTypes: IItemTypeModule;
+  projects: IProjectModule;
+  roles: IRoleModule;
+  userRoles: IUserRoleModule;
+  users: IUserModule;
 }

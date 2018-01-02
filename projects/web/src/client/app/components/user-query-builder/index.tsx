@@ -20,7 +20,7 @@ export class UserQueryBuilder extends React.PureComponent<IUserQueryBuilderProps
 
   render(): JSX.Element {
     return (
-      <ListQueryBuilder items={this.props.users} displayProperty="name" query={this.props.query} queryItem={this.props.queryItem} queryItemType="User" itemToQueryItem={asEntity} itemComparer={entityComparer} onChange={this.props.onChange} />
+      <ListQueryBuilder items={this.props.users} itemKeyGetter={(item: IUser) => item.id} itemTitleGetter={(item: IUser) => item.name} query={this.props.query} queryItem={this.props.queryItem} queryItemType="User" itemToQueryItem={asEntity} itemComparer={entityComparer} onChange={this.props.onChange} />
     );
   }
 }

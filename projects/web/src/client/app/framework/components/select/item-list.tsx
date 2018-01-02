@@ -9,14 +9,13 @@ import { ISelectItem } from './iselect-item';
 require('../../assets/stylesheets/base.less');
 require('./item-list.less');
 
-const emptySelectItem: ISelectItem = {
-  id: '',
-};
+const emptySelectItem: ISelectItem = {};
 
 interface ISelectItemListProps {
   items: ISelectItem[];
   selectedItem: ISelectItem;
-  displayProperty: string;
+  itemKeyGetter: (item: ISelectItem) => string;
+  itemTitleGetter: (item: ISelectItem) => string;
   onSelect(item: ISelectItem): void;
 }
 
@@ -123,7 +122,7 @@ export class ItemList extends React.PureComponent<ISelectItemListProps, ISelectI
 
     text = text.toLowerCase();
 
-    return items.filter(item => item === emptySelectItem || (item[this.props.displayProperty] || '').toLowerCase().indexOf(text) !== -1);
+    return items.filter(item => item === emptySelectItem || (this.props.itemTitleGetter(item) || '').toLowerCase().indexOf(text) !== -1);
   }
 
   render(): JSX.Element {
@@ -134,12 +133,12 @@ export class ItemList extends React.PureComponent<ISelectItemListProps, ISelectI
           {
             this.state.items.map((item, index) => {
               return (
-                <div className={classNames('item', 'row', { 'active': index === this.state.activeItemIndex })} onMouseEnter={_.partial(this.handleItemMouseEnter, item)} key={item.id}>
+                <div className={classNames('item', 'row', { 'active': index === this.state.activeItemIndex })} onMouseEnter={_.partial(this.handleItemMouseEnter, item)} key={item !== emptySelectItem ? this.props.itemKeyGetter(item) : ''}>
                   <a className={classNames('title', { empty: item === emptySelectItem }) } href="#" onClick={_.partial(this.handleItemTitleClick, item)}>
                     <Icon className={classNames('icon', { 'selected': item === this.props.selectedItem })} name="check" />
                     {
                       item !== emptySelectItem ?
-                        item[this.props.displayProperty] :
+                        this.props.itemTitleGetter(item) :
                         '(None)'
                     }
                   </a>

@@ -45,7 +45,7 @@ export class UserRouter extends RouterBase<IUser, IUserChange> {
   }
 
   async getPermissions(request: IRequest, response: IResponse): Promise<void> {
-    const params = new Params(request);
+    const params = new Params(request.params);
     const user = await params.readEntity('id', this.userManager);
 
     if (!user)

@@ -26,7 +26,7 @@ export class MilestoneSelect extends React.PureComponent<IMilestoneSelectProps, 
 
   render(): JSX.Element {
     return (
-      <Select className={classNames('milestone-select-component', this.props.className)} selectedItem={this.props.milestone} items={this.props.milestones} displayProperty="fullTitle" onChange={this.handleSelectChange} />
+      <Select className={classNames('milestone-select-component', this.props.className)} selectedItem={this.props.milestone} items={this.props.milestones} itemKeyGetter={(item: IMilestone) => item.id} itemTitleGetter={(item: IMilestone) => item.fullTitle} onChange={this.handleSelectChange} />
     );
   }
 }

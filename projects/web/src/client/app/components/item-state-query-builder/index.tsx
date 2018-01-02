@@ -20,7 +20,7 @@ export class ItemStateQueryBuilder extends React.PureComponent<IItemStateQueryBu
 
   render(): JSX.Element {
     return (
-      <ListQueryBuilder items={this.props.itemStates} displayProperty="title" query={this.props.query} queryItem={this.props.queryItem} queryItemType="ItemState" itemToQueryItem={asEntity} itemComparer={entityComparer} onChange={this.props.onChange} />
+      <ListQueryBuilder items={this.props.itemStates} itemKeyGetter={(item: IItemState) => item.id} itemTitleGetter={(item: IItemState) => item.title} query={this.props.query} queryItem={this.props.queryItem} queryItemType="ItemState" itemToQueryItem={asEntity} itemComparer={entityComparer} onChange={this.props.onChange} />
     );
   }
 }

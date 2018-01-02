@@ -26,7 +26,7 @@ export class v1 implements ISchema {
       'user': {
         '_id': adminUser._id,
       },
-      'name': 'system.admin',
+      'role': 'system.admin',
     });
   }
 }

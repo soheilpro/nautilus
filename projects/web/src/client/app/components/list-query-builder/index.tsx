@@ -9,28 +9,27 @@ import { Icon } from '../../framework/components/icon';
 require('../../assets/stylesheets/base.less');
 require('./index.less');
 
-interface IItem {
-  id?: string;
-  [key: string]: any;
+interface IListItem {
 }
 
 interface IListQueryBuilderProps {
-  items: IItem[];
-  displayProperty: string;
+  items: IListItem[];
+  itemKeyGetter: (item: IListItem) => string;
+  itemTitleGetter: (item: IListItem) => string;
   query?: NQL.IExpression;
   queryItem: string;
   queryItemType: string;
-  itemToQueryItem: (item: IItem) => Object;
-  itemComparer: (item1: IItem, item2: IItem) => boolean;
+  itemToQueryItem: (item: IListItem) => Object;
+  itemComparer: (item1: IListItem, item2: IListItem) => boolean;
   onChange(query: NQL.IExpression, reset: boolean, done: boolean): void;
 }
 
 interface IListQueryBuilderState {
-  items?: IItem[];
+  items?: IListItem[];
   activeItemIndex?: number;
   searchText?: string;
-  includedItems?: IItem[];
-  excludedItems?: IItem[];
+  includedItems?: IListItem[];
+  excludedItems?: IListItem[];
 }
 
 export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps, IListQueryBuilderState> {
@@ -131,7 +130,7 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
     });
   }
 
-  private handleItemMouseEnter(item: IItem): void {
+  private handleItemMouseEnter(item: IListItem): void {
     this.setState(state => {
       return {
         activeItemIndex: state.items.indexOf(item),
@@ -139,7 +138,7 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
     });
   }
 
-  private handleItemExcludeClick(item: IItem, event: React.MouseEvent<HTMLAnchorElement>): void {
+  private handleItemExcludeClick(item: IListItem, event: React.MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
 
     this.toggleItemExclude(item);
@@ -151,7 +150,7 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
     });
   }
 
-  private handleItemIncludeClick(item: IItem, event: React.MouseEvent<HTMLAnchorElement>): void {
+  private handleItemIncludeClick(item: IListItem, event: React.MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
 
     this.toggleItemInclude(item);
@@ -163,7 +162,7 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
     });
   }
 
-  private handleItemTitleClick(item: IItem, event: React.MouseEvent<HTMLAnchorElement>): void {
+  private handleItemTitleClick(item: IListItem, event: React.MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
 
     this.includeItem(item);
@@ -175,18 +174,18 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
     });
   }
 
-  private filterItems(items: IItem[], text: string): IItem[] {
+  private filterItems(items: IListItem[], text: string): IListItem[] {
     if (!text)
       return items;
 
     text = text.toLowerCase();
 
-    return items.filter(item => item[this.props.displayProperty].toLowerCase().indexOf(text) !== -1);
+    return items.filter(item => this.props.itemTitleGetter(item).toLowerCase().indexOf(text) !== -1);
   }
 
-  private includeItem(item: IItem): void {
+  private includeItem(item: IListItem): void {
     const includedItems = [item];
-    const excludedItems: IItem[] = [];
+    const excludedItems: IListItem[] = [];
 
     this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), true, true);
 
@@ -196,8 +195,8 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
     });
   }
 
-  private toggleItemExclude(item: IItem): void {
-    const includedItems: IItem[] = [];
+  private toggleItemExclude(item: IListItem): void {
+    const includedItems: IListItem[] = [];
     const excludedItems = (this.state.excludedItems.indexOf(item) === -1) ? [...this.state.excludedItems, item] : this.state.excludedItems.filter(x => x !== item);
 
     this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), false, false);
@@ -208,9 +207,9 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
     });
   }
 
-  private toggleItemInclude(item: IItem): void {
+  private toggleItemInclude(item: IListItem): void {
     const includedItems = (this.state.includedItems.indexOf(item) === -1) ? [...this.state.includedItems, item] : this.state.includedItems.filter(x => x !== item);
-    const excludedItems: IItem[] = [];
+    const excludedItems: IListItem[] = [];
 
     this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), false, false);
 
@@ -220,7 +219,7 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
     });
   }
 
-  private getQuery(includedItems: IItem[], excludedItems: IItem[], props: IListQueryBuilderProps): NQL.IExpression {
+  private getQuery(includedItems: IListItem[], excludedItems: IListItem[], props: IListQueryBuilderProps): NQL.IExpression {
     if (includedItems.length === 1) {
       return new NQL.ComparisonExpression(
         new NQL.LocalExpression(props.queryItem),
@@ -252,7 +251,7 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
     return null;
   }
 
-  private parseQuery(query: NQL.IExpression, props: IListQueryBuilderProps): { includedItems: IItem[], excludedItems: IItem[]} {
+  private parseQuery(query: NQL.IExpression, props: IListQueryBuilderProps): { includedItems: IListItem[], excludedItems: IListItem[]} {
     if (!query)
       return {
         includedItems: [],
@@ -342,7 +341,7 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
             this.state.items.length > 0 ?
               this.state.items.map((item, index) => {
                 return (
-                  <div className={classNames('item', { 'active': index === this.state.activeItemIndex })} onMouseEnter={_.partial(this.handleItemMouseEnter, item)} key={item.id}>
+                  <div className={classNames('item', { 'active': index === this.state.activeItemIndex })} onMouseEnter={_.partial(this.handleItemMouseEnter, item)} key={this.props.itemKeyGetter(item)}>
                     <a className={classNames('exclude', { 'active': this.state.excludedItems.indexOf(item) !== -1 })} href="#" title="Exclude" onClick={_.partial(this.handleItemExcludeClick, item)}>
                       <Icon name="minus-square" />
                     </a>
@@ -350,7 +349,7 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
                       <Icon name="plus-square" />
                     </a>
                     <a className="title" href="#" onClick={_.partial(this.handleItemTitleClick, item)}>
-                      {item[this.props.displayProperty]}
+                      {this.props.itemTitleGetter(item)}
                     </a>
                   </div>
                 );

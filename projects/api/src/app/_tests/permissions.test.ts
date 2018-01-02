@@ -53,14 +53,14 @@ class TestContext extends Context {
 
     this.userRole1 = await this.createEntity(this.adminSession, 'user-roles', {
       'user_id': this.user1.id,
+      'role': 'project.member',
       'project_id': this.project1.id,
-      'name': 'project.member',
     });
 
     this.userRole2 = await this.createEntity(this.adminSession, 'user-roles', {
       'user_id': this.user2.id,
+      'role': 'project.member',
       'project_id': this.project2.id,
-      'name': 'project.member',
     });
 
     this.itemState = await this.createEntity(this.adminSession, 'item-states', {

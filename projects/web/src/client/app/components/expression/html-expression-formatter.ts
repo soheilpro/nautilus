@@ -88,6 +88,9 @@ export class HTMLExpressionFormatter extends NQL.ExpressionVisitor<string, {}> {
     if (expression.type === 'Milestone')
       return this.application.items.getMilestone(expression.value).fullTitle;
 
+    if (expression.type === 'Role')
+      return expression.value;
+
     throw new Error('Not supported.');
   }
 }

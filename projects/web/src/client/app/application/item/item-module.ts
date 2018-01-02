@@ -37,16 +37,16 @@ export class ItemModule extends BaseModule implements IItemModule {
     this.relationship1Map = {};
     this.relationship2Map = {};
 
-    for (const item of result.entities) {
-      switch (item.kind) {
+    for (const entity of result.entities) {
+      switch (entity.kind) {
         case 'issue':
-          const issue = new Issue(item, this.application);
+          const issue = new Issue(entity, this.application);
           this.issues.push(issue);
           this.issuesMap[issue.id] = issue;
           break;
 
         case 'milestone':
-          const milestone = new Milestone(item, this.application);
+          const milestone = new Milestone(entity, this.application);
           this.milestones.push(milestone);
           this.milestonesMap[milestone.id] = milestone;
           break;

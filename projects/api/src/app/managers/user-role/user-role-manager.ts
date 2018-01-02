@@ -16,16 +16,26 @@ export class UserRoleManager extends ManagerBase<IUserRole, IUserRoleChange> imp
     if (entity.user === null)
       return { message: 'Missing user.' };
 
-    if (entity.project !== undefined) {
-      if (entity.project === null)
-        return { message: 'Invalid project.' };
+    if (entity.role === undefined)
+      return { message: 'Missing role.' };
+
+    if (!NameRegEx.test(entity.role))
+      return { message: 'Invalid role.' };
+
+    if (entity.role.startsWith('project.')) {
+      if (entity.project === undefined) {
+        return { message: 'Project is required.' };
+      }
+      else {
+        if (entity.project === null)
+          return { message: 'Invalid project.' };
+      }
     }
-
-    if (entity.name === undefined)
-      return { message: 'Missing name.' };
-
-    if (!NameRegEx.test(entity.name))
-      return { message: 'Invalid name.' };
+    else {
+      if (entity.project !== undefined) {
+        return { message: 'Project is not required.' };
+      }
+    }
 
     return null;
   }
@@ -36,9 +46,9 @@ export class UserRoleManager extends ManagerBase<IUserRole, IUserRoleChange> imp
         return { message: 'Requires user.' };
     }
 
-    if (change.name !== undefined) {
-      if (!NameRegEx.test(change.name))
-        return { message: 'Invalid name.' };
+    if (change.role !== undefined) {
+      if (!NameRegEx.test(change.role))
+        return { message: 'Invalid role.' };
     }
 
     return null;

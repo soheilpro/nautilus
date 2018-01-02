@@ -2,11 +2,12 @@ import * as NQL from '../nql';
 
 export class Query {
   private types =  [
-    { name: 'ItemState',    base: 'Entity' },
-    { name: 'ItemType',     base: 'Entity' },
-    { name: 'Milestone',    base: 'Entity' },
-    { name: 'Project',      base: 'Entity' },
-    { name: 'User',         base: 'Entity' },
+    { name: 'ItemState', base: 'Entity' },
+    { name: 'ItemType',  base: 'Entity' },
+    { name: 'Milestone', base: 'Entity' },
+    { name: 'Project',   base: 'Entity' },
+    { name: 'User',      base: 'Entity' },
+    { name: 'Role',      base: 'String' },
   ];
 
   getPredicate<T>(query: NQL.IExpression): (item: T) => boolean {

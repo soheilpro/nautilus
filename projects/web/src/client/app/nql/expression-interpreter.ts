@@ -142,6 +142,9 @@ export class ExpressionInterpreter extends ExpressionVisitor<any, IInterpretatio
   visitProperty(expression: PropertyExpression, context: IInterpretationContext): any {
     const targetValue = this.visit(expression.target, context);
 
+    if (!targetValue)
+      return null;
+
     return targetValue[expression.name];
   }
 }

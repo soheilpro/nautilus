@@ -147,6 +147,6 @@ export class ExpressionCompiler extends ExpressionVisitor<any, IContext> {
     const target = this.visit(expression.target, context);
     const name = expression.name;
 
-    return `(${target}).${name}`;
+    return `(${target} ? (${target}).${name} : null)`;
   }
 }

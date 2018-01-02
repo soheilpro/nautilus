@@ -20,7 +20,7 @@ export class PermissionProvider implements IPermissionProvider {
   }
 
   private * getPermissionsForRole(userRole: IUserRole): IterableIterator<string> {
-    switch (userRole.name) {
+    switch (userRole.role) {
       case 'system.admin':
         yield 'item-relationships:create';
         yield 'item-relationships.*:read';

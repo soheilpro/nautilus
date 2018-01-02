@@ -28,8 +28,8 @@ export class UserRoleRepository extends RepositoryBase<IUserRole, IUserRoleChang
   changeToUpdate(change: IUserRoleDocument): IUpdate {
     const update = super.changeToUpdate(change);
     update.setOrUnset('user', change.user, this.toRef);
+    update.setOrUnset('role', change.role);
     update.setOrUnset('project', change.project, this.toRef);
-    update.setOrUnset('name', change.name);
 
     return update;
   }
@@ -38,8 +38,8 @@ export class UserRoleRepository extends RepositoryBase<IUserRole, IUserRoleChang
     return {
       ...super.documentToEntity(document),
       user: this.fromRef(document.user),
+      role: document.role,
       project: this.fromRef(document.project),
-      name: document.name,
     };
   }
 
@@ -47,8 +47,8 @@ export class UserRoleRepository extends RepositoryBase<IUserRole, IUserRoleChang
     return {
       ...super.entityToDocument(entity),
       user: this.toRef(entity.user),
+      role: entity.role,
       project: this.toRef(entity.project),
-      name: entity.name,
     };
   }
 }

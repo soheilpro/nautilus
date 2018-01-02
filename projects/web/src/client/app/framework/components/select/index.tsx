@@ -10,7 +10,8 @@ require('./index.less');
 interface ISelectProps {
   items: ISelectItem[];
   selectedItem: ISelectItem;
-  displayProperty: string;
+  itemKeyGetter: (item: ISelectItem) => string;
+  itemTitleGetter: (item: ISelectItem) => string;
   placeholder?: string;
   className?: string;
   onChange(item: ISelectItem): void;
@@ -62,7 +63,7 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
       <span className={classNames('title', { 'placeholder': !this.props.selectedItem })}>
         {
           this.props.selectedItem ?
-            this.props.selectedItem[this.props.displayProperty] :
+            this.props.itemTitleGetter(this.props.selectedItem) :
             this.props.placeholder
         }
       </span>
@@ -73,7 +74,7 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
     return (
       <div className={classNames('select-component', this.props.className)}>
         <Dropdown className="dropdown" title={this.getDropdownTitle()} ref={e => this.dropdownRef = e}>
-          <ItemList items={this.props.items} selectedItem={this.state.selectedItem} displayProperty={this.props.displayProperty} onSelect={this.handleItemListSelect} />
+          <ItemList items={this.props.items} selectedItem={this.state.selectedItem} itemKeyGetter={this.props.itemKeyGetter} itemTitleGetter={this.props.itemTitleGetter} onSelect={this.handleItemListSelect} />
         </Dropdown>
       </div>
     );
