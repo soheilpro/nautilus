@@ -229,7 +229,7 @@ class Chunk extends React.PureComponent<IChunkProps, IChunkState> {
             const isSelected = (this.props.selectedItem === item);
 
             return (
-              <this.props.Row item={item} index={index} isSelected={isSelected} onSelect={this.props.onItemSelect} onAction={this.props.onItemAction} ref={e => this.selectedRow = isSelected ? e : this.selectedRow} key={item.id} />
+              <this.props.Row item={item} index={this.props.index * CHUNK_SIZE + index} isSelected={isSelected} onSelect={this.props.onItemSelect} onAction={this.props.onItemAction} ref={e => this.selectedRow = isSelected ? e : this.selectedRow} key={item.id} />
             );
           })
         }
