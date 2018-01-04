@@ -16,6 +16,7 @@ export interface IApplicationConfig {
 export class Application extends EventEmitter implements IApplication {
   private client: IClient;
   private session: ISession;
+  private userPermissions: string[];
   private isInitializedState: boolean;
   private isLoadedState: boolean;
 
@@ -81,6 +82,10 @@ export class Application extends EventEmitter implements IApplication {
     return this.session;
   }
 
+  getUserPermissions(): string[] {
+    return this.userPermissions;
+  }
+
   isLoaded(): boolean {
     return this.isLoadedState;
   }
@@ -89,6 +94,7 @@ export class Application extends EventEmitter implements IApplication {
     // Put most time consuming ones first
     await Promise.all([
       this.items.load(),
+      this.loadUserPermissions(),
       this.users.load(),
       this.projects.load(),
       this.userRoles.load(),
@@ -100,5 +106,9 @@ export class Application extends EventEmitter implements IApplication {
     this.isLoadedState = true;
 
     this.emit('load');
+  }
+
+  private async loadUserPermissions(): Promise<void> {
+    this.userPermissions = await this.client.users.getUserPermissions(this.session.user);
   }
 }

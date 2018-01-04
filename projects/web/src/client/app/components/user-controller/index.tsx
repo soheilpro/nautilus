@@ -15,6 +15,7 @@ interface IUserControllerProps {
 }
 
 interface IUserControllerState {
+  isAdmin: boolean;
 }
 
 export class UserController extends React.PureComponent<IUserControllerProps, IUserControllerState> implements IUserController, ICommandProvider {
@@ -28,7 +29,9 @@ export class UserController extends React.PureComponent<IUserControllerProps, IU
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      isAdmin: this.application.getUserPermissions().some(permission => permission === 'admin'),
+    };
   }
 
   componentWillMount(): void {
@@ -44,6 +47,9 @@ export class UserController extends React.PureComponent<IUserControllerProps, IU
   }
 
   getCommands(): ICommand[] {
+    if (!this.state.isAdmin)
+      return [];
+
     return [
       new NewUserCommand(),
     ];

@@ -15,6 +15,7 @@ interface IProjectControllerProps {
 }
 
 interface IProjectControllerState {
+  isAdmin: boolean;
 }
 
 export class ProjectController extends React.PureComponent<IProjectControllerProps, IProjectControllerState> implements IProjectController, ICommandProvider {
@@ -28,7 +29,9 @@ export class ProjectController extends React.PureComponent<IProjectControllerPro
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      isAdmin: this.application.getUserPermissions().some(permission => permission === 'admin'),
+    };
   }
 
   componentWillMount(): void {
@@ -44,6 +47,9 @@ export class ProjectController extends React.PureComponent<IProjectControllerPro
   }
 
   getCommands(): ICommand[] {
+    if (!this.state.isAdmin)
+      return [];
+
     return [
       new NewProjectCommand(),
     ];

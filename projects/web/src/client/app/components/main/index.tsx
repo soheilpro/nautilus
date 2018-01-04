@@ -14,6 +14,7 @@ import { MilestoneController } from '../milestone-controller';
 import { NotificationController } from '../../framework/components/notification-controller';
 import { SearchController } from '../search-controller';
 import { WindowController } from '../../framework/components/window-controller';
+import { IApplication } from '../../application';
 import { IssuesPage } from '../issues-page';
 import { MilestonesPage } from '../milestones-page';
 import { UsersPage } from '../users-page';
@@ -26,11 +27,21 @@ interface IMainProps {
 }
 
 interface IMainState {
+  isAdmin: boolean;
 }
 
 export class Main extends React.PureComponent<IMainProps, IMainState> implements ICommandProvider {
+  private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private browserRouterRef: BrowserRouter;
+
+  constructor() {
+    super();
+
+    this.state = {
+      isAdmin: this.application.getUserPermissions().some(permission => permission === 'admin'),
+    };
+  }
 
   componentWillMount(): void {
     this.commandManager.registerCommandProvider(this);
@@ -43,17 +54,39 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
   getCommands(): ICommand[] {
     const history: History = (this.browserRouterRef as any).history;
 
-    return [
+    let commands: ICommand[] = [
       new RefreshCommand(),
       new GoToIssuesCommand(history),
       new GoToMilestonesCommand(history),
-      new GoToUsersCommand(history),
-      new GoToProjectsCommand(history),
-      new GoToUserRolesCommand(history),
     ];
+
+    if (this.state.isAdmin) {
+      commands = [
+        ...commands,
+        new GoToUsersCommand(history),
+        new GoToProjectsCommand(history),
+        new GoToUserRolesCommand(history),
+      ];
+    }
+
+    return commands;
   }
 
   render(): JSX.Element {
+    let routes: JSX.Element[] = [
+      <Route path="/" exact component={IssuesPage as any} key="issues" />,
+      <Route path="/milestones" component={MilestonesPage as any} key="milestones" />,
+    ];
+
+    if (this.state.isAdmin) {
+      routes = [
+        ...routes,
+        <Route path="/users" component={UsersPage as any} key="users" />,
+        <Route path="/projects" component={ProjectsPage as any} key="projects" />,
+        <Route path="/user-roles" component={UserRolesPage as any} key="user-roles" />,
+      ];
+    }
+
     return (
       <div className="main-component rtl">
         <WindowController />
@@ -62,19 +95,13 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
         <CommandController />
         <SearchController />
         <ActiveItemController />
+        <IssueController />
+        <MilestoneController />
         <UserController />
         <ProjectController />
         <UserRoleController />
-        <IssueController />
-        <MilestoneController />
         <BrowserRouter ref={e => this.browserRouterRef = e}>
-          <div>
-            <Route path="/" exact component={IssuesPage as any} />
-            <Route path="/milestones" component={MilestonesPage as any} />
-            <Route path="/users" component={UsersPage as any} />
-            <Route path="/projects" component={ProjectsPage as any} />
-            <Route path="/user-roles" component={UserRolesPage as any} />
-          </div>
+          <div>{ routes }</div>
         </BrowserRouter>
       </div>
     );

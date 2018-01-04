@@ -18,6 +18,7 @@ export interface IApplication extends EventEmitter {
   load(): void;
 
   getSession(): ISession;
+  getUserPermissions(): string[];
 
   items: IItemModule;
   itemStates: IItemStateModule;

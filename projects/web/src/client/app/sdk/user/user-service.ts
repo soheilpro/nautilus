@@ -3,7 +3,6 @@ import { IUser } from './iuser';
 import { IUserChange } from './iuser-change';
 import { IUserFilter } from './iuser-filter';
 import { IUserGetResult } from './iuser-get-result';
-import { IUserPermission } from './iuser-permission';
 import { IUserService } from './iuser-service';
 import { User } from './user';
 
@@ -40,12 +39,12 @@ export class UserService extends ServiceBase<IUser, IUserFilter, IUserChange, IU
     };
   }
 
-  getUserPermissions(user: IUser): Promise<IUserPermission[]> {
+  async getUserPermissions(user: IUser): Promise<string[]> {
     const options = {
       method: 'GET',
       path: `${this.basePath()}/${user.id}/permissions`,
     };
 
-    return this.invoke(options);
+    return (await this.invoke(options)).data.data;
   }
 }

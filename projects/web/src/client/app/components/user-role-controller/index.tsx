@@ -15,6 +15,7 @@ interface IUserRoleControllerProps {
 }
 
 interface IUserRoleControllerState {
+  isAdmin: boolean;
 }
 
 export class UserRoleController extends React.PureComponent<IUserRoleControllerProps, IUserRoleControllerState> implements IUserRoleController, ICommandProvider {
@@ -28,7 +29,9 @@ export class UserRoleController extends React.PureComponent<IUserRoleControllerP
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      isAdmin: this.application.getUserPermissions().some(permission => permission === 'admin'),
+    };
   }
 
   componentWillMount(): void {
@@ -44,6 +47,9 @@ export class UserRoleController extends React.PureComponent<IUserRoleControllerP
   }
 
   getCommands(): ICommand[] {
+    if (!this.state.isAdmin)
+      return [];
+
     return [
       new NewUserRoleCommand(),
     ];
