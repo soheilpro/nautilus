@@ -9,7 +9,7 @@ import { IDialogController } from '../../framework/dialog';
 import { INotificationController } from '../../framework/notifications';
 import { IWindowController } from '../../framework/windows';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
-import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, UpdateIssueCommand } from './commands';
+import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, RepeatUpdateIssueCommand } from './commands';
 import { IItemControllerManager } from '../../framework/items';
 import { AddEditIssueWindow } from '../add-edit-issue-window';
 
@@ -52,7 +52,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       new NewIssueCommand(),
       new NewSubIssueCommand(),
       new DuplicateIssueCommand(),
-      new UpdateIssueCommand(this),
+      new RepeatUpdateIssueCommand(this),
     ];
   }
 

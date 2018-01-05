@@ -8,7 +8,7 @@ import { BaseCommand } from '../../../framework/commands';
 import { IContextManager } from '../../../framework/context';
 import { IssueType } from '../../../modules/issues/issue-type';
 
-export class UpdateIssueCommand extends BaseCommand {
+export class RepeatUpdateIssueCommand extends BaseCommand {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');
   private actionManager = ServiceManager.Instance.getService<IActionManager>('IActionManager');
@@ -18,11 +18,11 @@ export class UpdateIssueCommand extends BaseCommand {
   }
 
   get id(): string {
-    return 'update-issue';
+    return 'repeat-update-issue';
   }
 
   get title(): string {
-    return 'Update Issue';
+    return 'Repeat Update Issue';
   }
 
   get shortcut(): IShortcut {
