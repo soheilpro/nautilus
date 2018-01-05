@@ -12,7 +12,7 @@ import { Expression } from '../expression';
 import { ViewList } from './view-list';
 import { IView } from './iview';
 import { View } from './view';
-import { FilterIssuesByMilestoneCommand, FilterIssuesByProjectCommand, FilterIssuesByTypeCommand, FilterIssuesByStateCommand, FilterIssuesByAssignedToCommand, FilterIssuesByCreatedByCommand, ResetViewCommand, SaveViewCommand, LoadViewCommand } from './commands';
+import { FilterByMilestoneCommand, FilterByProjectCommand, FilterByTypeCommand, FilterByStateCommand, FilterByAssignedToCommand, FilterByCreatedByCommand, ResetViewCommand, SaveViewCommand, LoadViewCommand } from './commands';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -85,12 +85,12 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
     });
 
     return [
-      new FilterIssuesByMilestoneCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'milestone')),
-      new FilterIssuesByProjectCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'project')),
-      new FilterIssuesByTypeCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'type')),
-      new FilterIssuesByStateCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'state')),
-      new FilterIssuesByAssignedToCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'assignedTo')),
-      new FilterIssuesByCreatedByCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'createdBy')),
+      new FilterByMilestoneCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'milestone')),
+      new FilterByProjectCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'project')),
+      new FilterByTypeCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'type')),
+      new FilterByStateCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'state')),
+      new FilterByAssignedToCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'assignedTo')),
+      new FilterByCreatedByCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'createdBy')),
       new ResetViewCommand(view, this.handleResetViewCommandExecute),
       new SaveViewCommand(view, this.handleSaveViewCommandExecute),
       new LoadViewCommand(this.handleLoadViewCommandExecute),

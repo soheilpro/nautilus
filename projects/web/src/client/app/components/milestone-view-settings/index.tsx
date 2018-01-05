@@ -8,7 +8,7 @@ import { MilestoneFilterQueryBuilder } from '../milestone-filter-query-builder';
 import { Expression } from '../expression';
 import { IView } from './iview';
 import { View } from './view';
-import { FilterMilestonesByProjectCommand, FilterMilestonesByStateCommand, FilterMilestonesByCreatedByCommand, ResetViewCommand } from './commands';
+import { FilterByProjectCommand, FilterByStateCommand, FilterByCreatedByCommand, ResetViewCommand } from './commands';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -61,9 +61,9 @@ export class MilestoneViewSettings extends React.PureComponent<IMilestoneViewSet
     });
 
     return [
-      new FilterMilestonesByProjectCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'project')),
-      new FilterMilestonesByStateCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'state')),
-      new FilterMilestonesByCreatedByCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'createdBy')),
+      new FilterByProjectCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'project')),
+      new FilterByStateCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'state')),
+      new FilterByCreatedByCommand(_.partial(this.handleOpenFilterCommandExecute, 'milestone', 'createdBy')),
       new ResetViewCommand(view, this.handleResetViewCommandExecute),
     ];
   }

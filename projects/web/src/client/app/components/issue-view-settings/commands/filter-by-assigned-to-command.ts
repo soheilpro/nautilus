@@ -1,7 +1,7 @@
 import { BaseCommand } from '../../../framework/commands';
 import { KeyCode, IShortcut } from '../../../framework/keyboard';
 
-export class FilterIssuesByAssignedToCommand extends BaseCommand {
+export class FilterByAssignedToCommand extends BaseCommand {
   constructor(private onExecute: () => void) {
     super();
   }

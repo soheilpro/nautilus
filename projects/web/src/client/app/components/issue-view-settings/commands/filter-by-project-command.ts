@@ -1,24 +1,24 @@
 import { BaseCommand } from '../../../framework/commands';
 import { KeyCode, IShortcut } from '../../../framework/keyboard';
 
-export class FilterUserRolesByUserCommand extends BaseCommand {
+export class FilterByProjectCommand extends BaseCommand {
   constructor(private onExecute: () => void) {
     super();
   }
 
   get id(): string {
-    return 'user-role-user-filter';
+    return 'issue-project-filter';
   }
 
   get title(): string {
-    return 'Filter by User';
+    return 'Filter by Project';
   }
 
   get shortcut(): IShortcut {
     return [
       { keyCode: KeyCode.F },
       { keyCode: KeyCode.B },
-      { keyCode: KeyCode.U },
+      { keyCode: KeyCode.P },
     ];
   }
 

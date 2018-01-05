@@ -8,7 +8,7 @@ import { UserRoleFilterQueryBuilder } from '../user-role-filter-query-builder';
 import { Expression } from '../expression';
 import { IView } from './iview';
 import { View } from './view';
-import { FilterUserRolesByRoleCommand, FilterUserRolesByUserCommand, FilterUserRolesByProjectCommand, ResetViewCommand } from './commands';
+import { FilterByRoleCommand, FilterByUserCommand, FilterByProjectCommand, ResetViewCommand } from './commands';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -61,9 +61,9 @@ export class UserRoleViewSettings extends React.PureComponent<IUserRoleViewSetti
     });
 
     return [
-      new FilterUserRolesByUserCommand(_.partial(this.handleOpenFilterCommandExecute, 'user')),
-      new FilterUserRolesByRoleCommand(_.partial(this.handleOpenFilterCommandExecute, 'role')),
-      new FilterUserRolesByProjectCommand(_.partial(this.handleOpenFilterCommandExecute, 'project')),
+      new FilterByUserCommand(_.partial(this.handleOpenFilterCommandExecute, 'user')),
+      new FilterByRoleCommand(_.partial(this.handleOpenFilterCommandExecute, 'role')),
+      new FilterByProjectCommand(_.partial(this.handleOpenFilterCommandExecute, 'project')),
       new ResetViewCommand(view, this.handleResetViewCommandExecute),
     ];
   }

@@ -1,7 +1,7 @@
 import { BaseCommand } from '../../../framework/commands';
 import { KeyCode, IShortcut } from '../../../framework/keyboard';
 
-export class FilterMilestonesByProjectCommand extends BaseCommand {
+export class FilterByProjectCommand extends BaseCommand {
   constructor(private onExecute: () => void) {
     super();
   }
