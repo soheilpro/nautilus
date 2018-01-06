@@ -2,26 +2,25 @@
 
 .navigation-component {
   padding: 5px 10px 0 10px;
-  border-bottom: 2px solid @gray;
+  border-bottom: 2px solid lighten(@default_border, 5%);
 
   a {
     margin-right: 5px;
     padding: 5px 10px;
     display: inline-block;
     text-decoration: none;
-    color: @text;
+    color: @default_text;
 
     &.right {
       float: right;
     }
 
     &:hover {
-      background-color: lighten(@gray, 3%);
-      background-color: @gray;
+      background-color: lighten(@default_border, 5%);
     }
 
     &.active {
-      background-color: @gray;
+      background-color: lighten(@default_border, 5%);
     }
   }
 }

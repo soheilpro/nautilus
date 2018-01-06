@@ -3,21 +3,21 @@
 .input-component {
   display: block;
   padding: 6px 8px;
-  border: 1px solid #d1d1d1;
+  border: 1px solid @default_border;
   height: 34px;
-  background-color: @white;
+  background-color: @default_fill;
   resize: none;
 
   &:focus {
-    border-color: @primary;
-    box-shadow: 0 0 10px lighten(@primary, 45%);
+    border-color: @primary_border;
+    box-shadow: 0 0 10px lighten(@primary_border, 45%);
   }
 
   &.simple {
     height: 30px;
 
     &:focus {
-      border-color: #d1d1d1;
+      border-color: @default_border;
       box-shadow: none;
     }
   }

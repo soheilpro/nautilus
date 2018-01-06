@@ -75,7 +75,7 @@ export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState
     return (
       <tr className={classNames('table-row-component', 'table-row', { 'selected': this.props.isSelected })} tabIndex={0} onClick={this.handleClick} onDoubleClick={this.handleDoubleClick} ref={e => this.componentRef = e}>
         <td className="table-cell sid">
-          <SidField sid={this.props.item.sid} bold={this.props.isSelected} />
+          <SidField sid={this.props.item.sid} selected={this.props.isSelected} />
         </td>
         <td className="table-cell title">
           {

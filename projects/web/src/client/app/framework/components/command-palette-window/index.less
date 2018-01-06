@@ -14,26 +14,26 @@
         display: block;
         padding: 4px 6px;
         text-decoration: none;
-        color: @text;
+        color: @default_text;
 
         .shortcut {
           float: right;
         }
 
         &.active {
-          background-color: @primary;
-          color: @white;
+          background-color: @selection_fill;
+          color: @selection_text;
         }
 
         &.disabled {
-          color: @darkgray;
+          color: @dim_text;
         }
       }
     }
 
     .no-commands-found {
       padding: 4px;
-      color: @darkdarkgray;
+      color: @dim_text;
     }
   }
 }

@@ -2,7 +2,7 @@
 
 .expression-component {
   .expression-and .expression-and-operator {
-    color: #ccc;
+    color: @dim_text;
     font-weight: bold;
     font-size: 11px;
     padding-right: 5px;
@@ -21,14 +21,14 @@
     &.expression-comparison-operator-eq,
     &.expression-comparison-operator-in {
       .expression-constant {
-        color: @green;
+        color: @included;
       }
     }
 
     &.expression-comparison-operator-neq,
     &.expression-comparison-operator-nin {
       .expression-constant {
-        color: @red;
+        color: @excluded;
       }
     }
   }

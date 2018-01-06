@@ -4,40 +4,46 @@
   display: inline-block;
   height: 34px;
   padding: 6px 14px;
-  border: 1px solid @primary;
+  border-width: 1px;
+  border-style: solid;
   border-radius: 2px;
-  background-color: @primary;
-  color: @white;
   text-align: center;
   white-space: nowrap;
   cursor: pointer;
 
-  &:hover {
-    background-color: lighten(@primary, 5%);
-    border-color: lighten(@primary, 5%);
-  }
+  &.primary,
+  &.submit {
+    border-color: @primary_border;
+    background-color: @primary_fill;
+    color: @primary_text;
 
-  &:disabled {
-    background-color: lighten(desaturate(@primary, 100%), 30%);
-    border-color: lighten(desaturate(@primary, 100%), 30%);
-    cursor: default;
-  }
+    &:hover {
+      background-color: lighten(@primary, 5%);
+      border-color: lighten(@primary, 5%);
+    }
 
-  &:focus {
-    box-shadow: 0 0 10px lighten(@primary, 20%);
+    &:disabled {
+      background-color: lighten(desaturate(@primary_fill, 100%), 30%);
+      border-color: lighten(desaturate(@primary_border, 100%), 30%);
+      cursor: default;
+    }
+
+    &:focus {
+      box-shadow: 0 0 10px lighten(@primary, 20%);
+    }
   }
 
   &.secondary {
-    border-color: @darkgray;
-    background-color: @white;
-    color: @text;
+    border-color: @default_border;
+    background-color: @default_fill;
+    color: @default_text;
 
     &:hover {
       color: @primary;
     }
 
     &:disabled {
-      color: lighten(desaturate(@text, 100%), 30%);
+      color: lighten(desaturate(@default_text, 100%), 30%);
       cursor: default;
     }
 
@@ -48,21 +54,21 @@
   }
 
   &.destructive {
-    border-color: @danger;
-    background-color: @danger;
-    color: @white;
+    border-color: @danger_border;
+    background-color: @danger_fill;
+    color: @danger_text;
 
     &:hover {
-      background-color: lighten(@danger, 5%);
+      background-color: lighten(@danger_fill, 5%);
     }
 
     &:focus {
-      box-shadow: 0 0 10px lighten(@danger, 40%);
+      box-shadow: 0 0 10px lighten(@danger_fill, 40%);
     }
 
     &:disabled {
-      background-color: lighten(desaturate(@danger, 100%), 30%);
-      border-color: lighten(desaturate(@danger, 100%), 30%);
+      background-color: lighten(desaturate(@danger_fill, 100%), 30%);
+      border-color: lighten(desaturate(@danger_border, 100%), 30%);
       cursor: default;
     }
   }
@@ -83,7 +89,7 @@
     }
 
     &:disabled {
-      color: lighten(desaturate(@text, 100%), 30%);
+      color: lighten(desaturate(@default_text, 100%), 30%);
       cursor: default;
     }
   }

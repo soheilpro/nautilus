@@ -1,12 +1,10 @@
 import * as React from 'react';
-import * as classNames from 'classnames';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
 
 interface ITextFieldProps {
   text: string;
-  bold?: boolean;
 }
 
 interface ITextFieldState {
@@ -15,7 +13,7 @@ interface ITextFieldState {
 export class TextField extends React.PureComponent<ITextFieldProps, ITextFieldState> {
   render(): JSX.Element {
     return (
-      <span className={classNames('text-field-component', { 'bold': this.props.bold })}>
+      <span className={'text-field-component'}>
         {this.props.text}
       </span>
     );

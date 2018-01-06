@@ -1,12 +1,10 @@
 import * as React from 'react';
-import * as classNames from 'classnames';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
 
 interface INumberFieldProps {
   number: number;
-  bold?: boolean;
 }
 
 interface INumberFieldState {
@@ -15,7 +13,7 @@ interface INumberFieldState {
 export class NumberField extends React.PureComponent<INumberFieldProps, INumberFieldState> {
   render(): JSX.Element {
     return (
-      <span className={classNames('number-field-component', { 'bold': this.props.bold })}>
+      <span className={'number-field-component'}>
         {this.props.number}
       </span>
     );

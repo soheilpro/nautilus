@@ -15,14 +15,14 @@
 
         .remove {
           padding: 2px 6px 2px 3px;
-          color: @darkgray;
+          color: @dim_fill;
 
           &:hover {
-            color: lighten(@red, 5%);
+            color: lighten(@danger_fill, 5%);
           }
 
           &.active {
-            color: @red;
+            color: @danger_fill;
           }
         }
 
@@ -30,13 +30,13 @@
           flex: 1;
           padding: 2px 6px;
           text-decoration: none;
-          color: @text;
+          color: @default_text;
         }
 
         &.active {
           .name {
-            background-color: @primary;
-            color: @white;
+            background-color: @selection_fill;
+            color: @selection_text;
           }
         }
       }
@@ -44,7 +44,7 @@
 
     .no-views-found {
       padding: 4px;
-      color: @darkdarkgray;
+      color: @dim_text;
     }
   }
 }

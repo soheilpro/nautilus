@@ -74,13 +74,15 @@ export class Login extends React.PureComponent<ILoginProps, ILoginState> {
         <div className="container">
             <div className="title">nautilus</div>
             <form onSubmit={this.handleFormSubmit}>
+              <div className="errors">
                 {
                   this.state.error &&
                     <div className="error">{this.state.error}</div>
                 }
-                <Input className="username" placeholder="Username" value={this.state.username} onChange={this.handleUsernameChange} />
-                <Input className="password" placeholder="Password" secret={true} value={this.state.password} onChange={this.handlePasswordChange} />
-                <Button className="submit" type="submit">Log In</Button>
+              </div>
+              <Input className="username" placeholder="Username" value={this.state.username} onChange={this.handleUsernameChange} />
+              <Input className="password" placeholder="Password" secret={true} value={this.state.password} onChange={this.handlePasswordChange} />
+              <Button className="submit" type="submit">Log In</Button>
             </form>
           </div>
       </div>

@@ -14,11 +14,11 @@
         display: block;
         padding: 4px 6px;
         text-decoration: none;
-        color: @text;
+        color: @default_text;
 
         &.selected {
-          background-color: @primary;
-          color: @white;
+          background-color: @selection_fill;
+          color: @selection_text;
         }
 
         .issue {
@@ -31,7 +31,7 @@
 
     .no-search-results-found {
       padding: 4px;
-      color: @darkdarkgray;
+      color: @dim_text;
     }
 
     .search-help {
