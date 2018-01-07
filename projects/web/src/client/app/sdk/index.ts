@@ -1,4 +1,5 @@
 export * from './argument-error';
+export * from './unauthorized-error';
 export * from './client';
 export * from './iclient';
 export * from './ientity-meta';

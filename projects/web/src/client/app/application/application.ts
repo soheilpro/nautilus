@@ -1,5 +1,5 @@
 import EventEmitter = require('wolfy87-eventemitter');
-import { Client, IClient, ISession } from '../sdk';
+import { Client, IClient, ISession, UnauthorizedError } from '../sdk';
 import { IApplication } from './iapplication';
 import { IItemModule, ItemModule } from './item';
 import { IItemStateModule, ItemStateModule } from './item-state';
@@ -65,17 +65,23 @@ export class Application extends EventEmitter implements IApplication {
   }
 
   async logIn(username: string, password: string): Promise<ISession> {
-    const session = await this.client.sessions.create(username, password);
+    try {
+      const session = await this.client.sessions.create(username, password);
 
-    if (session) {
       this.session = session;
       this.client.session = session;
       this.emit('login', { session: session });
 
       this.load();
-    }
 
-    return session;
+      return session;
+    }
+    catch (error) {
+      if (error instanceof UnauthorizedError)
+        return null;
+
+      throw error;
+    }
   }
 
   getSession(): ISession {

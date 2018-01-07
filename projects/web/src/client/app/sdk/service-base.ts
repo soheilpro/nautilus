@@ -6,6 +6,7 @@ import { IClient } from './iclient';
 import { IEntity } from './ientity';
 import { IFilter } from './ifilter';
 import { IGetResult } from './iget-result';
+import { UnauthorizedError } from './unauthorized-error';
 import { ArgumentError } from './argument-error';
 
 export interface IInvokeOptions {
@@ -105,6 +106,9 @@ export abstract class ServiceBase<TEntity extends IEntity, TFilter extends IFilt
     }
 
     const response = await axios.request(config);
+
+    if (response.status === 401)
+      throw new UnauthorizedError();
 
     if (response.status === 422)
       throw new ArgumentError(response.data.message);
