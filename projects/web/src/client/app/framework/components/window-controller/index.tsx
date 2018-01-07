@@ -1,14 +1,16 @@
 import * as _ from 'underscore';
 import * as React from 'react';
 import { ServiceManager } from '../../../services';
-import { IWindow, IWindowController } from '../../windows';
+import { IWindowController, IWindowOptions } from '../../windows';
 import { WindowContainer } from '../window';
 import { ICommandController } from '../../commands';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
 
-interface IExtendedWindow extends IWindow {
+interface IWindowHandle {
+  window: JSX.Element;
+  options: IWindowOptions;
   key?: number;
   focusedElementOnOpen?: HTMLElement;
 }
@@ -17,7 +19,7 @@ interface IWindowControllerProps {
 }
 
 interface IWindowControllerState {
-  windows?: IExtendedWindow[];
+  handles?: IWindowHandle[];
 }
 
 export class WindowController extends React.PureComponent<IWindowControllerProps, IWindowControllerState> implements IWindowController {
@@ -34,7 +36,7 @@ export class WindowController extends React.PureComponent<IWindowControllerProps
     this.handleWindowContainerClose = this.handleWindowContainerClose.bind(this);
 
     this.state = {
-      windows: [],
+      handles: [],
     };
   }
 
@@ -46,56 +48,61 @@ export class WindowController extends React.PureComponent<IWindowControllerProps
     if (this.elementToFocus)
       this.elementToFocus.focus();
 
-    document.body.style.overflowY = this.state.windows.some(window => window.modal) ? 'hidden' : null;
+    document.body.style.overflowY = this.state.handles.some(handle => handle.options.modal) ? 'hidden' : null;
   }
 
   componentWillUnmount(): void {
     ServiceManager.Instance.unregisterService('IWindowController', this);
   }
 
-  showWindow(window: IWindow, callback?: () => any): void {
-    const extendedWindow: IExtendedWindow = window;
-    extendedWindow.key = this.windowKeyCounter++;
-    extendedWindow.focusedElementOnOpen = document.activeElement as HTMLElement;
+  showWindow(window: JSX.Element, options: IWindowOptions, callback?: () => any): IWindowHandle {
+    const handle: IWindowHandle = {
+      window: window,
+      options: options,
+      key: this.windowKeyCounter++,
+      focusedElementOnOpen: document.activeElement as HTMLElement,
+    };
 
     this.elementToFocus = null;
 
     this.setState(state => ({
-      windows: [...state.windows, extendedWindow],
+      handles: [...state.handles, handle],
     }), callback);
 
-    if (window.modal)
+    if (options.modal)
       this.commandController.disableCommandShortcuts();
+
+    return handle;
   }
 
-  closeWindow(window: IExtendedWindow, callback?: () => any): void {
-    this.elementToFocus = window.focusedElementOnOpen;
+  closeWindow(handle: IWindowHandle, callback?: () => any): void {
+    this.elementToFocus = handle.focusedElementOnOpen;
 
     this.setState(state => ({
-      windows: state.windows.filter(x => x !== window),
+      handles: state.handles.filter(x => x !== handle),
     }), callback);
 
-    if (window.modal)
+    if (handle.options.modal)
       this.commandController.enableCommandShortcuts();
   }
 
-  private handleWindowContainerClose(window: IExtendedWindow): void {
-    this.closeWindow(window);
+  private handleWindowContainerClose(handle: IWindowHandle): void {
+    this.closeWindow(handle);
   }
 
   render(): JSX.Element {
     return (
       <div className="window-controller-component">
       {
-        this.state.windows.map((window, index) => {
+        this.state.handles.map(handle => {
           return (
-            <div key={window.key}>
+            <div key={handle.key}>
               {
-                window.modal &&
+                handle.options.modal &&
                   <div className="overlay"></div>
               }
-              <WindowContainer position="fixed" top={window.top} width={window.width} closeOnBlur={!window.modal} onClose={_.partial(this.handleWindowContainerClose, window)} >
-                {window.content}
+              <WindowContainer position="fixed" top={handle.options.top} width={handle.options.width} closeOnBlur={!handle.options.modal} onClose={_.partial(this.handleWindowContainerClose, handle)} >
+                {handle.window}
               </WindowContainer>
             </div>
           );

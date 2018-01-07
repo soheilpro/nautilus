@@ -56,11 +56,11 @@ export class UserRoleController extends React.PureComponent<IUserRoleControllerP
   }
 
   createNew(): void {
-    const handleAddUserRoleWindowAdd = async (userRole: IUserRole, window: AddEditUserRoleWindow) => {
+    const handleAdd = async (userRole: IUserRole, window: AddEditUserRoleWindow) => {
       try {
         await this.application.userRoles.add(userRole);
 
-        this.windowController.closeWindow(addUserRoleWindow);
+        this.windowController.closeWindow(handle);
       }
       catch (error) {
         window.showError({
@@ -69,26 +69,26 @@ export class UserRoleController extends React.PureComponent<IUserRoleControllerP
       }
     };
 
-    const handleAddUserRoleWindowClose = () => {
-      this.windowController.closeWindow(addUserRoleWindow);
+    const handleClose = () => {
+      this.windowController.closeWindow(handle);
     };
 
-    const addUserRoleWindow = {
-      content: <AddEditUserRoleWindow mode="add" onAdd={handleAddUserRoleWindowAdd} onClose={handleAddUserRoleWindowClose} />,
+    const window = <AddEditUserRoleWindow mode="add" onAdd={handleAdd} onClose={handleClose} />;
+    const options = {
       top: 120,
       width: 800,
       modal: true,
     };
 
-    this.windowController.showWindow(addUserRoleWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   editItem(userRole: IUserRole): void {
-    const handleEditUserRoleWindowUpdate = async (userRole: IUserRole, userRoleChange: IUserRoleChange, window: AddEditUserRoleWindow) => {
+    const handleUpdate = async (userRole: IUserRole, userRoleChange: IUserRoleChange, window: AddEditUserRoleWindow) => {
       try {
         await this.application.userRoles.update(userRole, userRoleChange);
 
-        this.windowController.closeWindow(editUserRoleWindow);
+        this.windowController.closeWindow(handle);
       }
       catch (error) {
         window.showError({
@@ -97,18 +97,18 @@ export class UserRoleController extends React.PureComponent<IUserRoleControllerP
       }
     };
 
-    const handleEditUserRoleWindowClose = () => {
-      this.windowController.closeWindow(editUserRoleWindow);
+    const handleClose = () => {
+      this.windowController.closeWindow(handle);
     };
 
-    const editUserRoleWindow = {
-      content: <AddEditUserRoleWindow mode="edit" userRole={userRole} onUpdate={_.partial(handleEditUserRoleWindowUpdate, userRole)} onClose={handleEditUserRoleWindowClose} />,
+    const window = <AddEditUserRoleWindow mode="edit" userRole={userRole} onUpdate={_.partial(handleUpdate, userRole)} onClose={handleClose} />;
+    const options = {
       top: 120,
       width: 800,
       modal: true,
     };
 
-    this.windowController.showWindow(editUserRoleWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   async deleteItem(userRole: IUserRole): Promise<void> {

@@ -56,11 +56,11 @@ export class UserController extends React.PureComponent<IUserControllerProps, IU
   }
 
   createNew(): void {
-    const handleAddUserWindowAdd = async (user: IUser, window: AddEditUserWindow) => {
+    const handleAdd = async (user: IUser, window: AddEditUserWindow) => {
       try {
         await this.application.users.add(user);
 
-        this.windowController.closeWindow(addUserWindow);
+        this.windowController.closeWindow(handle);
       }
       catch (error) {
         window.showError({
@@ -69,26 +69,26 @@ export class UserController extends React.PureComponent<IUserControllerProps, IU
       }
     };
 
-    const handleAddUserWindowClose = () => {
-      this.windowController.closeWindow(addUserWindow);
+    const handleClose = () => {
+      this.windowController.closeWindow(handle);
     };
 
-    const addUserWindow = {
-      content: <AddEditUserWindow mode="add" onAdd={handleAddUserWindowAdd} onClose={handleAddUserWindowClose} />,
+    const window = <AddEditUserWindow mode="add" onAdd={handleAdd} onClose={handleClose} />;
+    const options = {
       top: 120,
       width: 800,
       modal: true,
     };
 
-    this.windowController.showWindow(addUserWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   editItem(user: IUser): void {
-    const handleEditUserWindowUpdate = async (user: IUser, userChange: IUserChange, window: AddEditUserWindow) => {
+    const handleUpdate = async (user: IUser, userChange: IUserChange, window: AddEditUserWindow) => {
       try {
         await this.application.users.update(user, userChange);
 
-        this.windowController.closeWindow(editUserWindow);
+        this.windowController.closeWindow(handle);
       }
       catch (error) {
         window.showError({
@@ -97,18 +97,18 @@ export class UserController extends React.PureComponent<IUserControllerProps, IU
       }
     };
 
-    const handleEditUserWindowClose = () => {
-      this.windowController.closeWindow(editUserWindow);
+    const handleClose = () => {
+      this.windowController.closeWindow(handle);
     };
 
-    const editUserWindow = {
-      content: <AddEditUserWindow mode="edit" user={user} onUpdate={_.partial(handleEditUserWindowUpdate, user)} onClose={handleEditUserWindowClose} />,
+    const window = <AddEditUserWindow mode="edit" user={user} onUpdate={_.partial(handleUpdate, user)} onClose={handleClose} />;
+    const options = {
       top: 120,
       width: 800,
       modal: true,
     };
 
-    this.windowController.showWindow(editUserWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   async deleteItem(user: IUser): Promise<void> {

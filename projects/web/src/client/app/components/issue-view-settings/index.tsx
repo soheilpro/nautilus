@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as NQL from '../../nql';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { ServiceManager } from '../../services';
-import { IWindow, IWindowController } from '../../framework/windows';
+import { IWindowController } from '../../framework/windows';
 import { Button } from '../../framework/components/button';
 import { Dropdown } from '../../framework/components/dropdown';
 import { PromptWindow } from '../../framework/components/prompt-window';
@@ -34,7 +34,6 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
   private queryBuilderRef: IssueFilterQueryBuilder;
   private savedViewListDropdownRef: Dropdown;
-  private promptWindow: IWindow;
 
   constructor(props: IIssueViewSettingsProps) {
     super(props);
@@ -42,8 +41,6 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
     this.handleIssueFilterQueryBuilderChange = this.handleIssueFilterQueryBuilderChange.bind(this);
     this.handleResetButtonClick = this.handleResetButtonClick.bind(this);
     this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
-    this.handleSavePromptWindowConfirm = this.handleSavePromptWindowConfirm.bind(this);
-    this.handleSavePromptWindowClose = this.handleSavePromptWindowClose.bind(this);
     this.handleViewListDelete = this.handleViewListDelete.bind(this);
     this.handleViewListSelect = this.handleViewListSelect.bind(this);
     this.handleOpenFilterCommandExecute = this.handleOpenFilterCommandExecute.bind(this);
@@ -97,6 +94,38 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
     ];
   }
 
+  private saveView(): void {
+    const handleConfirm = (name: string) => {
+      this.windowController.closeWindow(handle);
+
+      const view = View.create({
+        name: name,
+        filterExpression: this.state.filterExpression,
+      });
+
+      const savedViews = [...this.state.savedViews, view];
+
+      this.props.onSavedViewsChange(savedViews);
+
+      this.setState({
+        savedViews: savedViews,
+      });
+    };
+
+    const handleClose = () => {
+      this.windowController.closeWindow(handle);
+    };
+
+    const window = <PromptWindow title="Save" placeholder="Name" confirmButtonText="Save" onConfirm={handleConfirm} onClose={handleClose} />;
+    const options = {
+      top: 120,
+      width: 500,
+      modal: true,
+    };
+
+    const handle = this.windowController.showWindow(window, options);
+  }
+
   private handleOpenFilterCommandExecute(itemKind: string, key: string): void {
     this.queryBuilderRef.open(key);
   }
@@ -110,14 +139,7 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
   }
 
   private handleSaveViewCommandExecute(): void {
-    this.promptWindow = {
-      content: <PromptWindow title="Save" placeholder="Name" confirmButtonText="Save" onConfirm={this.handleSavePromptWindowConfirm} onClose={this.handleSavePromptWindowClose} />,
-      top: 120,
-      width: 500,
-      modal: true,
-    };
-
-    this.windowController.showWindow(this.promptWindow);
+    this.saveView();
   }
 
   private handleLoadViewCommandExecute(): void {
@@ -145,35 +167,7 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
   }
 
   private handleSaveButtonClick(): void {
-    this.promptWindow = {
-      content: <PromptWindow title="Save" placeholder="Name" confirmButtonText="Save" onConfirm={this.handleSavePromptWindowConfirm} onClose={this.handleSavePromptWindowClose} />,
-      top: 120,
-      width: 500,
-      modal: true,
-    };
-
-    this.windowController.showWindow(this.promptWindow);
-  }
-
-  private handleSavePromptWindowConfirm(name: string): void {
-    this.windowController.closeWindow(this.promptWindow);
-
-    const view = View.create({
-      name: name,
-      filterExpression: this.state.filterExpression,
-    });
-
-    const savedViews = [...this.state.savedViews, view];
-
-    this.props.onSavedViewsChange(savedViews);
-
-    this.setState({
-      savedViews: savedViews,
-    });
-  }
-
-  private handleSavePromptWindowClose(): void {
-    this.windowController.closeWindow(this.promptWindow);
+    this.saveView();
   }
 
   private handleViewListDelete(view: IView): void {

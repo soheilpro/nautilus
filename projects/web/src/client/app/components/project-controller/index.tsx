@@ -56,11 +56,11 @@ export class ProjectController extends React.PureComponent<IProjectControllerPro
   }
 
   createNew(): void {
-    const handleAddProjectWindowAdd = async (project: IProject, window: AddEditProjectWindow) => {
+    const handleAdd = async (project: IProject, window: AddEditProjectWindow) => {
       try {
         await this.application.projects.add(project);
 
-        this.windowController.closeWindow(addProjectWindow);
+        this.windowController.closeWindow(handle);
       }
       catch (error) {
         window.showError({
@@ -69,26 +69,26 @@ export class ProjectController extends React.PureComponent<IProjectControllerPro
       }
     };
 
-    const handleAddProjectWindowClose = () => {
-      this.windowController.closeWindow(addProjectWindow);
+    const handleClose = () => {
+      this.windowController.closeWindow(handle);
     };
 
-    const addProjectWindow = {
-      content: <AddEditProjectWindow mode="add" onAdd={handleAddProjectWindowAdd} onClose={handleAddProjectWindowClose} />,
+    const window = <AddEditProjectWindow mode="add" onAdd={handleAdd} onClose={handleClose} />;
+    const options = {
       top: 120,
       width: 800,
       modal: true,
     };
 
-    this.windowController.showWindow(addProjectWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   editItem(project: IProject): void {
-    const handleEditProjectWindowUpdate = async (project: IProject, projectChange: IProjectChange, window: AddEditProjectWindow) => {
+    const handleUpdate = async (project: IProject, projectChange: IProjectChange, window: AddEditProjectWindow) => {
       try {
         await this.application.projects.update(project, projectChange);
 
-        this.windowController.closeWindow(editProjectWindow);
+        this.windowController.closeWindow(handle);
       }
       catch (error) {
         window.showError({
@@ -97,18 +97,18 @@ export class ProjectController extends React.PureComponent<IProjectControllerPro
       }
     };
 
-    const handleEditProjectWindowClose = () => {
-      this.windowController.closeWindow(editProjectWindow);
+    const handleClose = () => {
+      this.windowController.closeWindow(handle);
     };
 
-    const editProjectWindow = {
-      content: <AddEditProjectWindow mode="edit" project={project} onUpdate={_.partial(handleEditProjectWindowUpdate, project)} onClose={handleEditProjectWindowClose} />,
+    const window = <AddEditProjectWindow mode="edit" project={project} onUpdate={_.partial(handleUpdate, project)} onClose={handleClose} />;
+    const options = {
       top: 120,
       width: 800,
       modal: true,
     };
 
-    this.windowController.showWindow(editProjectWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   async deleteItem(project: IProject): Promise<void> {

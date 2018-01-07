@@ -1,12 +1,8 @@
-export interface IDialogButton {
-  key: string;
-  title: string;
-  type: 'default' | 'cancel' | 'destructive';
-}
+import { IDialogButton } from './idialog-button';
 
 export interface IDialog {
   title: string;
   content: any;
   buttons: IDialogButton[];
-  onButtonClick(button: IDialogButton): void;
+  onButtonClick?(button: IDialogButton): void;
 }

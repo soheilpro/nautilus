@@ -1,8 +1,7 @@
-import * as _ from 'underscore';
 import * as React from 'react';
 import { ServiceManager } from '../../../services';
 import { IDialog, IDialogButton, IDialogController } from '../../dialog';
-import { IWindow, IWindowController } from '../../windows';
+import { IWindowController } from '../../windows';
 import { DialogWindow } from '../dialog-window';
 
 interface IDialogControllerProps {
@@ -13,13 +12,6 @@ interface IDialogControllerState {
 
 export class DialogController extends React.PureComponent<IDialogControllerProps, IDialogControllerState> implements IDialogController {
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
-  private dialogWindow: IWindow;
-
-  constructor() {
-    super();
-
-    this.handleDialogWindowButtonClick = this.handleDialogWindowButtonClick.bind(this);
-  }
 
   componentWillMount(): void {
     ServiceManager.Instance.registerService('IDialogController', this);
@@ -30,14 +22,21 @@ export class DialogController extends React.PureComponent<IDialogControllerProps
   }
 
   showDialog(dialog: IDialog): void {
-    this.dialogWindow = {
-      content: <DialogWindow dialog={dialog} onButtonClick={_.partial(this.handleDialogWindowButtonClick, dialog)} />,
+    const handleButtonClick = (button: IDialogButton) => {
+      this.windowController.closeWindow(handle, () => {
+        if (dialog.onButtonClick)
+          dialog.onButtonClick(button);
+      });
+    };
+
+    const window = <DialogWindow dialog={dialog} onButtonClick={handleButtonClick} />;
+    const options = {
       top: 120,
       width: 600,
       modal: true,
     };
 
-    this.windowController.showWindow(this.dialogWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   showErrorDialog(options: { title: string, message: string }): void {
@@ -47,9 +46,6 @@ export class DialogController extends React.PureComponent<IDialogControllerProps
       buttons: [
         { key: 'ok', title: 'OK', type: 'default' },
       ],
-      onButtonClick: (button: IDialogButton): void => {
-        this.windowController.closeWindow(this.dialogWindow);
-      },
     };
 
     this.showDialog(dialog);
@@ -64,18 +60,12 @@ export class DialogController extends React.PureComponent<IDialogControllerProps
         { key: 'cancel', title: 'Cancel', type: 'cancel' },
       ],
       onButtonClick: (button: IDialogButton): void => {
-        this.windowController.closeWindow(this.dialogWindow, () => {
-          if (button.key === 'ok')
-            options.onConfirm();
-        });
+        if (button.key === 'ok')
+          options.onConfirm();
       },
     };
 
     this.showDialog(dialog);
-  }
-
-  private handleDialogWindowButtonClick(dialog: IDialog, button: IDialogButton): void {
-    dialog.onButtonClick(button);
   }
 
   render(): JSX.Element {

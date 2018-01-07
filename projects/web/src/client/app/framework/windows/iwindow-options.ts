@@ -1,5 +1,4 @@
-export interface IWindow {
-  content: any;
+export interface IWindowOptions {
   top?: number;
   width?: number;
   modal?: boolean;

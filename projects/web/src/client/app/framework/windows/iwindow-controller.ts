@@ -1,6 +1,7 @@
-import { IWindow } from './iwindow';
+import { IWindowOptions } from './iwindow-options';
+import { IWindowHandle } from './iwindow-handle';
 
 export interface IWindowController {
-  showWindow(window: IWindow, callback?: () => any): void;
-  closeWindow(window: IWindow, callback?: () => any): void;
+  showWindow(window: JSX.Element, options: IWindowOptions, callback?: () => any): IWindowHandle;
+  closeWindow(handle: IWindowHandle, callback?: () => any): void;
 }

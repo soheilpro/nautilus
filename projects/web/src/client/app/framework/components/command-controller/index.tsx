@@ -1,7 +1,7 @@
 import * as _ from 'underscore';
 import * as React from 'react';
 import { ICommandProvider, ICommand, ICommandController, ICommandManager } from '../../commands';
-import { IWindow, IWindowController } from '../../windows';
+import { IWindowController } from '../../windows';
 import { KeyCombination, isInputEvent } from '../../../framework/keyboard';
 import { ServiceManager } from '../../../services';
 import { CommandPaletteWindow } from '../command-palette-window';
@@ -18,13 +18,11 @@ export class CommandController extends React.PureComponent<ICommandControllerPro
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
   private commandShortcutsDisabledCounter: number = 0;
   private keyboardEvents: KeyboardEvent[] = [];
-  private commandPaletteWindow: IWindow;
 
   constructor() {
     super();
 
     this.handleDocumentKeyDown = this.handleDocumentKeyDown.bind(this);
-    this.handleCommandPaletteWindowSelect = this.handleCommandPaletteWindowSelect.bind(this);
 
     this.state = {};
   }
@@ -50,15 +48,21 @@ export class CommandController extends React.PureComponent<ICommandControllerPro
   }
 
   showCommandPaletteWindow(): void {
+    const handleSelect = (command: ICommand) => {
+      this.windowController.closeWindow(handle, () => {
+        this.commandManager.executeCommand(command.id);
+      });
+    };
+
     const commands = _.sortBy(this.commandManager.getCommands().filter(command => command.isAvailable && command.isVisible), command => command.title);
 
-    this.commandPaletteWindow = {
-      content: <CommandPaletteWindow commands={commands} onSelect={this.handleCommandPaletteWindowSelect} />,
+    const window = <CommandPaletteWindow commands={commands} onSelect={handleSelect} />;
+    const options = {
       top: 20,
       width: 600,
     };
 
-    this.windowController.showWindow(this.commandPaletteWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   getCommands(): ICommand[] {
@@ -117,12 +121,6 @@ export class CommandController extends React.PureComponent<ICommandControllerPro
         // Wait for more events
       }
     }
-  }
-
-  private handleCommandPaletteWindowSelect(command: ICommand): void {
-    this.windowController.closeWindow(this.commandPaletteWindow, () => {
-      this.commandManager.executeCommand(command.id);
-    });
   }
 
   render(): JSX.Element {

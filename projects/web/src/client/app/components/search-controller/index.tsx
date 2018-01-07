@@ -3,7 +3,7 @@ import { IIssue } from '../../application';
 import { ICommandProvider, ICommand, ICommandManager } from '../../framework/commands';
 import { ISearchController } from '../../modules/search';
 import { ServiceManager } from '../../services';
-import { IWindow, IWindowController } from '../../framework/windows';
+import { IWindowController } from '../../framework/windows';
 import { SearchWindow } from '../search-window';
 
 interface ISearchControllerProps {
@@ -15,15 +15,6 @@ interface ISearchControllerState {
 export class SearchController extends React.PureComponent<ISearchControllerProps, ISearchControllerState> implements ISearchController, ICommandProvider {
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
-  private searchWindow: IWindow;
-
-  constructor() {
-    super();
-
-    this.handleSearchWindowIssueSelect = this.handleSearchWindowIssueSelect.bind(this);
-
-    this.state = {};
-  }
 
   componentWillMount(): void {
     ServiceManager.Instance.registerService('ISearchController', this);
@@ -36,21 +27,21 @@ export class SearchController extends React.PureComponent<ISearchControllerProps
   }
 
   showSearchWindow(): void {
-    this.searchWindow = {
-      content: <SearchWindow onIssueSelect={this.handleSearchWindowIssueSelect} />,
+    const handleIssueSelect = (issue: IIssue) => {
+      this.windowController.closeWindow(handle);
+    };
+
+    const window = <SearchWindow onIssueSelect={handleIssueSelect} />;
+    const options = {
       top: 20,
       width: 600,
     };
 
-    this.windowController.showWindow(this.searchWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   getCommands(): ICommand[] {
     return [];
-  }
-
-  private handleSearchWindowIssueSelect(issue: IIssue): void {
-    this.windowController.closeWindow(this.searchWindow);
   }
 
   render(): JSX.Element {

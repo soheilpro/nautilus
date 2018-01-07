@@ -57,8 +57,8 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
   }
 
   createNew(issue: IIssue, parentIssue?: IIssue): void {
-    const handleAddIssueWindowAdd = async (issue: IIssue) => {
-      this.windowController.closeWindow(addIssueWindow);
+    const handleAdd = async (issue: IIssue) => {
+      this.windowController.closeWindow(handle);
 
       const notification = {
         title: 'Adding issue...',
@@ -71,23 +71,23 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       this.notificationController.hideNotification(notification);
     };
 
-    const handleAddIssueWindowClose = () => {
-      this.windowController.closeWindow(addIssueWindow);
+    const handleClose = () => {
+      this.windowController.closeWindow(handle);
     };
 
-    const addIssueWindow = {
-      content: <AddEditIssueWindow mode="add" issue={issue} parentIssue={parentIssue} onAdd={handleAddIssueWindowAdd} onClose={handleAddIssueWindowClose} />,
+    const window = <AddEditIssueWindow mode="add" issue={issue} parentIssue={parentIssue} onAdd={handleAdd} onClose={handleClose} />;
+    const options = {
       top: 120,
       width: 800,
       modal: true,
     };
 
-    this.windowController.showWindow(addIssueWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   editItem(issue: IIssue): void {
-    const handleEditIssueWindowUpdate = async (issue: IIssue, issueChange: IIssueChange) => {
-      this.windowController.closeWindow(editIssueWindow);
+    const handleUpdate = async (issue: IIssue, issueChange: IIssueChange) => {
+      this.windowController.closeWindow(handle);
 
       const notification = {
         title: 'Editing issue...',
@@ -101,18 +101,18 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       this.notificationController.hideNotification(notification);
     };
 
-    const handleEditIssueWindowClose = async () => {
-      this.windowController.closeWindow(editIssueWindow);
+    const handleClose = async () => {
+      this.windowController.closeWindow(handle);
     };
 
-    const editIssueWindow = {
-      content: <AddEditIssueWindow mode="edit" issue={issue} onUpdate={_.partial(handleEditIssueWindowUpdate, issue)} onClose={handleEditIssueWindowClose} />,
+    const window = <AddEditIssueWindow mode="edit" issue={issue} onUpdate={_.partial(handleUpdate, issue)} onClose={handleClose} />;
+    const options = {
       top: 120,
       width: 800,
       modal: true,
     };
 
-    this.windowController.showWindow(editIssueWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   deleteItem(issue: IIssue): void {

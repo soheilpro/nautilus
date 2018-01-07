@@ -54,8 +54,8 @@ export class MilestoneController extends React.PureComponent<IMilestoneControlle
   }
 
   createNew(): void {
-    const handleAddMilestoneWindowAdd = async (milestone: IMilestone) => {
-      this.windowController.closeWindow(addMilestoneWindow);
+    const handleAdd = async (milestone: IMilestone) => {
+      this.windowController.closeWindow(handle);
 
       const notification = {
         title: 'Adding milestone...',
@@ -68,23 +68,23 @@ export class MilestoneController extends React.PureComponent<IMilestoneControlle
       this.notificationController.hideNotification(notification);
     };
 
-    const handleAddMilestoneWindowClose = () => {
-      this.windowController.closeWindow(addMilestoneWindow);
+    const handleClose = () => {
+      this.windowController.closeWindow(handle);
     };
 
-    const addMilestoneWindow = {
-      content: <AddEditMilestoneWindow mode="add" onAdd={handleAddMilestoneWindowAdd} onClose={handleAddMilestoneWindowClose} />,
+    const window = <AddEditMilestoneWindow mode="add" onAdd={handleAdd} onClose={handleClose} />;
+    const options = {
       top: 120,
       width: 800,
       modal: true,
     };
 
-    this.windowController.showWindow(addMilestoneWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   editItem(milestone: IMilestone): void {
-    const handleEditMilestoneWindowUpdate = async (milestone: IMilestone, milestoneChange: IMilestoneChange) => {
-      this.windowController.closeWindow(editMilestoneWindow);
+    const handleUpdate = async (milestone: IMilestone, milestoneChange: IMilestoneChange) => {
+      this.windowController.closeWindow(handle);
 
       const notification = {
         title: 'Updating milestone...',
@@ -97,18 +97,18 @@ export class MilestoneController extends React.PureComponent<IMilestoneControlle
       this.notificationController.hideNotification(notification);
     };
 
-    const handleEditMilestoneWindowClose = () => {
-      this.windowController.closeWindow(editMilestoneWindow);
+    const handleClose = () => {
+      this.windowController.closeWindow(handle);
     };
 
-    const editMilestoneWindow = {
-      content: <AddEditMilestoneWindow mode="edit" milestone={milestone} onUpdate={_.partial(handleEditMilestoneWindowUpdate, milestone)} onClose={handleEditMilestoneWindowClose} />,
+    const window = <AddEditMilestoneWindow mode="edit" milestone={milestone} onUpdate={_.partial(handleUpdate, milestone)} onClose={handleClose} />;
+    const options = {
       top: 120,
       width: 800,
       modal: true,
     };
 
-    this.windowController.showWindow(editMilestoneWindow);
+    const handle = this.windowController.showWindow(window, options);
   }
 
   async deleteItem(milestone: IMilestone): Promise<void> {
