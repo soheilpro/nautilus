@@ -49,7 +49,7 @@ export class MilestoneController extends React.PureComponent<IMilestoneControlle
 
   getCommands(): ICommand[] {
     return [
-      new NewMilestoneCommand(),
+      new NewMilestoneCommand(this),
     ];
   }
 

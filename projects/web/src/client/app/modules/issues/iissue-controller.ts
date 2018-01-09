@@ -3,6 +3,9 @@ import { IItemController } from '../../framework/items';
 
 export interface IIssueController extends IItemController {
   createNew(issue: IIssue, parentIssue?: IIssue): void;
+  duplicateIssue(issue: IIssue): void;
+  createSubIssue(issue: IIssue): void;
+  applyLastChangeToIssue(issue: IIssue): void;
   assignIssue(issue: IIssue): void;
   getLastChange(): IIssueChange;
 }

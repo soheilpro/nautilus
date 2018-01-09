@@ -1,10 +1,11 @@
 import { BaseCommand } from '../../../framework/commands';
 import { KeyCode, IShortcut } from '../../../framework/keyboard';
-import { ServiceManager } from '../../../services';
 import { ISearchController } from '../../../modules/search';
 
 export class SearchCommand extends BaseCommand {
-  private searchController = ServiceManager.Instance.getService<ISearchController>('ISearchController');
+  constructor(private searchController: ISearchController) {
+    super();
+  }
 
   get id(): string {
     return 'search';

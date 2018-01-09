@@ -51,7 +51,7 @@ export class ProjectController extends React.PureComponent<IProjectControllerPro
       return [];
 
     return [
-      new NewProjectCommand(),
+      new NewProjectCommand(this),
     ];
   }
 

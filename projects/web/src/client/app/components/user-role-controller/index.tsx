@@ -51,7 +51,7 @@ export class UserRoleController extends React.PureComponent<IUserRoleControllerP
       return [];
 
     return [
-      new NewUserRoleCommand(),
+      new NewUserRoleCommand(this),
     ];
   }
 

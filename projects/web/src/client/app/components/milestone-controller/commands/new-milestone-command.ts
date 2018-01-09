@@ -1,9 +1,10 @@
 import { BaseCommand } from '../../../framework/commands';
-import { ServiceManager } from '../../../services';
 import { IMilestoneController } from '../../../modules/milestones';
 
 export class NewMilestoneCommand extends BaseCommand {
-  private milestoneController = ServiceManager.Instance.getService<IMilestoneController>('IMilestoneController');
+  constructor(private milestoneController: IMilestoneController) {
+    super();
+  }
 
   get id(): string {
     return 'new-milestone';

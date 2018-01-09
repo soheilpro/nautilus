@@ -22,6 +22,7 @@ import { ProjectsPage } from '../projects-page';
 import { UserRolesPage } from '../user-roles-page';
 import { RefreshCommand, GoToIssuesCommand, GoToMilestonesCommand, GoToUsersCommand, GoToProjectsCommand } from './commands';
 import { GoToUserRolesCommand } from './commands/go-to-user-roles-command';
+import { INotificationController } from '../../framework/notifications';
 
 interface IMainProps {
 }
@@ -34,6 +35,10 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private browserRouterRef: BrowserRouter;
+
+  private get notificationController(): INotificationController {
+    return ServiceManager.Instance.getService<INotificationController>('INotificationController');
+  }
 
   constructor() {
     super();
@@ -55,7 +60,7 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
     const history: History = (this.browserRouterRef as any).history;
 
     let commands: ICommand[] = [
-      new RefreshCommand(),
+      new RefreshCommand(this.application, this.notificationController),
       new GoToIssuesCommand(history),
       new GoToMilestonesCommand(history),
     ];

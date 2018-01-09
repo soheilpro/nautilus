@@ -67,7 +67,7 @@ export class CommandController extends React.PureComponent<ICommandControllerPro
 
   getCommands(): ICommand[] {
     return [
-      new ShowCommandPaletteCommand(),
+      new ShowCommandPaletteCommand(this),
     ];
   }
 

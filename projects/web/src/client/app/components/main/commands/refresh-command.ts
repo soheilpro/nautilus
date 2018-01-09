@@ -1,12 +1,12 @@
 import { BaseCommand } from '../../../framework/commands';
 import { KeyCode, IShortcut } from '../../../framework/keyboard';
-import { ServiceManager } from '../../../services';
 import { IApplication } from '../../../application';
 import { INotificationController } from '../../../framework/notifications';
 
 export class RefreshCommand extends BaseCommand {
-  private application = ServiceManager.Instance.getService<IApplication>('IApplication');
-  private notificationController = ServiceManager.Instance.getService<INotificationController>('INotificationController');
+  constructor(private application: IApplication, private notificationController: INotificationController) {
+    super();
+  }
 
   get id(): string {
     return 'refresh';

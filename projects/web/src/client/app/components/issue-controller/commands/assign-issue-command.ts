@@ -1,14 +1,10 @@
 import { KeyCode, IShortcut } from '../../../framework/keyboard';
-import { ServiceManager } from '../../../services';
 import { IIssueController, IssueType } from '../../../modules/issues';
 import { IContextManager } from '../../../framework/context';
 import { BaseCommand } from '../../../framework/commands';
 
 export class AssignIssueCommand extends BaseCommand {
-  private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');
-  private issueController = ServiceManager.Instance.getService<IIssueController>('IIssueController');
-
-  constructor() {
+  constructor(private issueController: IIssueController, private contextManager: IContextManager) {
     super();
   }
 

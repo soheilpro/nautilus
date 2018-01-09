@@ -53,7 +53,7 @@ export class UserController extends React.PureComponent<IUserControllerProps, IU
       return [];
 
     return [
-      new NewUserCommand(),
+      new NewUserCommand(this),
     ];
   }
 

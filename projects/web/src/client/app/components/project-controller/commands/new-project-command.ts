@@ -1,9 +1,10 @@
 import { BaseCommand } from '../../../framework/commands';
-import { ServiceManager } from '../../../services';
 import { IProjectController } from '../../../modules/projects';
 
 export class NewProjectCommand extends BaseCommand {
-  private projectController = ServiceManager.Instance.getService<IProjectController>('IProjectController');
+  constructor(private projectController: IProjectController) {
+    super();
+  }
 
   get id(): string {
     return 'new-project';

@@ -1,9 +1,10 @@
 import { BaseCommand } from '../../../framework/commands';
-import { ServiceManager } from '../../../services';
 import { IUserRoleController } from '../../../modules/user-roles';
 
 export class NewUserRoleCommand extends BaseCommand {
-  private userRoleController = ServiceManager.Instance.getService<IUserRoleController>('IUserRoleController');
+  constructor(private userRoleController: IUserRoleController) {
+    super();
+  }
 
   get id(): string {
     return 'new-user-role';

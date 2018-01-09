@@ -1,9 +1,10 @@
 import { BaseCommand, ICommandController } from '../../../../framework/commands';
 import { KeyCode, IShortcut } from '../../../../framework/keyboard';
-import { ServiceManager } from '../../../../services';
 
 export class ShowCommandPaletteCommand extends BaseCommand {
-  private commandController = ServiceManager.Instance.getService<ICommandController>('ICommandController');
+  constructor(private commandController: ICommandController) {
+    super();
+  }
 
   get id(): string {
     return 'show-command-palette';

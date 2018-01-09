@@ -3,6 +3,7 @@ import * as React from 'react';
 import { IIssue, IIssueChange, IApplication, entityComparer } from '../../application';
 import { IIssueController, IssueType } from '../../modules/issues';
 import { ServiceManager } from '../../services';
+import { IContextManager } from '../../framework/context';
 import { AddIssueAction, UpdateIssueAction, DeleteIssueAction } from '../../actions/issues';
 import { IActionManager } from '../../framework/actions';
 import { IDialogController } from '../../framework/dialog';
@@ -23,6 +24,7 @@ interface IIssueControllerState {
 
 export class IssueController extends React.PureComponent<IIssueControllerProps, IIssueControllerState> implements IIssueController, ICommandProvider  {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
+  private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');
   private actionManager = ServiceManager.Instance.getService<IActionManager>('IActionManager');
   private windowController = ServiceManager.Instance.getService<IWindowController>('IWindowController');
   private dialogController = ServiceManager.Instance.getService<IDialogController>('IDialogController');
@@ -55,11 +57,11 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
 
   getCommands(): ICommand[] {
     return [
-      new NewIssueCommand(),
-      new NewSubIssueCommand(),
-      new DuplicateIssueCommand(),
-      new RepeatUpdateIssueCommand(this),
-      new AssignIssueCommand(),
+      new NewIssueCommand(this),
+      new NewSubIssueCommand(this, this.contextManager),
+      new DuplicateIssueCommand(this, this.contextManager),
+      new RepeatUpdateIssueCommand(this, this.contextManager),
+      new AssignIssueCommand(this, this.contextManager),
     ];
   }
 
@@ -90,6 +92,76 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
     };
 
     const handle = this.windowController.showWindow(window, options);
+  }
+
+  duplicateIssue(issue: IIssue): void {
+    const newIssue: IIssue = {
+      title: issue.title,
+      description: issue.description,
+      type: issue.type,
+      state: issue.state,
+      project: issue.project,
+      assignedTo: issue.assignedTo,
+      milestone: issue.milestone,
+    };
+
+    this.createNew(newIssue, issue.parent);
+  }
+
+  createSubIssue(issue: IIssue): void {
+    const newIssue: IIssue = {
+      type: _.find(this.application.itemTypes.getAll('issue'), itemType => itemType.key === 'task'),
+      state: _.find(this.application.itemStates.getAll('issue'), itemType => itemType.key === 'todo'),
+      project: issue.project,
+      assignedTo: issue.assignedTo,
+      milestone: issue.milestone,
+    };
+
+    this.createNew(newIssue, issue);
+  }
+
+  applyLastChangeToIssue(issue: IIssue): void {
+    const issueChange = this.getLastChange();
+
+    const newIssueChange: IIssueChange = {
+      type: issueChange.type,
+      state: issueChange.state,
+      tags: issueChange.tags,
+      project: issueChange.project,
+      milestone: issueChange.milestone,
+      assignedTo: issueChange.assignedTo,
+    };
+
+    this.actionManager.execute(new UpdateIssueAction(issue, newIssueChange, this.application));
+  }
+
+  async assignIssue(issue: IIssue): Promise<void> {
+    const user = await this.userController.selectUser();
+
+    if (!user)
+      return;
+
+    if (entityComparer(user, issue.assignedTo))
+      return;
+
+    const issueChange: IIssueChange = {
+      assignedTo: user,
+    };
+
+    const notification = {
+      title: 'Editing issue...',
+    };
+
+    this.notificationController.showNotification(notification);
+
+    await this.actionManager.execute(new UpdateIssueAction(issue, issueChange, this.application));
+    this.lastChange = issueChange;
+
+    this.notificationController.hideNotification(notification);
+  }
+
+  getLastChange(): IIssueChange {
+    return this.lastChange;
   }
 
   editItem(issue: IIssue): void {
@@ -146,35 +218,6 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
 
   getItemId(item: IIssue): string {
     return item.sid;
-  }
-
-  async assignIssue(issue: IIssue): Promise<void> {
-    const user = await this.userController.selectUser();
-
-    if (!user)
-      return;
-
-    if (entityComparer(user, issue.assignedTo))
-      return;
-
-    const issueChange: IIssueChange = {
-      assignedTo: user,
-    };
-
-    const notification = {
-      title: 'Editing issue...',
-    };
-
-    this.notificationController.showNotification(notification);
-
-    await this.actionManager.execute(new UpdateIssueAction(issue, issueChange, this.application));
-    this.lastChange = issueChange;
-
-    this.notificationController.hideNotification(notification);
-  }
-
-  getLastChange(): IIssueChange {
-    return this.lastChange;
   }
 
   render(): JSX.Element {

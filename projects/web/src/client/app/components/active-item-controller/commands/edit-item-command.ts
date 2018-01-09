@@ -1,14 +1,11 @@
 import { KeyCode, IShortcut } from '../../../framework/keyboard';
-import { ServiceManager } from '../../../services';
 import { IContextManager } from '../../../framework/context';
 import { BaseCommand } from '../../../framework/commands';
+import { IActiveItemController } from '../../../modules/active-item';
 import { IItemControllerManager } from '../../../framework/items';
 
 export class EditItemCommand extends BaseCommand {
-  private contextManager = ServiceManager.Instance.getService<IContextManager>('IContextManager');
-  private itemControllerManager = ServiceManager.Instance.getService<IItemControllerManager>('IItemControllerManager');
-
-  constructor() {
+  constructor(private activeItemController: IActiveItemController, private contextManager: IContextManager, private itemControllerManager: IItemControllerManager) {
     super();
   }
 
@@ -34,10 +31,9 @@ export class EditItemCommand extends BaseCommand {
 
   execute(): void {
     const context = this.contextManager.getContext();
+    const activeItem = context['core.activeItem'];
     const activeItemType = context['core.activeItemType'];
-    const itemController = this.itemControllerManager.getItemController(activeItemType);
-    const item = context['core.activeItem'];
 
-    itemController.editItem(item);
+    this.activeItemController.editItem(activeItem, activeItemType);
   }
 }
