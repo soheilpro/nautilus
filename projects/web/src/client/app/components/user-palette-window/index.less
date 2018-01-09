@@ -1,0 +1,40 @@
+@import '../../assets/stylesheets/common';
+
+.user-palette-window-component {
+  .container {
+    padding: 10px;
+
+    .heading {
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+
+    .search-input {
+      min-width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .user-list {
+      .user {
+        display: block;
+        padding: 4px 6px;
+        text-decoration: none;
+        color: @default_text;
+
+        .shortcut {
+          float: right;
+        }
+
+        &.active {
+          background-color: @selection_fill;
+          color: @selection_text;
+        }
+      }
+    }
+
+    .no-users-found {
+      padding: 4px;
+      color: @dim_text;
+    }
+  }
+}

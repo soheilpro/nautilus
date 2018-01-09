@@ -1,5 +1,6 @@
 import * as _ from 'underscore';
 import * as React from 'react';
+import * as NQL from '../../nql';
 import { IUser, IUserChange, IApplication } from '../../application';
 import { IUserController, UserType } from '../../modules/users';
 import { ServiceManager } from '../../services';
@@ -10,6 +11,7 @@ import { NewUserCommand } from './commands';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { IItemControllerManager } from '../../framework/items';
 import { AddEditUserWindow } from '../add-edit-user-window';
+import { UserPaletteWindow } from '../user-palette-window';
 
 interface IUserControllerProps {
 }
@@ -135,6 +137,30 @@ export class UserController extends React.PureComponent<IUserControllerProps, IU
 
   getItemId(user: IUser): string {
     return user.id;
+  }
+
+  selectUser(): Promise<IUser> {
+    let _resolve: (user: IUser) => void;
+
+    const handleSelect = (user: IUser) => {
+      this.windowController.closeWindow(handle, () => {
+        _resolve(user);
+      });
+    };
+
+    const users = this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]);
+
+    const window = <UserPaletteWindow users={users} onSelect={handleSelect} />;
+    const options = {
+      top: 20,
+      width: 600,
+    };
+
+    const handle = this.windowController.showWindow(window, options);
+
+    return new Promise(resolve => {
+      _resolve = resolve;
+    });
   }
 
   render(): JSX.Element {

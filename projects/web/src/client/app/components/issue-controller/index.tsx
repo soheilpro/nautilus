@@ -1,6 +1,6 @@
 import * as _ from 'underscore';
 import * as React from 'react';
-import { IIssue, IIssueChange, IApplication } from '../../application';
+import { IIssue, IIssueChange, IApplication, entityComparer } from '../../application';
 import { IIssueController, IssueType } from '../../modules/issues';
 import { ServiceManager } from '../../services';
 import { AddIssueAction, UpdateIssueAction, DeleteIssueAction } from '../../actions/issues';
@@ -8,10 +8,12 @@ import { IActionManager } from '../../framework/actions';
 import { IDialogController } from '../../framework/dialog';
 import { INotificationController } from '../../framework/notifications';
 import { IWindowController } from '../../framework/windows';
+import { IUserController } from '../../modules/users';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, RepeatUpdateIssueCommand } from './commands';
 import { IItemControllerManager } from '../../framework/items';
 import { AddEditIssueWindow } from '../add-edit-issue-window';
+import { AssignIssueCommand } from './commands/assign-issue-command';
 
 interface IIssueControllerProps {
 }
@@ -28,6 +30,10 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
   private itemControllerManager = ServiceManager.Instance.getService<IItemControllerManager>('IItemControllerManager');
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
   private lastChange: IIssueChange;
+
+  private get userController(): IUserController {
+    return ServiceManager.Instance.getService<IUserController>('IUserController');
+  }
 
   constructor() {
     super();
@@ -53,6 +59,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       new NewSubIssueCommand(),
       new DuplicateIssueCommand(),
       new RepeatUpdateIssueCommand(this),
+      new AssignIssueCommand(),
     ];
   }
 
@@ -139,6 +146,31 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
 
   getItemId(item: IIssue): string {
     return item.sid;
+  }
+
+  async assignIssue(issue: IIssue): Promise<void> {
+    const user = await this.userController.selectUser();
+
+    if (!user)
+      return;
+
+    if (entityComparer(user, issue.assignedTo))
+      return;
+
+    const issueChange: IIssueChange = {
+      assignedTo: user,
+    };
+
+    const notification = {
+      title: 'Editing issue...',
+    };
+
+    this.notificationController.showNotification(notification);
+
+    await this.actionManager.execute(new UpdateIssueAction(issue, issueChange, this.application));
+    this.lastChange = issueChange;
+
+    this.notificationController.hideNotification(notification);
   }
 
   getLastChange(): IIssueChange {

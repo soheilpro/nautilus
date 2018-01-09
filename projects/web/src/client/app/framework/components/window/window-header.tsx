@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Heading } from '../heading';
 
 require('../../assets/stylesheets/base.less');
 require('./window-header.less');
@@ -13,7 +14,7 @@ export class WindowHeader extends React.PureComponent<IWindowHeaderProps, IWindo
   render(): JSX.Element {
     return (
       <div className="window-header-component">
-        <span className="title">{this.props.children}</span>
+        <Heading level={1}>{this.props.children}</Heading>
       </div>
     );
   }
