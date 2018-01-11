@@ -149,7 +149,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
     };
 
     const notification = {
-      title: 'Editing issue...',
+      title: 'Updating issue...',
     };
 
     this.notificationController.showNotification(notification);
@@ -169,7 +169,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       this.windowController.closeWindow(handle);
 
       const notification = {
-        title: 'Editing issue...',
+        title: 'Updating issue...',
       };
 
       this.notificationController.showNotification(notification);
