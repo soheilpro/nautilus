@@ -65,7 +65,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
     ];
   }
 
-  createNew(issue: IIssue, parentIssue?: IIssue): void {
+  createIssue(issue?: IIssue, parentIssue?: IIssue): void {
     const handleAdd = async (issue: IIssue) => {
       this.windowController.closeWindow(handle);
 
@@ -105,7 +105,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       milestone: issue.milestone,
     };
 
-    this.createNew(newIssue, issue.parent);
+    this.createIssue(newIssue, issue.parent);
   }
 
   createSubIssue(issue: IIssue): void {
@@ -117,7 +117,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       milestone: issue.milestone,
     };
 
-    this.createNew(newIssue, issue);
+    this.createIssue(newIssue, issue);
   }
 
   applyLastChangeToIssue(issue: IIssue): void {

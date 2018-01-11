@@ -53,7 +53,7 @@ export class MilestoneController extends React.PureComponent<IMilestoneControlle
     ];
   }
 
-  createNew(): void {
+  createMilestone(): void {
     const handleAdd = async (milestone: IMilestone) => {
       this.windowController.closeWindow(handle);
 

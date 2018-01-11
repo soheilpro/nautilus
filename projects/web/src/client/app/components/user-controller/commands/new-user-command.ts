@@ -15,6 +15,6 @@ export class NewUserCommand extends BaseCommand {
   }
 
   execute(): void {
-    this.userController.createNew();
+    this.userController.createUser();
   }
 }

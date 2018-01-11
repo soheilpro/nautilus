@@ -20,6 +20,6 @@ export class NewIssueCommand extends BaseCommand {
   }
 
   execute(): void {
-    this.issueController.createNew({});
+    this.issueController.createIssue();
   }
 }

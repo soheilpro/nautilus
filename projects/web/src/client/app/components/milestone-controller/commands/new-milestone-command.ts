@@ -15,6 +15,6 @@ export class NewMilestoneCommand extends BaseCommand {
   }
 
   execute(): void {
-    this.milestoneController.createNew();
+    this.milestoneController.createMilestone();
   }
 }

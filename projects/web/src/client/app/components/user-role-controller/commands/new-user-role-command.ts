@@ -15,6 +15,6 @@ export class NewUserRoleCommand extends BaseCommand {
   }
 
   execute(): void {
-    this.userRoleController.createNew();
+    this.userRoleController.createUserRole();
   }
 }

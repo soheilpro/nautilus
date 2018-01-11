@@ -55,7 +55,7 @@ export class ProjectController extends React.PureComponent<IProjectControllerPro
     ];
   }
 
-  createNew(): void {
+  createProject(): void {
     const handleAdd = async (project: IProject, window: AddEditProjectWindow) => {
       try {
         await this.application.projects.add(project);

@@ -57,7 +57,7 @@ export class UserController extends React.PureComponent<IUserControllerProps, IU
     ];
   }
 
-  createNew(): void {
+  createUser(): void {
     const handleAdd = async (user: IUser, window: AddEditUserWindow) => {
       try {
         await this.application.users.add(user);

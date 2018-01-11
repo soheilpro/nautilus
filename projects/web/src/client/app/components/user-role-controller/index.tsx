@@ -55,7 +55,7 @@ export class UserRoleController extends React.PureComponent<IUserRoleControllerP
     ];
   }
 
-  createNew(): void {
+  createUserRole(): void {
     const handleAdd = async (userRole: IUserRole, window: AddEditUserRoleWindow) => {
       try {
         await this.application.userRoles.add(userRole);

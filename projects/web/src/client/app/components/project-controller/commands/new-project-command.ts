@@ -15,6 +15,6 @@ export class NewProjectCommand extends BaseCommand {
   }
 
   execute(): void {
-    this.projectController.createNew();
+    this.projectController.createProject();
   }
 }
