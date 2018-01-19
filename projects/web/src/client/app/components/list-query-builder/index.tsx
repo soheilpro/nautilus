@@ -1,9 +1,7 @@
-import * as _ from 'underscore';
 import * as React from 'react';
 import * as classNames from 'classnames';
 import * as NQL from '../../nql';
-import { KeyCode } from '../../framework/keyboard';
-import { Input } from '../../framework/components/input';
+import { List } from '../../framework/components/list';
 import { Icon } from '../../framework/components/icon';
 
 require('../../assets/stylesheets/base.less');
@@ -25,9 +23,6 @@ interface IListQueryBuilderProps {
 }
 
 interface IListQueryBuilderState {
-  items?: IListItem[];
-  activeItemIndex?: number;
-  searchText?: string;
   includedItems?: IListItem[];
   excludedItems?: IListItem[];
 }
@@ -36,19 +31,14 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
   constructor(props: IListQueryBuilderProps) {
     super(props);
 
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
-    this.handleItemListMouseLeave = this.handleItemListMouseLeave.bind(this);
-    this.handleItemMouseEnter = this.handleItemMouseEnter.bind(this);
-    this.handleItemExcludeClick = this.handleItemExcludeClick.bind(this);
-    this.handleItemIncludeClick = this.handleItemIncludeClick.bind(this);
-    this.handleItemTitleClick = this.handleItemTitleClick.bind(this);
+    this.handleListRenderItem = this.handleListRenderItem.bind(this);
+    this.handleListRenderItemButton = this.handleListRenderItemButton.bind(this);
+    this.handleListSelect = this.handleListSelect.bind(this);
+    this.handleListButtonSelect = this.handleListButtonSelect.bind(this);
 
     const { includedItems, excludedItems } = this.parseQuery(props.query, props);
 
     this.state = {
-      items: props.items,
-      activeItemIndex: -1,
       includedItems: includedItems,
       excludedItems: excludedItems,
     };
@@ -60,163 +50,11 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
 
       this.setState(state => {
         return {
-          items: this.filterItems(props.items, state.searchText),
           includedItems: includedItems,
           excludedItems: excludedItems,
         };
       });
     }
-  }
-
-  private handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>): void {
-    if (event.which === KeyCode.DownArrow) {
-      event.preventDefault();
-
-      this.setState(state => {
-        return {
-          activeItemIndex: state.activeItemIndex < state.items.length - 1 ? state.activeItemIndex + 1 : 0,
-        };
-      });
-    }
-    else if (event.which === KeyCode.UpArrow) {
-      event.preventDefault();
-
-      this.setState(state => {
-        return {
-          activeItemIndex: state.activeItemIndex > 0 ? state.activeItemIndex - 1 : state.items.length - 1,
-        };
-      });
-    }
-    else if (event.which === KeyCode.Dash) {
-      event.preventDefault();
-
-      const activeItem = this.state.items[this.state.activeItemIndex];
-
-      this.toggleItemExclude(activeItem);
-    }
-    else if (event.which === KeyCode.Equals) {
-      event.preventDefault();
-
-      const activeItem = this.state.items[this.state.activeItemIndex];
-
-      this.toggleItemInclude(activeItem);
-    }
-    else if (event.which === KeyCode.Enter) {
-      event.preventDefault();
-
-      if (this.state.activeItemIndex !== -1) {
-        const activeItem = this.state.items[this.state.activeItemIndex];
-        this.includeItem(activeItem);
-      }
-    }
-  }
-
-  private handleSearchTextChange(value: string): void {
-    this.setState({
-      searchText: value,
-    });
-
-    value = value.trim();
-
-    this.setState({
-      items: this.filterItems(this.props.items, value),
-      activeItemIndex: value ? 0 : -1,
-    });
-  }
-
-  private handleItemListMouseLeave(): void {
-    this.setState({
-      activeItemIndex: -1,
-    });
-  }
-
-  private handleItemMouseEnter(item: IListItem): void {
-    this.setState(state => {
-      return {
-        activeItemIndex: state.items.indexOf(item),
-      };
-    });
-  }
-
-  private handleItemExcludeClick(item: IListItem, event: React.MouseEvent<HTMLAnchorElement>): void {
-    event.preventDefault();
-
-    this.toggleItemExclude(item);
-
-    this.setState(state => {
-      return {
-        activeItemIndex: state.items.indexOf(item),
-      };
-    });
-  }
-
-  private handleItemIncludeClick(item: IListItem, event: React.MouseEvent<HTMLAnchorElement>): void {
-    event.preventDefault();
-
-    this.toggleItemInclude(item);
-
-    this.setState(state => {
-      return {
-        activeItemIndex: state.items.indexOf(item),
-      };
-    });
-  }
-
-  private handleItemTitleClick(item: IListItem, event: React.MouseEvent<HTMLAnchorElement>): void {
-    event.preventDefault();
-
-    this.includeItem(item);
-
-    this.setState(state => {
-      return {
-        activeItemIndex: state.items.indexOf(item),
-      };
-    });
-  }
-
-  private filterItems(items: IListItem[], text: string): IListItem[] {
-    if (!text)
-      return items;
-
-    text = text.toLowerCase();
-
-    return items.filter(item => this.props.itemTitleGetter(item).toLowerCase().indexOf(text) !== -1);
-  }
-
-  private includeItem(item: IListItem): void {
-    const includedItems = [item];
-    const excludedItems: IListItem[] = [];
-
-    this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), true, true);
-
-    this.setState({
-      includedItems: includedItems,
-      excludedItems: excludedItems,
-    });
-  }
-
-  private toggleItemExclude(item: IListItem): void {
-    const includedItems: IListItem[] = [];
-    const excludedItems = (this.state.excludedItems.indexOf(item) === -1) ? [...this.state.excludedItems, item] : this.state.excludedItems.filter(x => x !== item);
-
-    this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), false, false);
-
-    this.setState({
-      includedItems: includedItems,
-      excludedItems: excludedItems,
-    });
-  }
-
-  private toggleItemInclude(item: IListItem): void {
-    const includedItems = (this.state.includedItems.indexOf(item) === -1) ? [...this.state.includedItems, item] : this.state.includedItems.filter(x => x !== item);
-    const excludedItems: IListItem[] = [];
-
-    this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), false, false);
-
-    this.setState({
-      includedItems: includedItems,
-      excludedItems: excludedItems,
-    });
   }
 
   private getQuery(includedItems: IListItem[], excludedItems: IListItem[], props: IListQueryBuilderProps): NQL.IExpression {
@@ -332,34 +170,83 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
     return false;
   }
 
+  private toggleItemExclude(item: IListItem): void {
+    const includedItems: IListItem[] = [];
+    const excludedItems = (this.state.excludedItems.indexOf(item) === -1) ? [...this.state.excludedItems, item] : this.state.excludedItems.filter(x => x !== item);
+
+    this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), false, false);
+
+    this.setState({
+      includedItems: includedItems,
+      excludedItems: excludedItems,
+    });
+  }
+
+  private toggleItemInclude(item: IListItem): void {
+    const includedItems = (this.state.includedItems.indexOf(item) === -1) ? [...this.state.includedItems, item] : this.state.includedItems.filter(x => x !== item);
+    const excludedItems: IListItem[] = [];
+
+    this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), false, false);
+
+    this.setState({
+      includedItems: includedItems,
+      excludedItems: excludedItems,
+    });
+  }
+
+  private handleListSelect(item: IListItem): void {
+    const includedItems = [item];
+    const excludedItems: IListItem[] = [];
+
+    this.props.onChange(this.getQuery(includedItems, excludedItems, this.props), true, true);
+
+    this.setState({
+      includedItems: includedItems,
+      excludedItems: excludedItems,
+    });
+  }
+
+  private handleListRenderItem(item: IListItem): JSX.Element {
+    return (
+      <span>
+        { this.props.itemTitleGetter(item) }
+      </span>
+    );
+  }
+
+  private handleListRenderItemButton(item: IListItem, button: string): JSX.Element {
+    switch (button) {
+      case 'exclude':
+        return (
+          <Icon className={classNames({ 'selected': this.state.excludedItems.indexOf(item) !== -1 })} name="minus-square" />
+        );
+
+      case 'include':
+        return (
+          <Icon className={classNames({ 'selected': this.state.includedItems.indexOf(item) !== -1 })} name="plus-square" />
+        );
+
+      default:
+        throw new Error('Not implemented.');
+    }
+  }
+
+  private handleListButtonSelect(item: IListItem, button: string): void {
+    switch (button) {
+      case 'exclude':
+        this.toggleItemExclude(item);
+        break;
+
+      case 'include':
+        this.toggleItemInclude(item);
+        break;
+    }
+  }
+
   render(): JSX.Element {
     return (
-      <div className="list-query-builder-component" onKeyDown={this.handleKeyDown}>
-        <Input className="search-input" value={this.state.searchText} autoFocus={true} selectOnFocus={true} style="simple" onChange={this.handleSearchTextChange} />
-        <div className="item-list" onMouseLeave={this.handleItemListMouseLeave}>
-          {
-            this.state.items.length > 0 ?
-              this.state.items.map((item, index) => {
-                return (
-                  <div className={classNames('item', { 'active': index === this.state.activeItemIndex })} onMouseEnter={_.partial(this.handleItemMouseEnter, item)} key={this.props.itemKeyGetter(item)}>
-                    <a className={classNames('exclude', { 'active': this.state.excludedItems.indexOf(item) !== -1 })} href="#" title="Exclude" onClick={_.partial(this.handleItemExcludeClick, item)}>
-                      <Icon name="minus-square" />
-                    </a>
-                    <a className={classNames('include', { 'active': this.state.includedItems.indexOf(item) !== -1 })} href="#" title="Include" onClick={_.partial(this.handleItemIncludeClick, item)}>
-                      <Icon name="plus-square" />
-                    </a>
-                    <a className="title" href="#" onClick={_.partial(this.handleItemTitleClick, item)}>
-                      {this.props.itemTitleGetter(item)}
-                    </a>
-                  </div>
-                );
-              })
-              :
-              <div className="no-items-found">
-                  No items found.
-              </div>
-          }
-        </div>
+      <div className="list-query-builder-component">
+        <List className="list" items={this.props.items} buttons={['exclude', 'include']} keyForItem={this.props.itemKeyGetter} titleForItem={this.props.itemTitleGetter} renderItem={this.handleListRenderItem} renderItemButton={this.handleListRenderItemButton} onSelect={this.handleListSelect} onButtonSelect={this.handleListButtonSelect} />
       </div>
     );
   }

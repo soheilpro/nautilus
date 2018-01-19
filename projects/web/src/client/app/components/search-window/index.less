@@ -1,41 +1,10 @@
 @import '../../assets/stylesheets/common';
 
 .search-window-component {
-  .container {
-    padding: 10px;
+  padding: 10px;
 
-    .search-input {
-      min-width: 100%;
-      margin-bottom: 10px;
-    }
-
-    .search-result-list {
-      .search-result {
-        display: block;
-        padding: 4px 6px;
-        text-decoration: none;
-        color: @default_text;
-
-        &.selected {
-          background-color: @selection_fill;
-          color: @selection_text;
-        }
-
-        .issue {
-          .sid {
-            margin-right: 10px;
-          }
-        }
-      }
-    }
-
-    .no-search-results-found {
-      padding: 4px;
-      color: @dim_text;
-    }
-
-    .search-help {
-      padding: 4px;
-    }
+  .heading {
+    margin-top: 5px;
+    margin-bottom: 15px;
   }
 }

@@ -1,11 +1,15 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { Dropdown } from '../dropdown';
-import { ItemList } from './item-list';
-import { ISelectItem } from './iselect-item';
+import { List, IListItem } from '../list';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
+
+export interface ISelectItem {
+}
+
+const emptySelectItem: ISelectItem = {};
 
 interface ISelectProps {
   items: ISelectItem[];
@@ -27,7 +31,11 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
   constructor(props: ISelectProps) {
     super();
 
-    this.handleItemListSelect = this.handleItemListSelect.bind(this);
+    this.handleListGetItems = this.handleListGetItems.bind(this);
+    this.handleListKeyForItem = this.handleListKeyForItem.bind(this);
+    this.handleListIsItemSelected = this.handleListIsItemSelected.bind(this);
+    this.handleListRenderItem = this.handleListRenderItem.bind(this);
+    this.handleListSelect = this.handleListSelect.bind(this);
 
     this.state = {
       selectedItem: this.getSelectedItem(props.selectedItem, props.items),
@@ -47,34 +55,64 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
     }
   }
 
-  private handleItemListSelect(item: ISelectItem): void {
-    this.dropdownRef.close();
-    this.dropdownRef.focus();
-    this.props.onChange(item);
-  }
-
   private getSelectedItem(selectedItem: ISelectItem, items: ISelectItem[]): ISelectItem {
     // Ensure selectedItem exists in items
     return items.indexOf(selectedItem) !== -1 ? selectedItem : null;
   }
 
-  private getDropdownTitle(): JSX.Element {
+  private handleListSelect(item: ISelectItem): void {
+    this.dropdownRef.close();
+    this.dropdownRef.focus();
+
+    if (item === emptySelectItem)
+      item = null;
+
+    this.props.onChange(item);
+  }
+
+  private async handleListGetItems(query: string, filterItems: (items: IListItem[], query: string) => Promise<IListItem[]>): Promise<IListItem[]> {
+    const items = [emptySelectItem, ...await filterItems(this.props.items, query)];
+
+    return Promise.resolve(items);
+  }
+
+  private handleListKeyForItem(selectItem: ISelectItem): string {
+    if (selectItem === emptySelectItem)
+      return '';
+
+    return this.props.itemKeyGetter(selectItem);
+  }
+
+  private handleListIsItemSelected(selectItem: ISelectItem): boolean {
+    return selectItem === this.state.selectedItem;
+  }
+
+  private handleListRenderItem(selectItem: ISelectItem): JSX.Element {
     return (
-      <span className={classNames('title', { 'placeholder': !this.props.selectedItem })}>
+      <span className={classNames({ 'empty': selectItem === emptySelectItem })}>
         {
-          this.props.selectedItem ?
-            this.props.itemTitleGetter(this.props.selectedItem) :
-            this.props.placeholder
+          selectItem !== emptySelectItem ?
+            this.props.itemTitleGetter(selectItem) :
+            '(None)'
         }
       </span>
     );
   }
 
   render(): JSX.Element {
+    let dropdownTitle =
+      <span className={classNames('title', { 'placeholder': !this.props.selectedItem })}>
+        {
+          this.props.selectedItem ?
+            this.props.itemTitleGetter(this.props.selectedItem) :
+            this.props.placeholder
+        }
+      </span>;
+
     return (
       <div className={classNames('select-component', this.props.className)}>
-        <Dropdown className="dropdown" title={this.getDropdownTitle()} ref={e => this.dropdownRef = e}>
-          <ItemList items={this.props.items} selectedItem={this.state.selectedItem} itemKeyGetter={this.props.itemKeyGetter} itemTitleGetter={this.props.itemTitleGetter} onSelect={this.handleItemListSelect} />
+        <Dropdown className="dropdown" title={dropdownTitle} ref={e => this.dropdownRef = e}>
+          <List className="list" getItems={this.handleListGetItems} keyForItem={this.handleListKeyForItem} titleForItem={this.props.itemTitleGetter} isItemSelected={this.handleListIsItemSelected} renderItem={this.handleListRenderItem} showSelectionMarks={true} defaultSelectedItemIndex={1} onSelect={this.handleListSelect} />
         </Dropdown>
       </div>
     );

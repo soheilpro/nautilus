@@ -7,12 +7,13 @@ import { IWindowController } from '../../framework/windows';
 import { Button } from '../../framework/components/button';
 import { Dropdown } from '../../framework/components/dropdown';
 import { PromptWindow } from '../../framework/components/prompt-window';
+import { List } from '../../framework/components/list';
 import { IssueFilterQueryBuilder } from '../issue-filter-query-builder';
 import { Expression } from '../expression';
-import { ViewList } from './view-list';
 import { IView } from './iview';
 import { View } from './view';
 import { FilterByMilestoneCommand, FilterByProjectCommand, FilterByTypeCommand, FilterByStateCommand, FilterByAssignedToCommand, FilterByCreatedByCommand, ResetViewCommand, SaveViewCommand, LoadViewCommand } from './commands';
+import { Icon } from '../../framework/components/icon';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -41,8 +42,12 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
     this.handleIssueFilterQueryBuilderChange = this.handleIssueFilterQueryBuilderChange.bind(this);
     this.handleResetButtonClick = this.handleResetButtonClick.bind(this);
     this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
-    this.handleViewListDelete = this.handleViewListDelete.bind(this);
-    this.handleViewListSelect = this.handleViewListSelect.bind(this);
+    this.handleListKeyForItem = this.handleListKeyForItem.bind(this);
+    this.handleListTitleForItem = this.handleListTitleForItem.bind(this);
+    this.handleListRenderItem = this.handleListRenderItem.bind(this);
+    this.handleListRenderItemButton = this.handleListRenderItemButton.bind(this);
+    this.handleListButtonSelect = this.handleListButtonSelect.bind(this);
+    this.handleListSelect = this.handleListSelect.bind(this);
     this.handleOpenFilterCommandExecute = this.handleOpenFilterCommandExecute.bind(this);
     this.handleResetViewCommandExecute = this.handleResetViewCommandExecute.bind(this);
     this.handleSaveViewCommandExecute = this.handleSaveViewCommandExecute.bind(this);
@@ -170,19 +175,55 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
     this.saveView();
   }
 
-  private handleViewListDelete(view: IView): void {
-    const savedViews = this.state.savedViews.filter(x => x !== view);
-
-    this.props.onSavedViewsChange(savedViews);
-
-    this.setState({
-      savedViews: savedViews,
-    });
-  }
-
-  private handleViewListSelect(view: IView): void {
+  private handleListSelect(view: IView): void {
     this.savedViewListDropdownRef.close();
     this.props.onChange(view);
+  }
+
+  private handleListKeyForItem(view: IView): string {
+    return view.id;
+  }
+
+  private handleListTitleForItem(view: IView): string {
+    return view.name;
+  }
+
+  private handleListRenderItem(view: IView): JSX.Element {
+    return (
+      <span>
+        { view.name }
+      </span>
+    );
+  }
+
+  private handleListRenderItemButton(view: IView, button: string): JSX.Element {
+    switch (button) {
+      case 'remove':
+        return (
+          <Icon name="remove" />
+        );
+
+      default:
+        throw new Error('Not implemented.');
+    }
+  }
+
+  private handleListButtonSelect(view: IView, button: string): void {
+    switch (button) {
+      case 'remove':
+        const savedViews = this.state.savedViews.filter(x => x !== view);
+
+        this.props.onSavedViewsChange(savedViews);
+
+        this.setState({
+          savedViews: savedViews,
+        });
+
+        break;
+
+      default:
+        throw new Error('Not implemented');
+    }
   }
 
   render(): JSX.Element {
@@ -204,7 +245,7 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
                 <Button className="save-button" type="secondary" onClick={this.handleSaveButtonClick}>Save</Button>
             }
             <Dropdown className="load-button" title="Load" ref={e => this.savedViewListDropdownRef = e}>
-              <ViewList views={this.state.savedViews} onDelete={this.handleViewListDelete} onSelect={this.handleViewListSelect} />
+              <List className="list" items={this.state.savedViews} buttons={['remove']} keyForItem={this.handleListKeyForItem} titleForItem={this.handleListTitleForItem} renderItem={this.handleListRenderItem} renderItemButton={this.handleListRenderItemButton} onSelect={this.handleListSelect} onButtonSelect={this.handleListButtonSelect} />
             </Dropdown>
           </div>
         </div>

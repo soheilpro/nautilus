@@ -1,39 +1,13 @@
 @import '../../assets/stylesheets/common';
 
 .command-palette-window-component {
-  .container {
-    padding: 10px;
+  padding: 10px;
 
-    .search-input {
-      min-width: 100%;
-      margin-bottom: 10px;
-    }
-
-    .command-list {
-      .command {
-        display: block;
-        padding: 4px 6px;
-        text-decoration: none;
-        color: @default_text;
-
-        .shortcut {
-          float: right;
-        }
-
-        &.active {
-          background-color: @selection_fill;
-          color: @selection_text;
-        }
-
-        &.disabled {
-          color: @dim_text;
-        }
+  .list {
+    .list-item {
+      .shortcut {
+        float: right;
       }
-    }
-
-    .no-commands-found {
-      padding: 4px;
-      color: @dim_text;
     }
   }
 }

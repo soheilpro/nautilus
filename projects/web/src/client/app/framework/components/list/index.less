@@ -1,0 +1,57 @@
+@import '../../assets/stylesheets/common';
+
+.list-component {
+  .search-input {
+    min-width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .list-items {
+    .list-item {
+      display: flex;
+
+      .list-item-button {
+        padding: 3px 4px;
+        color: @dim_fill;
+      }
+
+      .spacer {
+        padding-right: 3px;
+      }
+
+      .content {
+        flex: 1;
+        padding: 3px 6px;
+        text-decoration: none;
+        color: @default_text;
+
+        .icon {
+          margin-right: 8px;
+          visibility: hidden;
+
+          &.selected {
+            visibility: visible;
+          }
+        }
+      }
+
+      &.active {
+        .content {
+          background-color: @selection_fill;
+          color: @selection_text;
+        }
+      }
+
+      &.disabled {
+        .content {
+          color: @dim_text;
+        }
+      }
+    }
+  }
+
+  .no-result {
+    padding: 4px;
+    color: @dim_text;
+  }
+}
