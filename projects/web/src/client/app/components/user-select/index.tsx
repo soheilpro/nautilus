@@ -14,19 +14,9 @@ interface IUserSelectState {
 }
 
 export class UserSelect extends React.PureComponent<IUserSelectProps, IUserSelectState> {
-  constructor() {
-    super();
-
-    this.handleSelectChange = this.handleSelectChange.bind(this);
-  }
-
-  private handleSelectChange(user: IUser): void {
-    this.props.onChange(user);
-  }
-
   render(): JSX.Element {
     return (
-      <Select className={classNames('user-select-component', this.props.className)} selectedItem={this.props.user} items={this.props.users} keyForItem={(item: IUser) => item.id} titleForItem={(item: IUser) => item.name} onChange={this.handleSelectChange} />
+      <Select className={classNames('user-select-component', this.props.className)} selectedItem={this.props.user} items={this.props.users} keyForItem={(item: IUser) => item.id} titleForItem={(item: IUser) => item.name} onChange={this.props.onChange} />
     );
   }
 }

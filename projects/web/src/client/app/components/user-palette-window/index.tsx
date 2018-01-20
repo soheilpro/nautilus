@@ -20,17 +20,7 @@ export class UserPaletteWindow extends React.PureComponent<IUserPaletteWindowPro
   constructor() {
     super();
 
-    this.handleListKeyForItem = this.handleListKeyForItem.bind(this);
-    this.handleListTitleForItem = this.handleListTitleForItem.bind(this);
     this.handleListRenderItem = this.handleListRenderItem.bind(this);
-  }
-
-  private handleListKeyForItem(user: IUser): string {
-    return user.id;
-  }
-
-  private handleListTitleForItem(user: IUser): string {
-    return user.name;
   }
 
   private handleListRenderItem(user: IUser): JSX.Element {
@@ -43,7 +33,7 @@ export class UserPaletteWindow extends React.PureComponent<IUserPaletteWindowPro
     return (
       <Window className="user-palette-window-component">
         <Heading className="heading" level={1}>Assign issue to</Heading>
-        <List className="list" items={this.props.users} keyForItem={this.handleListKeyForItem} titleForItem={this.handleListTitleForItem} renderItem={this.handleListRenderItem} onSelect={this.props.onSelect} />
+        <List className="list" items={this.props.users} keyForItem={(user: IUser) => user.id} titleForItem={(user: IUser) => user.name} renderItem={this.handleListRenderItem} onSelect={this.props.onSelect} />
       </Window>
     );
   }

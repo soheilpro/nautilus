@@ -18,7 +18,6 @@ export class SearchWindow extends React.PureComponent<ISearchWindowProps, ISearc
     super();
 
     this.handleListGetItems = this.handleListGetItems.bind(this);
-    this.handleListKeyForItem = this.handleListKeyForItem.bind(this);
     this.handleListRenderItem = this.handleListRenderItem.bind(this);
   }
 
@@ -26,10 +25,6 @@ export class SearchWindow extends React.PureComponent<ISearchWindowProps, ISearc
     let items: any = [];
 
     return Promise.resolve(items);
-  }
-
-  private handleListKeyForItem(issue: IIssue): string {
-    return issue.id;
   }
 
   private handleListRenderItem(issue: IIssue): JSX.Element {
@@ -41,7 +36,7 @@ export class SearchWindow extends React.PureComponent<ISearchWindowProps, ISearc
   render(): JSX.Element {
     return (
       <Window className="search-window-component">
-        <List className="list" getItems={this.handleListGetItems} keyForItem={this.handleListKeyForItem} renderItem={this.handleListRenderItem} onSelect={this.props.onIssueSelect} />
+        <List className="list" getItems={this.handleListGetItems} keyForItem={(issue: IIssue) => issue.id} renderItem={this.handleListRenderItem} onSelect={this.props.onIssueSelect} />
       </Window>
     );
   }

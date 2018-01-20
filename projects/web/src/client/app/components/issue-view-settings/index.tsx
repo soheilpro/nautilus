@@ -42,8 +42,6 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
     this.handleIssueFilterQueryBuilderChange = this.handleIssueFilterQueryBuilderChange.bind(this);
     this.handleResetButtonClick = this.handleResetButtonClick.bind(this);
     this.handleSaveButtonClick = this.handleSaveButtonClick.bind(this);
-    this.handleListKeyForItem = this.handleListKeyForItem.bind(this);
-    this.handleListTitleForItem = this.handleListTitleForItem.bind(this);
     this.handleListRenderItem = this.handleListRenderItem.bind(this);
     this.handleListRenderItemButton = this.handleListRenderItemButton.bind(this);
     this.handleListButtonSelect = this.handleListButtonSelect.bind(this);
@@ -180,14 +178,6 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
     this.props.onChange(view);
   }
 
-  private handleListKeyForItem(view: IView): string {
-    return view.id;
-  }
-
-  private handleListTitleForItem(view: IView): string {
-    return view.name;
-  }
-
   private handleListRenderItem(view: IView): JSX.Element {
     return (
       <span>
@@ -245,7 +235,7 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
                 <Button className="save-button" type="secondary" onClick={this.handleSaveButtonClick}>Save</Button>
             }
             <Dropdown className="load-button" title="Load" ref={e => this.savedViewListDropdownRef = e}>
-              <List className="list" items={this.state.savedViews} buttons={['remove']} keyForItem={this.handleListKeyForItem} titleForItem={this.handleListTitleForItem} renderItem={this.handleListRenderItem} renderItemButton={this.handleListRenderItemButton} onSelect={this.handleListSelect} onButtonSelect={this.handleListButtonSelect} />
+              <List className="list" items={this.state.savedViews} buttons={['remove']} keyForItem={(view: IView) => view.id} titleForItem={(view: IView) => view.name} renderItem={this.handleListRenderItem} renderItemButton={this.handleListRenderItemButton} onSelect={this.handleListSelect} onButtonSelect={this.handleListButtonSelect} />
             </Dropdown>
           </div>
         </div>

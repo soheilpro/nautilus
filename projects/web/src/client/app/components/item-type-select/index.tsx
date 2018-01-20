@@ -14,19 +14,9 @@ interface IItemTypeSelectState {
 }
 
 export class ItemTypeSelect extends React.PureComponent<IItemTypeSelectProps, IItemTypeSelectState> {
-  constructor() {
-    super();
-
-    this.handleSelectChange = this.handleSelectChange.bind(this);
-  }
-
-  private handleSelectChange(itemType: IItemType): void {
-    this.props.onChange(itemType);
-  }
-
   render(): JSX.Element {
     return (
-      <Select className={classNames('item-type-select-component', this.props.className)} selectedItem={this.props.itemType} items={this.props.itemTypes} keyForItem={(item: IItemType) => item.id} titleForItem={(item: IItemType) => item.title} onChange={this.handleSelectChange} />
+      <Select className={classNames('item-type-select-component', this.props.className)} selectedItem={this.props.itemType} items={this.props.itemTypes} keyForItem={(item: IItemType) => item.id} titleForItem={(item: IItemType) => item.title} onChange={this.props.onChange} />
     );
   }
 }

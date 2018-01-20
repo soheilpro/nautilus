@@ -19,22 +19,7 @@ export class CommandPaletteWindow extends React.PureComponent<ICommandPaletteWin
   constructor() {
     super();
 
-    this.handleListKeyForItem = this.handleListKeyForItem.bind(this);
-    this.handleListTitleForItem = this.handleListTitleForItem.bind(this);
-    this.handleListIsItemEnabled = this.handleListIsItemEnabled.bind(this);
     this.handleListRenderItem = this.handleListRenderItem.bind(this);
-  }
-
-  private handleListKeyForItem(command: ICommand): string {
-    return command.id;
-  }
-
-  private handleListTitleForItem(command: ICommand): string {
-    return command.title;
-  }
-
-  private handleListIsItemEnabled(command: ICommand): boolean {
-    return command.isEnabled;
   }
 
   private handleListRenderItem(command: ICommand): JSX.Element {
@@ -53,7 +38,7 @@ export class CommandPaletteWindow extends React.PureComponent<ICommandPaletteWin
   render(): JSX.Element {
     return (
       <Window className="command-palette-window-component">
-        <List className="list" items={this.props.commands} keyForItem={this.handleListKeyForItem} titleForItem={this.handleListTitleForItem} isItemEnabled={this.handleListIsItemEnabled} renderItem={this.handleListRenderItem} onSelect={this.props.onSelect} />
+        <List className="list" items={this.props.commands} keyForItem={(command: ICommand) => command.id} titleForItem={(command: ICommand) => command.title} isItemEnabled={(command: ICommand) => command.isEnabled} renderItem={this.handleListRenderItem} onSelect={this.props.onSelect} />
       </Window>
     );
   }

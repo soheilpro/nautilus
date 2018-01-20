@@ -14,19 +14,9 @@ interface IMilestoneSelectState {
 }
 
 export class MilestoneSelect extends React.PureComponent<IMilestoneSelectProps, IMilestoneSelectState> {
-  constructor() {
-    super();
-
-    this.handleSelectChange = this.handleSelectChange.bind(this);
-  }
-
-  private handleSelectChange(milestone: IMilestone): void {
-    this.props.onChange(milestone);
-  }
-
   render(): JSX.Element {
     return (
-      <Select className={classNames('milestone-select-component', this.props.className)} selectedItem={this.props.milestone} items={this.props.milestones} keyForItem={(item: IMilestone) => item.id} titleForItem={(item: IMilestone) => item.fullTitle} onChange={this.handleSelectChange} />
+      <Select className={classNames('milestone-select-component', this.props.className)} selectedItem={this.props.milestone} items={this.props.milestones} keyForItem={(item: IMilestone) => item.id} titleForItem={(item: IMilestone) => item.fullTitle} onChange={this.props.onChange} />
     );
   }
 }
