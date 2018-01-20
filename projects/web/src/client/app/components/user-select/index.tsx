@@ -26,7 +26,7 @@ export class UserSelect extends React.PureComponent<IUserSelectProps, IUserSelec
 
   render(): JSX.Element {
     return (
-      <Select className={classNames('user-select-component', this.props.className)} selectedItem={this.props.user} items={this.props.users} itemKeyGetter={(item: IUser) => item.id} itemTitleGetter={(item: IUser) => item.name} onChange={this.handleSelectChange} />
+      <Select className={classNames('user-select-component', this.props.className)} selectedItem={this.props.user} items={this.props.users} keyForItem={(item: IUser) => item.id} titleForItem={(item: IUser) => item.name} onChange={this.handleSelectChange} />
     );
   }
 }

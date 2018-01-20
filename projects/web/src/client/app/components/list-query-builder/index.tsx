@@ -12,8 +12,8 @@ interface IListItem {
 
 interface IListQueryBuilderProps {
   items: IListItem[];
-  itemKeyGetter: (item: IListItem) => string;
-  itemTitleGetter: (item: IListItem) => string;
+  keyForItem: (item: IListItem) => string;
+  titleForItem: (item: IListItem) => string;
   query?: NQL.IExpression;
   queryItem: string;
   queryItemType: string;
@@ -209,7 +209,7 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
   private handleListRenderItem(item: IListItem): JSX.Element {
     return (
       <span>
-        { this.props.itemTitleGetter(item) }
+        { this.props.titleForItem(item) }
       </span>
     );
   }
@@ -246,7 +246,7 @@ export class ListQueryBuilder extends React.PureComponent<IListQueryBuilderProps
   render(): JSX.Element {
     return (
       <div className="list-query-builder-component">
-        <List className="list" items={this.props.items} buttons={['exclude', 'include']} keyForItem={this.props.itemKeyGetter} titleForItem={this.props.itemTitleGetter} renderItem={this.handleListRenderItem} renderItemButton={this.handleListRenderItemButton} onSelect={this.handleListSelect} onButtonSelect={this.handleListButtonSelect} />
+        <List className="list" items={this.props.items} buttons={['exclude', 'include']} keyForItem={this.props.keyForItem} titleForItem={this.props.titleForItem} renderItem={this.handleListRenderItem} renderItemButton={this.handleListRenderItemButton} onSelect={this.handleListSelect} onButtonSelect={this.handleListButtonSelect} />
       </div>
     );
   }

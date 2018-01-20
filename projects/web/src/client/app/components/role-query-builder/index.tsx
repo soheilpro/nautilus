@@ -20,7 +20,7 @@ export class RoleQueryBuilder extends React.PureComponent<IRoleQueryBuilderProps
 
   render(): JSX.Element {
     return (
-      <ListQueryBuilder items={this.props.roles} itemKeyGetter={(item: IRole) => item} itemTitleGetter={(item: IRole) => item} query={this.props.query} queryItem={this.props.queryItem} queryItemType="Role" itemToQueryItem={(item: IRole) => item} itemComparer={valueComparer} onChange={this.props.onChange} />
+      <ListQueryBuilder items={this.props.roles} keyForItem={(item: IRole) => item} titleForItem={(item: IRole) => item} query={this.props.query} queryItem={this.props.queryItem} queryItemType="Role" itemToQueryItem={(item: IRole) => item} itemComparer={valueComparer} onChange={this.props.onChange} />
     );
   }
 }

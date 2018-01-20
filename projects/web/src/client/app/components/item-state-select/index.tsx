@@ -26,7 +26,7 @@ export class ItemStateSelect extends React.PureComponent<IItemStateSelectProps, 
 
   render(): JSX.Element {
     return (
-      <Select className={classNames('item-state-select-component', this.props.className)} selectedItem={this.props.itemState} items={this.props.itemStates} itemKeyGetter={(item: IItemState) => item.id} itemTitleGetter={(item: IItemState) => item.title} onChange={this.handleSelectChange} />
+      <Select className={classNames('item-state-select-component', this.props.className)} selectedItem={this.props.itemState} items={this.props.itemStates} keyForItem={(item: IItemState) => item.id} titleForItem={(item: IItemState) => item.title} onChange={this.handleSelectChange} />
     );
   }
 }

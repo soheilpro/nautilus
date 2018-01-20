@@ -26,7 +26,7 @@ export class RoleSelect extends React.PureComponent<IRoleSelectProps, IRoleSelec
 
   render(): JSX.Element {
     return (
-      <Select className={classNames('role-select-component', this.props.className)} selectedItem={this.props.role} items={this.props.roles} itemKeyGetter={(item: string) => item} itemTitleGetter={(item: string) => item} onChange={this.handleSelectChange} />
+      <Select className={classNames('role-select-component', this.props.className)} selectedItem={this.props.role} items={this.props.roles} keyForItem={(item: string) => item} titleForItem={(item: string) => item} onChange={this.handleSelectChange} />
     );
   }
 }

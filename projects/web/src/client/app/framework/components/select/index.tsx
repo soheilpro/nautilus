@@ -14,8 +14,8 @@ const emptySelectItem: ISelectItem = {};
 interface ISelectProps {
   items: ISelectItem[];
   selectedItem: ISelectItem;
-  itemKeyGetter: (item: ISelectItem) => string;
-  itemTitleGetter: (item: ISelectItem) => string;
+  keyForItem: (item: ISelectItem) => string;
+  titleForItem: (item: ISelectItem) => string;
   placeholder?: string;
   className?: string;
   onChange(item: ISelectItem): void;
@@ -80,7 +80,7 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
     if (selectItem === emptySelectItem)
       return '';
 
-    return this.props.itemKeyGetter(selectItem);
+    return this.props.keyForItem(selectItem);
   }
 
   private handleListIsItemSelected(selectItem: ISelectItem): boolean {
@@ -92,7 +92,7 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
       <span className={classNames({ 'empty': selectItem === emptySelectItem })}>
         {
           selectItem !== emptySelectItem ?
-            this.props.itemTitleGetter(selectItem) :
+            this.props.titleForItem(selectItem) :
             '(None)'
         }
       </span>
@@ -104,7 +104,7 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
       <span className={classNames('title', { 'placeholder': !this.props.selectedItem })}>
         {
           this.props.selectedItem ?
-            this.props.itemTitleGetter(this.props.selectedItem) :
+            this.props.titleForItem(this.props.selectedItem) :
             this.props.placeholder
         }
       </span>;
@@ -112,7 +112,7 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
     return (
       <div className={classNames('select-component', this.props.className)}>
         <Dropdown className="dropdown" title={dropdownTitle} ref={e => this.dropdownRef = e}>
-          <List className="list" getItems={this.handleListGetItems} keyForItem={this.handleListKeyForItem} titleForItem={this.props.itemTitleGetter} isItemSelected={this.handleListIsItemSelected} renderItem={this.handleListRenderItem} showSelectionMarks={true} defaultSelectedItemIndex={1} onSelect={this.handleListSelect} />
+          <List className="list" getItems={this.handleListGetItems} keyForItem={this.handleListKeyForItem} titleForItem={this.props.titleForItem} isItemSelected={this.handleListIsItemSelected} renderItem={this.handleListRenderItem} showSelectionMarks={true} defaultSelectedItemIndex={1} onSelect={this.handleListSelect} />
         </Dropdown>
       </div>
     );
