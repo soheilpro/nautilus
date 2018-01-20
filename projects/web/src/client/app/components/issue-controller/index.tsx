@@ -11,7 +11,8 @@ import { INotificationController } from '../../framework/notifications';
 import { IWindowController } from '../../framework/windows';
 import { IUserController } from '../../modules/users';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
-import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, RepeatUpdateIssueCommand } from './commands';
+import { IItemStateController } from '../../modules/item-states';
+import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, RepeatUpdateIssueCommand, SetIssueStateCommand } from './commands';
 import { IItemControllerManager } from '../../framework/items';
 import { AddEditIssueWindow } from '../add-edit-issue-window';
 import { AssignIssueCommand } from './commands/assign-issue-command';
@@ -35,6 +36,10 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
 
   private get userController(): IUserController {
     return ServiceManager.Instance.getService<IUserController>('IUserController');
+  }
+
+  private get itemStateController(): IItemStateController {
+    return ServiceManager.Instance.getService<IItemStateController>('IItemStateController');
   }
 
   constructor() {
@@ -62,6 +67,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       new DuplicateIssueCommand(this, this.contextManager),
       new RepeatUpdateIssueCommand(this, this.contextManager),
       new AssignIssueCommand(this, this.contextManager),
+      new SetIssueStateCommand(this, this.contextManager),
     ];
   }
 
@@ -146,6 +152,31 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
 
     const issueChange: IIssueChange = {
       assignedTo: user,
+    };
+
+    const notification = {
+      title: 'Updating issue...',
+    };
+
+    this.notificationController.showNotification(notification);
+
+    await this.actionManager.execute(new UpdateIssueAction(issue, issueChange, this.application));
+    this.lastChange = issueChange;
+
+    this.notificationController.hideNotification(notification);
+  }
+
+  async setIssueState(issue: IIssue): Promise<void> {
+    const state = await this.itemStateController.selectItemState('issue');
+
+    if (!state)
+      return;
+
+    if (entityComparer(state, issue.state))
+      return;
+
+    const issueChange: IIssueChange = {
+      state: state,
     };
 
     const notification = {

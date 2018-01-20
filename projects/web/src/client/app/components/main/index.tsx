@@ -9,6 +9,7 @@ import { ActiveItemController } from '../active-item-controller';
 import { UserController } from '../user-controller';
 import { ProjectController } from '../project-controller';
 import { UserRoleController } from '../user-role-controller';
+import { ItemStateController } from '../item-state-controller';
 import { IssueController } from '../issue-controller';
 import { MilestoneController } from '../milestone-controller';
 import { NotificationController } from '../../framework/components/notification-controller';
@@ -105,6 +106,7 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
         <UserController />
         <ProjectController />
         <UserRoleController />
+        <ItemStateController />
         <BrowserRouter ref={e => this.browserRouterRef = e}>
           <div>{ routes }</div>
         </BrowserRouter>
