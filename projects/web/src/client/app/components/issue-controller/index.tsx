@@ -154,16 +154,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       assignedTo: user,
     };
 
-    const notification = {
-      title: 'Updating issue...',
-    };
-
-    this.notificationController.showNotification(notification);
-
-    await this.actionManager.execute(new UpdateIssueAction(issue, issueChange, this.application));
-    this.lastChange = issueChange;
-
-    this.notificationController.hideNotification(notification);
+    this.updateIssue(issue, issueChange);
   }
 
   async setIssueState(issue: IIssue): Promise<void> {
@@ -179,16 +170,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       state: state,
     };
 
-    const notification = {
-      title: 'Updating issue...',
-    };
-
-    this.notificationController.showNotification(notification);
-
-    await this.actionManager.execute(new UpdateIssueAction(issue, issueChange, this.application));
-    this.lastChange = issueChange;
-
-    this.notificationController.hideNotification(notification);
+    this.updateIssue(issue, issueChange);
   }
 
   getLastChange(): IIssueChange {
@@ -199,16 +181,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
     const handleUpdate = async (issue: IIssue, issueChange: IIssueChange) => {
       this.windowController.closeWindow(handle);
 
-      const notification = {
-        title: 'Updating issue...',
-      };
-
-      this.notificationController.showNotification(notification);
-
-      await this.actionManager.execute(new UpdateIssueAction(issue, issueChange, this.application));
-      this.lastChange = issueChange;
-
-      this.notificationController.hideNotification(notification);
+      this.updateIssue(issue, issueChange);
     };
 
     const handleClose = async () => {
@@ -249,6 +222,19 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
 
   getItemId(item: IIssue): string {
     return item.sid;
+  }
+
+  private async updateIssue(issue: IIssue, issueChange: IIssueChange): Promise<void> {
+    const notification = {
+      title: 'Updating issue...',
+    };
+
+    this.notificationController.showNotification(notification);
+
+    await this.actionManager.execute(new UpdateIssueAction(issue, issueChange, this.application));
+    this.lastChange = issueChange;
+
+    this.notificationController.hideNotification(notification);
   }
 
   render(): JSX.Element {
