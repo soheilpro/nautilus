@@ -3,6 +3,7 @@ import * as NQL from '../../nql';
 import { IClient, IItem, IItemRelationship, IItemChange } from '../../sdk';
 import { IApplication } from '../iapplication';
 import { BaseModule } from '../base-module';
+import { IProject, entityComparer } from '../';
 import { IItemModule } from './iitem-module';
 import { IIssue } from './iissue';
 import { IIssueChange } from './iissue-change';
@@ -252,6 +253,15 @@ export class ItemModule extends BaseModule implements IItemModule {
     delete this.milestonesMap[milestone.id];
 
     this.emit('milestone.delete', { milestone: milestone });
+  }
+
+  filterValidMilestonesForProject(milestones: IMilestone[], project: IProject): IMilestone[] {
+    if (!project)
+      return [];
+
+    return milestones
+      .filter(milestone => milestone.state && milestone.state.key !== 'closed')
+      .filter(milestone => !milestone.project || entityComparer(milestone.project, project));
   }
 
   private async addRelationship(relationship: IItemRelationship): Promise<void> {

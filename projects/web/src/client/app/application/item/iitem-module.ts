@@ -1,5 +1,6 @@
 import * as NQL from '../../nql';
 import { IModule } from '../imodule';
+import { IProject } from '..';
 import { IIssue } from './iissue';
 import { IIssueChange } from './iissue-change';
 import { IMilestone } from './imilestone';
@@ -18,4 +19,5 @@ export interface IItemModule extends IModule {
   addMilestone(milestone: IMilestone): Promise<IMilestone>;
   updateMilestone(milestone: IMilestone, milestoneChange: IMilestoneChange): Promise<IMilestone>;
   deleteMilestone(milestone: IMilestone): Promise<void>;
+  filterValidMilestonesForProject(milestones: IMilestone[], project: IProject): IMilestone[];
 }

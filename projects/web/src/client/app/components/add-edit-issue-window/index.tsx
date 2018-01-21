@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { IProject, IItemState, IItemType, IIssue, IIssueChange, IMilestone, IUser, entityComparer, IApplication } from '../../application';
+import { IProject, IItemState, IItemType, IIssue, IIssueChange, IMilestone, IUser, IApplication } from '../../application';
 import { ServiceManager } from '../../services';
 import { Window, WindowHeader, WindowContent, WindowActionBar } from '../../framework/components/window';
 import { Input } from '../../framework/components/input';
@@ -166,10 +166,7 @@ export class AddEditIssueWindow extends React.PureComponent<IAddEditIssueWindowP
   private getMilestones(project: IProject): IMilestone[] {
     const milestones = this.application.items.getAllMilestones(null, [new NQL.SortExpression(new NQL.LocalExpression('fullTitle'))]);
 
-    if (!project)
-      return milestones;
-
-    return milestones.filter(milestone => !milestone.project || entityComparer(milestone.project, project));
+    return this.application.items.filterValidMilestonesForProject(milestones, project);
   }
 
   render(): JSX.Element {

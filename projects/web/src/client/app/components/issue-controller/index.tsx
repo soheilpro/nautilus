@@ -12,10 +12,11 @@ import { IWindowController } from '../../framework/windows';
 import { IUserController } from '../../modules/users';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { IItemStateController } from '../../modules/item-states';
-import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, RepeatUpdateIssueCommand, SetIssueStateCommand } from './commands';
+import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, RepeatUpdateIssueCommand, SetIssueStateCommand, SetIssueMilestoneCommand } from './commands';
 import { IItemControllerManager } from '../../framework/items';
 import { AddEditIssueWindow } from '../add-edit-issue-window';
 import { AssignIssueCommand } from './commands/assign-issue-command';
+import { IMilestoneController } from '../../modules/milestones';
 
 interface IIssueControllerProps {
 }
@@ -40,6 +41,10 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
 
   private get itemStateController(): IItemStateController {
     return ServiceManager.Instance.getService<IItemStateController>('IItemStateController');
+  }
+
+  private get milestoneController(): IMilestoneController {
+    return ServiceManager.Instance.getService<IMilestoneController>('IMilestoneController');
   }
 
   constructor() {
@@ -68,6 +73,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       new RepeatUpdateIssueCommand(this, this.contextManager),
       new AssignIssueCommand(this, this.contextManager),
       new SetIssueStateCommand(this, this.contextManager),
+      new SetIssueMilestoneCommand(this, this.contextManager),
     ];
   }
 
@@ -168,6 +174,22 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
 
     const issueChange: IIssueChange = {
       state: state,
+    };
+
+    this.updateIssue(issue, issueChange);
+  }
+
+  async setIssueMilestone(issue: IIssue): Promise<void> {
+    const milestone = await this.milestoneController.selectMilestone(issue.project);
+
+    if (!milestone)
+      return;
+
+    if (entityComparer(milestone, issue.milestone))
+      return;
+
+    const issueChange: IIssueChange = {
+      milestone: milestone,
     };
 
     this.updateIssue(issue, issueChange);

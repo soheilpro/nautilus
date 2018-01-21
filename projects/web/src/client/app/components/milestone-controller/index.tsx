@@ -1,7 +1,7 @@
 import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { IMilestone, IMilestoneChange, IApplication } from '../../application';
+import { IMilestone, IMilestoneChange, IApplication, IProject } from '../../application';
 import { IMilestoneController, MilestoneType } from '../../modules/milestones';
 import { ServiceManager } from '../../services';
 import { AddEditMilestoneWindow } from '../add-edit-milestone-window';
@@ -13,6 +13,7 @@ import { IWindowController } from '../../framework/windows';
 import { NewMilestoneCommand } from './commands';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { IItemControllerManager } from '../../framework/items';
+import { MilestonePaletteWindow } from '../milestone-palette-window';
 
 interface IMilestoneControllerProps {
 }
@@ -152,6 +153,31 @@ export class MilestoneController extends React.PureComponent<IMilestoneControlle
 
   getItemId(milestone: IMilestone): string {
     return milestone.sid;
+  }
+
+  selectMilestone(project: IProject): Promise<IMilestone> {
+    let _resolve: (milestone: IMilestone) => void;
+
+    const handleSelect = (milestone: IMilestone) => {
+      this.windowController.closeWindow(handle, () => {
+        _resolve(milestone);
+      });
+    };
+
+    const milestones = this.application.items.getAllMilestones(null, [new NQL.SortExpression(new NQL.LocalExpression('fullTitle'))]);
+    const validMilestones = this.application.items.filterValidMilestonesForProject(milestones, project);
+
+    const window = <MilestonePaletteWindow milestones={validMilestones} onSelect={handleSelect} />;
+    const options = {
+      top: 20,
+      width: 600,
+    };
+
+    const handle = this.windowController.showWindow(window, options);
+
+    return new Promise(resolve => {
+      _resolve = resolve;
+    });
   }
 
   render(): JSX.Element {
