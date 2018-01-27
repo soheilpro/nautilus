@@ -17,7 +17,7 @@ export class NewSubIssueCommand extends BaseCommand {
   }
 
   get shortcut(): IShortcut {
-    return [{ keyCode: KeyCode.S }];
+    return [{ keyCode: KeyCode.B }];
   }
 
   get isEnabled(): boolean {

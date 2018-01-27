@@ -17,7 +17,7 @@ export class SetIssueStateCommand extends BaseCommand {
   }
 
   get shortcut(): IShortcut {
-    return [{ keyCode: KeyCode.T }];
+    return [{ keyCode: KeyCode.S }];
   }
 
   get isEnabled(): boolean {

@@ -1,3 +1,4 @@
+import { KeyCode, IShortcut } from '../../../framework/keyboard';
 import { IContextManager } from '../../../framework/context';
 import { BaseCommand } from '../../../framework/commands';
 import { IActiveItemController } from '../../../modules/active-item';
@@ -14,6 +15,13 @@ export class CopyItemIdCommand extends BaseCommand {
 
   get title(): string {
     return 'Copy id to clipboard';
+  }
+
+  get shortcut(): IShortcut {
+    return [
+      { keyCode: KeyCode.C },
+      { keyCode: KeyCode.I },
+    ];
   }
 
   get isEnabled(): boolean {
