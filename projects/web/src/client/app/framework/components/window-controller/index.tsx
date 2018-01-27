@@ -47,8 +47,6 @@ export class WindowController extends React.PureComponent<IWindowControllerProps
   componentDidUpdate(): void {
     if (this.elementToFocus)
       this.elementToFocus.focus();
-
-    document.body.style.overflowY = this.state.handles.some(handle => handle.options.modal) ? 'hidden' : null;
   }
 
   componentWillUnmount(): void {
@@ -101,7 +99,7 @@ export class WindowController extends React.PureComponent<IWindowControllerProps
                 handle.options.modal &&
                   <div className="overlay"></div>
               }
-              <WindowContainer position="fixed" top={handle.options.top} width={handle.options.width} closeOnBlur={!handle.options.modal} onClose={_.partial(this.handleWindowContainerClose, handle)} >
+              <WindowContainer position="absolute" top={handle.options.top} width={handle.options.width} closeOnBlur={!handle.options.modal} onClose={_.partial(this.handleWindowContainerClose, handle)} >
                 {handle.window}
               </WindowContainer>
             </div>
