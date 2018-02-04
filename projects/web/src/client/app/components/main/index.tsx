@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
-import { History } from 'history';
+import { Router, Route } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { ServiceManager } from '../../services';
 import { CommandController } from '../../framework/components/command-controller';
@@ -15,6 +15,7 @@ import { MilestoneController } from '../milestone-controller';
 import { NotificationController } from '../../framework/components/notification-controller';
 import { SearchController } from '../search-controller';
 import { WindowController } from '../../framework/components/window-controller';
+import { TabController } from '../../framework/components/tab-controller';
 import { IApplication } from '../../application';
 import { IssuesPage } from '../issues-page';
 import { MilestonesPage } from '../milestones-page';
@@ -35,7 +36,7 @@ interface IMainState {
 export class Main extends React.PureComponent<IMainProps, IMainState> implements ICommandProvider {
   private application = ServiceManager.Instance.getService<IApplication>('IApplication');
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
-  private browserRouterRef: BrowserRouter;
+  private history = createBrowserHistory();
 
   private get notificationController(): INotificationController {
     return ServiceManager.Instance.getService<INotificationController>('INotificationController');
@@ -58,20 +59,18 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
   }
 
   getCommands(): ICommand[] {
-    const history: History = (this.browserRouterRef as any).history;
-
     let commands: ICommand[] = [
       new RefreshCommand(this.application, this.notificationController),
-      new GoToIssuesCommand(history),
-      new GoToMilestonesCommand(history),
+      new GoToIssuesCommand(this.history),
+      new GoToMilestonesCommand(this.history),
     ];
 
     if (this.state.isAdmin) {
       commands = [
         ...commands,
-        new GoToUsersCommand(history),
-        new GoToProjectsCommand(history),
-        new GoToUserRolesCommand(history),
+        new GoToUsersCommand(this.history),
+        new GoToProjectsCommand(this.history),
+        new GoToUserRolesCommand(this.history),
       ];
     }
 
@@ -95,6 +94,7 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
 
     return (
       <div className="main-component rtl">
+        <TabController history={this.history} />
         <WindowController />
         <DialogController />
         <NotificationController />
@@ -107,9 +107,9 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
         <ProjectController />
         <UserRoleController />
         <ItemStateController />
-        <BrowserRouter ref={e => this.browserRouterRef = e}>
+        <Router history={this.history}>
           <div>{ routes }</div>
-        </BrowserRouter>
+        </Router>
       </div>
     );
   }

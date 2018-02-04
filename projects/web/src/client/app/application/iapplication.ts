@@ -7,7 +7,7 @@ import { IRoleModule } from './role';
 import { IUserModule } from './user';
 import { IUserRoleModule } from './user-role';
 
-export interface IApplication extends EventEmitter {
+export interface IApplication extends IEventEmitter {
   isInitialized(): boolean;
   initialize(session: ISession): void;
 

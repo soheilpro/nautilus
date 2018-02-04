@@ -4,7 +4,7 @@
   padding: 5px 10px 0 10px;
   border-bottom: 2px solid lighten(@default_border, 5%);
 
-  a {
+  .tab {
     margin-right: 5px;
     padding: 5px 10px;
     display: inline-block;
@@ -21,6 +21,17 @@
 
     &.active {
       background-color: lighten(@default_border, 5%);
+    }
+
+    &.closable {
+      .close-button {
+        color: @dim_fill;
+        margin-left: 4px;
+
+        &:hover {
+          color: @danger_fill;
+        }
+      }
     }
   }
 }
