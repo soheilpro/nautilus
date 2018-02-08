@@ -66,7 +66,6 @@ export class Navigation extends React.Component<INavigationProps, INavigationSta
   render(): JSX.Element {
     let links: JSX.Element[] = [
       <NavLink to="/" exact className="tab" activeClassName="active" key="issues">Issues</NavLink>,
-      <NavLink to="/milestones" className="tab" activeClassName="active" key="milestones">Milestones</NavLink>,
     ];
 
     links = [
@@ -88,6 +87,11 @@ export class Navigation extends React.Component<INavigationProps, INavigationSta
         <NavLink to="/users" className="tab right" activeClassName="active" key="users">Users</NavLink>,
       ];
     }
+
+    links = [
+      ...links,
+      <NavLink to="/milestones" className="tab right" activeClassName="active" key="milestones">Milestones</NavLink>,
+    ];
 
     return (
       <div className="navigation-component">
