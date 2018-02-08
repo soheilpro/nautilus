@@ -23,6 +23,7 @@ interface IListProps {
   isItemSelected?(item: IListItem): boolean;
   renderItem(item: IListItem): JSX.Element;
   renderItemButton?(item: IListItem, button: string): JSX.Element;
+  renderInstruction?(): JSX.Element;
   className?: string;
   onSelect(item: IListItem): void;
   onButtonSelect?(item: IListItem, button: string): void;
@@ -187,43 +188,48 @@ export class List extends React.PureComponent<IListProps, IListState> {
     return (
       <div className={classNames('list-component', this.props.className)} onKeyDown={this.handleKeyDown}>
         <Input className="search-input" value={this.state.searchText} autoFocus={true} selectOnFocus={true} style="simple" onChange={this.handleSearchTextChange} />
-        {
-          this.state.items.length > 0 ?
-            <div className="list-items" onMouseLeave={this.handleListMouseLeave}>
-              {
-                this.state.items.map((item, index) => {
-                  return (
-                    <div className={classNames('list-item', { 'disabled': !this.isItemEnabled(item), 'active': index === this.state.activeItemIndex })} onMouseEnter={_.partial(this.handleItemMouseEnter, item)} key={this.props.keyForItem(item)}>
-                      {
-                        this.props.buttons.map(button => {
-                          return (
-                            <a className={classNames('list-item-button', `button-${button}`)} onClick={_.partial(this.handleItemButtonClick, item, button)} href="#" key={button}>
-                              { this.props.renderItemButton(item, button) }
-                            </a>
-                          );
-                        })
-                      }
-                      {
-                        this.props.buttons.length > 0 &&
-                          <span className="spacer"></span>
-                      }
-                      <a className="content" onClick={_.partial(this.handleItemContentClick, item)} href="#">
+          {
+            this.state.items.length > 0 ?
+              <div className="list-items" onMouseLeave={this.handleListMouseLeave}>
+                {
+                  this.state.items.map((item, index) => {
+                    return (
+                      <div className={classNames('list-item', { 'disabled': !this.isItemEnabled(item), 'active': index === this.state.activeItemIndex })} onMouseEnter={_.partial(this.handleItemMouseEnter, item)} key={this.props.keyForItem(item)}>
                         {
-                          this.props.showSelectionMarks &&
-                            <Icon className={classNames('icon', { 'selected': this.props.isItemSelected(item) })} name="check" />
+                          this.props.buttons.map(button => {
+                            return (
+                              <a className={classNames('list-item-button', `button-${button}`)} onClick={_.partial(this.handleItemButtonClick, item, button)} href="#" key={button}>
+                                { this.props.renderItemButton(item, button) }
+                              </a>
+                            );
+                          })
                         }
-                        { this.props.renderItem(item) }
-                      </a>
-                    </div>
-                  );
-                })
-              }
-            </div>
-            :
-            <div className="no-result">
-              No results found.
-            </div>
-        }
+                        {
+                          this.props.buttons.length > 0 &&
+                            <span className="spacer"></span>
+                        }
+                        <a className="content" onClick={_.partial(this.handleItemContentClick, item)} href="#">
+                          {
+                            this.props.showSelectionMarks &&
+                              <Icon className={classNames('icon', { 'selected': this.props.isItemSelected(item) })} name="check" />
+                          }
+                          { this.props.renderItem(item) }
+                        </a>
+                      </div>
+                    );
+                  })
+                }
+              </div>
+              :
+              !this.state.searchText ?
+                <div className="instruction">
+                  { this.props.renderInstruction && this.props.renderInstruction() }
+                </div>
+                :
+                <div className="no-result">
+                  No results found.
+                </div>
+          }
       </div>
     );
   }
