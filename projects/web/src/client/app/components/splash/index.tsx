@@ -14,7 +14,7 @@ export class Splash extends React.Component<ISplashProps, ISplashState> {
     return (
       <div className="splash-component">
         <div className="container">
-          Loading...
+          Nautilus
         </div>
       </div>
     );
