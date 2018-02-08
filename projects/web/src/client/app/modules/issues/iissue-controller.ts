@@ -9,5 +9,7 @@ export interface IIssueController extends IItemController {
   assignIssue(issue: IIssue): void;
   setIssueState(issue: IIssue): void;
   setIssueMilestone(issue: IIssue): void;
+  viewIssue(issue: IIssue): void;
+  findIssue(): void;
   getLastChange(): IIssueChange;
 }

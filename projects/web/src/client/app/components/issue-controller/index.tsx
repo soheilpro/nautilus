@@ -9,14 +9,16 @@ import { IActionManager } from '../../framework/actions';
 import { IDialogController } from '../../framework/dialog';
 import { INotificationController } from '../../framework/notifications';
 import { IWindowController } from '../../framework/windows';
+import { ITabController, ITab } from '../../framework/tabs';
 import { IUserController } from '../../modules/users';
 import { ICommandProvider, ICommandManager, ICommand } from '../../framework/commands';
 import { IItemStateController } from '../../modules/item-states';
-import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, RepeatUpdateIssueCommand, SetIssueStateCommand, SetIssueMilestoneCommand } from './commands';
+import { DuplicateIssueCommand, NewIssueCommand, NewSubIssueCommand, RepeatUpdateIssueCommand, SetIssueStateCommand, SetIssueMilestoneCommand, FindIssueCommand, ViewIssueCommand } from './commands';
 import { IItemControllerManager } from '../../framework/items';
 import { AddEditIssueWindow } from '../add-edit-issue-window';
 import { AssignIssueCommand } from './commands/assign-issue-command';
 import { IMilestoneController } from '../../modules/milestones';
+import { IssueSearchWindow } from '../issue-search-window';
 
 interface IIssueControllerProps {
 }
@@ -33,6 +35,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
   private notificationController = ServiceManager.Instance.getService<INotificationController>('INotificationController');
   private itemControllerManager = ServiceManager.Instance.getService<IItemControllerManager>('IItemControllerManager');
   private commandManager = ServiceManager.Instance.getService<ICommandManager>('ICommandManager');
+  private tabController = ServiceManager.Instance.getService<ITabController>('ITabController');
   private lastChange: IIssueChange;
 
   private get userController(): IUserController {
@@ -74,6 +77,8 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       new AssignIssueCommand(this, this.contextManager),
       new SetIssueStateCommand(this, this.contextManager),
       new SetIssueMilestoneCommand(this, this.contextManager),
+      new ViewIssueCommand(this, this.contextManager),
+      new FindIssueCommand(this),
     ];
   }
 
@@ -193,6 +198,31 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
     };
 
     this.updateIssue(issue, issueChange);
+  }
+
+  viewIssue(issue: IIssue): void {
+    const tab: ITab = {
+      key: `issue-${issue.sid}`,
+      title: `#${issue.sid}`,
+      url: `/${issue.sid}`,
+    };
+
+    this.tabController.openTab(tab);
+  }
+
+  findIssue(): void {
+    const handleIssueSelect = (issue: IIssue) => {
+      this.windowController.closeWindow(handle);
+      this.viewIssue(issue);
+    };
+
+    const window = <IssueSearchWindow onIssueSelect={handleIssueSelect} />;
+    const options = {
+      top: 20,
+      width: 600,
+    };
+
+    const handle = this.windowController.showWindow(window, options);
   }
 
   getLastChange(): IIssueChange {

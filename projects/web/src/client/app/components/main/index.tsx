@@ -13,12 +13,12 @@ import { ItemStateController } from '../item-state-controller';
 import { IssueController } from '../issue-controller';
 import { MilestoneController } from '../milestone-controller';
 import { NotificationController } from '../../framework/components/notification-controller';
-import { SearchController } from '../search-controller';
 import { WindowController } from '../../framework/components/window-controller';
 import { TabController } from '../../framework/components/tab-controller';
 import { IApplication } from '../../application';
 import { IssuesPage } from '../issues-page';
 import { MilestonesPage } from '../milestones-page';
+import { IssuePage } from '../issue-page';
 import { UsersPage } from '../users-page';
 import { ProjectsPage } from '../projects-page';
 import { UserRolesPage } from '../user-roles-page';
@@ -81,6 +81,7 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
     let routes: JSX.Element[] = [
       <Route path="/" exact component={IssuesPage as any} key="issues" />,
       <Route path="/milestones" component={MilestonesPage as any} key="milestones" />,
+      <Route path="/:issueId(\\d+)" exact component={IssuePage as any} key="issue" />,
     ];
 
     if (this.state.isAdmin) {
@@ -99,7 +100,6 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
         <DialogController />
         <NotificationController />
         <CommandController />
-        <SearchController />
         <ActiveItemController />
         <IssueController />
         <MilestoneController />

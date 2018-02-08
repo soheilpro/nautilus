@@ -1,0 +1,68 @@
+@import '../../assets/stylesheets/common';
+
+.issue-page-component {
+  margin: 20px 12px;
+
+  .container {
+    display: flex;
+
+    .main {
+      flex: 1;
+
+      .sid {
+        font-weight: bold;
+      }
+
+      .title {
+        margin-top: 5px;
+        font-weight: bold;
+        max-width: 1000px;
+      }
+
+      .description {
+        margin-top: 40px;
+        max-width: 500px;
+      }
+    }
+
+    .side {
+      margin-top: 20px;
+      margin-right: 100px;
+      min-width: 150px;
+
+      .group {
+        margin-bottom: 20px;
+
+        .label {
+          display: block;
+        }
+
+        .value {
+          display: block;
+          font-weight: bold;
+        }
+
+        .value2 {
+          display: block;
+        }
+      }
+
+      .divider {
+        border-top: 1px solid #ccc;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+.rtl {
+  .issue-page-component {
+    .container {
+      direction: rtl;
+
+      .side {
+        direction: initial;
+      }
+    }
+  }
+}
