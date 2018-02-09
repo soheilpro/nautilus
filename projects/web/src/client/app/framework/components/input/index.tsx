@@ -34,23 +34,27 @@ export class Input extends React.PureComponent<IInputProps, IInputState> {
     this.handleTextAreaFocus = this.handleTextAreaFocus.bind(this);
   }
 
-  private handleInputFocus(event: React.FormEvent<HTMLInputElement>): void {
-    if (this.props.selectOnFocus)
-      (event.target as HTMLInputElement).select();
+  private handleInputFocus(event: React.FocusEvent<HTMLInputElement>): void {
+    if (this.props.selectOnFocus) {
+      if (event.relatedTarget)
+        (event.target as HTMLInputElement).select();
+    }
   }
 
-  private handleInputChange(event: React.FormEvent<HTMLInputElement>): void {
+  private handleInputChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const value = (event.target as HTMLInputElement).value;
 
     this.props.onChange(value);
   }
 
-  private handleTextAreaFocus(event: React.FormEvent<HTMLTextAreaElement>): void {
-    if (this.props.selectOnFocus)
-      (event.target as HTMLTextAreaElement).select();
+  private handleTextAreaFocus(event: React.FocusEvent<HTMLTextAreaElement>): void {
+    if (this.props.selectOnFocus) {
+      if (event.relatedTarget)
+        (event.target as HTMLTextAreaElement).select();
+    }
   }
 
-  private handleTextAreaChange(event: React.FormEvent<HTMLTextAreaElement>): void {
+  private handleTextAreaChange(event: React.ChangeEvent<HTMLTextAreaElement>): void {
     const value = (event.target as HTMLTextAreaElement).value;
 
     this.props.onChange(value);
