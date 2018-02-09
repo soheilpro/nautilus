@@ -16,10 +16,7 @@ export class FindIssueCommand extends BaseCommand {
   }
 
   get shortcut(): IShortcut {
-    return [
-      { keyCode: KeyCode.F },
-      { keyCode: KeyCode.I },
-    ];
+    return [{ keyCode: KeyCode.F }];
   }
 
   execute(): void {
