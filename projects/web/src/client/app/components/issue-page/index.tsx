@@ -148,7 +148,7 @@ export class IssuePage extends React.Component<IIssuePageProps, IIssuePageState>
           <div className="container">
             <div className="main">
               <div className="sid">
-                <SidField sid={this.state.issue.sid} selected={true} />
+                <SidField sid={this.state.issue.sid} bold={true} />
               </div>
               <div className="title">
                 <TitleField title={this.state.issue.title} status={IssuePage.stateToStatus[this.state.issue.state ? this.state.issue.state.key : null]} />

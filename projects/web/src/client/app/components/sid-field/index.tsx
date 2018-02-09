@@ -6,7 +6,7 @@ require('./index.less');
 
 interface ISidFieldProps {
   sid: string;
-  selected?: boolean;
+  bold?: boolean;
 }
 
 interface ISidFieldState {
@@ -15,7 +15,7 @@ interface ISidFieldState {
 export class SidField extends React.PureComponent<ISidFieldProps, ISidFieldState> {
   render(): JSX.Element {
     return (
-      <span className={classNames('sid-field-component', { 'selected': this.props.selected })}>
+      <span className={classNames('sid-field-component', { 'bold': this.props.bold })}>
         {this.props.sid}
       </span>
     );
