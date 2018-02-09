@@ -18,7 +18,7 @@ export class MilestoneField extends React.PureComponent<IMilestoneFieldProps, IM
 
     return (
       <span className="milestone-field-component">
-        {this.props.milestone.title}
+        {this.props.milestone.smartTitle}
       </span>
     );
   }

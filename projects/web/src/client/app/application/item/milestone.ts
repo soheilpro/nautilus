@@ -21,10 +21,19 @@ export class Milestone implements IMilestone {
   get fullTitle(): string {
     const project = this.project;
 
-    if (project)
-      return `${project.name}: ${this.title}`;
+    if (!project)
+      return `(Global) ${this.title}`;
 
-    return `(Global) ${this.title}`;
+    return `${project.name}: ${this.title}`;
+  }
+
+  get smartTitle(): string {
+    const project = this.project;
+
+    if (!project)
+      return `(Global) ${this.title}`;
+
+    return this.title;
   }
 
   get description(): string {

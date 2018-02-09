@@ -33,7 +33,7 @@ export class MilestonePaletteWindow extends React.PureComponent<IMilestonePalett
     return (
       <Window className="milestone-palette-window-component">
         <Heading className="heading" level={1}>Set issue milestone</Heading>
-        <List className="list" items={this.props.milestones} keyForItem={(milestone: IMilestone) => milestone.id} titleForItem={(milestone: IMilestone) => milestone.fullTitle} renderItem={this.handleListRenderItem} onSelect={this.props.onSelect} />
+        <List className="list" items={this.props.milestones} keyForItem={(milestone: IMilestone) => milestone.id} titleForItem={(milestone: IMilestone) => milestone.smartTitle} renderItem={this.handleListRenderItem} onSelect={this.props.onSelect} />
       </Window>
     );
   }
