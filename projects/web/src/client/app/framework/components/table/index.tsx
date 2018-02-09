@@ -96,7 +96,7 @@ export class Table extends React.PureComponent<ITableProps, ITableState> {
       if (selectedItemIndex < this.props.items.length - 1) {
         event.preventDefault();
 
-        const selectedItem = this.props.items[selectedItemIndex + 1];
+        const selectedItem = !event.metaKey ? this.props.items[selectedItemIndex + 1] : this.props.items[this.props.items.length - 1];
 
         this.setState({
           selectedItem: selectedItem,
@@ -111,7 +111,7 @@ export class Table extends React.PureComponent<ITableProps, ITableState> {
       if (selectedItemIndex > 0) {
         event.preventDefault();
 
-        const selectedItem = this.props.items[selectedItemIndex - 1];
+        const selectedItem = !event.metaKey ? this.props.items[selectedItemIndex - 1] : this.props.items[0];
 
         this.setState({
           selectedItem: selectedItem,
