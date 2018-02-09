@@ -1,3 +1,4 @@
+import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
 import { IUser, entityComparer, IApplication } from '../../application';
@@ -79,11 +80,17 @@ export class UsersPage extends React.Component<IUsersPageProps, IUsersPageState>
 
   private loadUsers(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]): void {
     sortExpressions = [new NQL.SortExpression(new NQL.LocalExpression('name'))];
+
     const users = this.application.users.getAll(filterExpression, sortExpressions);
+
+    let selectedUser = this.state.selectedUser ? _.find(users, _.partial(entityComparer, this.state.selectedUser)) : null;
+
+    if (!selectedUser)
+      selectedUser = users[0];
 
     this.setState({
       users: users,
-      selectedUser: users[0],
+      selectedUser: selectedUser,
     });
   }
 

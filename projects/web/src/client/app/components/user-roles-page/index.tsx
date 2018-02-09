@@ -1,3 +1,4 @@
+import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
 import { IUserRole, entityComparer, IApplication } from '../../application';
@@ -85,9 +86,14 @@ export class UserRolesPage extends React.Component<IUserRolesPageProps, IUserRol
     ];
     const userRoles = this.application.userRoles.getAll(filterExpression, sortExpressions);
 
+    let selectedUserRole = this.state.selectedUserRole ? _.find(userRoles, _.partial(entityComparer, this.state.selectedUserRole)) : null;
+
+    if (!selectedUserRole)
+      selectedUserRole = userRoles[0];
+
     this.setState({
       userRoles: userRoles,
-      selectedUserRole: userRoles[0],
+      selectedUserRole: selectedUserRole,
     });
   }
 

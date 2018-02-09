@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as _ from 'underscore';
+import * as React from 'react';
 import { IIssue, entityComparer, IApplication } from '../../application';
 import * as NQL from '../../nql';
 import { ServiceManager } from '../../services';
@@ -91,11 +91,17 @@ export class IssuesPage extends React.Component<IIssuesPageProps, IIssuesPageSta
 
   private async loadIssues(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]): Promise<void> {
     sortExpressions = [new NQL.SortExpression(new NQL.LocalExpression('sid'), -1)];
+
     const issues = await this.application.items.getAllIssues(filterExpression, sortExpressions);
+
+    let selectedIssue = this.state.selectedIssue ? _.find(issues, _.partial(entityComparer, this.state.selectedIssue)) : null;
+
+    if (!selectedIssue)
+      selectedIssue = _.find(issues, issue => !issue.parent);
 
     this.setState({
       issues: issues,
-      selectedIssue: _.find(issues, issue => !issue.parent),
+      selectedIssue: selectedIssue,
     });
   }
 

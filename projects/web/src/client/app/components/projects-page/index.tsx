@@ -1,3 +1,4 @@
+import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
 import { IProject, entityComparer, IApplication } from '../../application';
@@ -79,11 +80,17 @@ export class ProjectsPage extends React.Component<IProjectsPageProps, IProjectsP
 
   private loadProjects(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]): void {
     sortExpressions = [new NQL.SortExpression(new NQL.LocalExpression('name'))];
+
     const projects = this.application.projects.getAll(filterExpression, sortExpressions);
+
+    let selectedProject = this.state.selectedProject ? _.find(projects, _.partial(entityComparer, this.state.selectedProject)) : null;
+
+    if (!selectedProject)
+      selectedProject = projects[0];
 
     this.setState({
       projects: projects,
-      selectedProject: projects[0],
+      selectedProject: selectedProject,
     });
   }
 

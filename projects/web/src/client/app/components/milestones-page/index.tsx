@@ -1,3 +1,4 @@
+import * as _ from 'underscore';
 import * as React from 'react';
 import * as NQL from '../../nql';
 import { IMilestone, entityComparer, IApplication } from '../../application';
@@ -79,11 +80,17 @@ export class MilestonesPage extends React.Component<IMilestonesPageProps, IMiles
 
   private loadMilestones(filterExpression: NQL.IExpression, sortExpressions: NQL.ISortExpression[]): void {
     sortExpressions = [new NQL.SortExpression(new NQL.LocalExpression('fullTitle'))];
+
     const milestones = this.application.items.getAllMilestones(filterExpression, sortExpressions);
+
+    let selectedMilestone = this.state.selectedMilestone ? _.find(milestones, _.partial(entityComparer, this.state.selectedMilestone)) : null;
+
+    if (!selectedMilestone)
+      selectedMilestone = milestones[0];
 
     this.setState({
       milestones: milestones,
-      selectedMilestone: milestones[0],
+      selectedMilestone: selectedMilestone,
     });
   }
 
