@@ -11,7 +11,7 @@ export class Issue implements IIssue {
     return this.item.id;
   }
 
-  get sid(): string {
+  get sid(): number {
     return this.item.sid;
   }
 

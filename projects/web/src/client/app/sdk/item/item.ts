@@ -3,7 +3,7 @@ import { IEntity } from '../ientity';
 import { Entity } from '../entity';
 
 export class Item extends Entity implements IItem {
-  sid?: string;
+  sid?: number;
   kind?: string;
   type?: IEntity;
   title?: string;
@@ -18,7 +18,7 @@ export class Item extends Entity implements IItem {
   constructor(data: any) {
     super(data);
 
-    this.sid = data.sid;
+    this.sid = Number(data.sid);
     this.kind = data.kind;
 
     if (data.type)

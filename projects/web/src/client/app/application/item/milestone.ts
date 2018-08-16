@@ -10,7 +10,7 @@ export class Milestone implements IMilestone {
     return this.item.id;
   }
 
-  get sid(): string {
+  get sid(): number {
     return this.item.sid;
   }
 

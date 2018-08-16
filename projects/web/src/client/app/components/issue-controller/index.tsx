@@ -273,7 +273,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
   }
 
   getItemId(item: IIssue): string {
-    return item.sid;
+    return item.sid.toString();
   }
 
   private async updateIssue(issue: IIssue, issueChange: IIssueChange): Promise<void> {

@@ -5,7 +5,7 @@ require('../../assets/stylesheets/base.less');
 require('./index.less');
 
 interface ISidFieldProps {
-  sid: string;
+  sid: number;
   bold?: boolean;
 }
 

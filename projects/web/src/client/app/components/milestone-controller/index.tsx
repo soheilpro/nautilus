@@ -152,7 +152,7 @@ export class MilestoneController extends React.PureComponent<IMilestoneControlle
   }
 
   getItemId(milestone: IMilestone): string {
-    return milestone.sid;
+    return milestone.sid.toString();
   }
 
   selectMilestone(project: IProject): Promise<IMilestone> {

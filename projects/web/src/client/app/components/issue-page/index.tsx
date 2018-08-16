@@ -92,7 +92,7 @@ export class IssuePage extends React.Component<IIssuePageProps, IIssuePageState>
   private async loadIssue(issueId: string): Promise<void> {
     const filter = new NQL.ComparisonExpression(
       new NQL.LocalExpression('sid'),
-      new NQL.ConstantExpression(issueId, 'String'),
+      new NQL.ConstantExpression(Number(issueId), 'Number'),
       'eq'
     );
 

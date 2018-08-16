@@ -3,7 +3,7 @@ import { IMilestone } from './imilestone';
 import { IIssue } from './iissue';
 
 export interface IIssue extends IEntity {
-  sid?: string;
+  sid?: number;
   type?: IItemType;
   title?: string;
   description?: string;

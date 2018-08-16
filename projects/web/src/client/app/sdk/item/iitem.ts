@@ -1,7 +1,7 @@
 import { IEntity } from '../ientity';
 
 export interface IItem extends IEntity {
-  sid?: string;
+  sid?: number;
   kind?: string;
   type?: IEntity;
   title?: string;

@@ -2,7 +2,10 @@ import * as NQL from '../../nql';
 
 export class MilestoneExpressionNormalizer extends NQL.ExpressionTransformer<{}> {
   visitLocal(expression: NQL.LocalExpression, context: {}): NQL.IExpression {
-    if (['sid', 'title', 'fullTitle'].some(name => name === expression.name))
+    if (['sid'].some(name => name === expression.name))
+      return new NQL.CastExpression(new NQL.PropertyExpression(new NQL.LocalExpression('item'), expression.name), 'Number');
+
+    if (['title', 'fullTitle'].some(name => name === expression.name))
       return new NQL.CastExpression(new NQL.PropertyExpression(new NQL.LocalExpression('item'), expression.name), 'String');
 
     if (['project'].some(name => name === expression.name))

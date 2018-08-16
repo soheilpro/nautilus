@@ -32,7 +32,7 @@ export class IssueSearchWindow extends React.PureComponent<IIssueSearchWindowPro
   private async handleListGetItems(query: string): Promise<IListItem[]> {
     const filter = new NQL.ComparisonExpression(
       new NQL.LocalExpression('sid'),
-      new NQL.ConstantExpression(query, 'String'),
+      new NQL.ConstantExpression(Number(query), 'Number'),
       'eq'
     );
 
