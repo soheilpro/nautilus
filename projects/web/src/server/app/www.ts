@@ -15,6 +15,7 @@ app.use(morgan('dev'));
 app.use(compression());
 
 app.use('/assets', express.static(path.join(__dirname, '../../client/out/assets'), { maxAge: 365 * 24 * 60 * 60 * 1000 }));
+app.use('/assets', express.static(path.join(__dirname, '../../client/assets'), { maxAge: 365 * 24 * 60 * 60 * 1000 }));
 
 app.use('/assets', (request, response) => {
   response.status(404).send('Not found.');
