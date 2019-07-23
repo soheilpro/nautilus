@@ -31,6 +31,10 @@ export class PermissionProvider implements IPermissionProvider {
         yield 'item-states.*:read';
         yield 'item-states.*:update';
         yield 'item-states.*:delete';
+        yield 'item-priorities:create';
+        yield 'item-priorities.*:read';
+        yield 'item-priorities.*:update';
+        yield 'item-priorities.*:delete';
         yield 'item-types:create';
         yield 'item-types.*:read';
         yield 'item-types.*:update';
@@ -60,6 +64,7 @@ export class PermissionProvider implements IPermissionProvider {
         break;
 
       case 'project.member':
+        yield 'item-priorities.*:read';
         yield 'item-states.*:read';
         yield 'item-types.*:read';
         yield `projects.${userRole.project.id}:read`;

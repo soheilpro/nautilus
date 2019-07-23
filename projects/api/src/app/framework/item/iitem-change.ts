@@ -6,6 +6,7 @@ export interface IItemChange extends IChange {
   kind?: string;
   title?: string;
   description?: string;
+  priority?: IEntity;
   state?: IEntity;
   tags?: string[];
   project?: IEntity;

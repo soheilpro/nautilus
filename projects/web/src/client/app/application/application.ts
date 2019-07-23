@@ -2,6 +2,7 @@ import EventEmitter = require('wolfy87-eventemitter');
 import { Client, IClient, ISession, UnauthorizedError } from '../sdk';
 import { IApplication } from './iapplication';
 import { IItemModule, ItemModule } from './item';
+import { IItemPriorityModule, ItemPriorityModule } from './item-priority';
 import { IItemStateModule, ItemStateModule } from './item-state';
 import { IItemTypeModule, ItemTypeModule } from './item-type';
 import { IProjectModule, ProjectModule } from './project';
@@ -21,6 +22,7 @@ export class Application extends EventEmitter implements IApplication {
   private isLoadedState: boolean;
 
   items: IItemModule;
+  itemPriorities: IItemPriorityModule;
   itemStates: IItemStateModule;
   itemTypes: IItemTypeModule;
   projects: IProjectModule;
@@ -35,6 +37,7 @@ export class Application extends EventEmitter implements IApplication {
 
     this.client = client;
     this.items = new ItemModule(this, client);
+    this.itemPriorities = new ItemPriorityModule(this, client);
     this.itemStates = new ItemStateModule(this, client);
     this.itemTypes = new ItemTypeModule(this, client);
     this.projects = new ProjectModule(this, client);
@@ -104,6 +107,7 @@ export class Application extends EventEmitter implements IApplication {
       this.users.load(),
       this.projects.load(),
       this.userRoles.load(),
+      this.itemPriorities.load(),
       this.itemStates.load(),
       this.itemTypes.load(),
       this.roles.load(),

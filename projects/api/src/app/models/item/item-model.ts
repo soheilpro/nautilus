@@ -8,6 +8,7 @@ export class ItemModel extends EntityModelBase {
   type?: IEntityModel;
   title?: string;
   description?: string;
+  priority?: IEntityModel;
   state?: IEntityModel;
   tags?: string[];
   project?: IEntityModel;
@@ -23,6 +24,7 @@ export class ItemModel extends EntityModelBase {
     this.type = this.renderEntity(entity.type);
     this.title = entity.title || undefined;
     this.description = entity.description || undefined;
+    this.priority = this.renderEntity(entity.priority);
     this.state = this.renderEntity(entity.state);
     this.tags = entity.tags;
     this.project = this.renderEntity(entity.project);

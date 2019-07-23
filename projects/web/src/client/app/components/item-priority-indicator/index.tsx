@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import { Icon } from '../../framework/components/icon';
+import { IItemPriority } from '../../application';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
 
 interface IItemPriorityIndicatorProps {
-  itemPriority: any;
+  itemPriority: IItemPriority;
   className?: string;
 }
 
@@ -18,19 +18,9 @@ export class ItemPriorityIndicator extends React.PureComponent<IItemPriorityIndi
     if (!this.props.itemPriority)
       return null;
 
-    const icons: {[key: string]: string} = {
-      'important': 'exclamation',
-      'critical': 'bolt',
-    };
-
-    const icon = icons[this.props.itemPriority.key];
-
-    if (!icon)
-      return null;
-
     return (
       <span className={classNames('item-priority-indicator-component', `priority-${this.props.itemPriority.key}`, this.props.className)}>
-        <Icon name={icon} />
+        {this.props.itemPriority.title}
       </span>
     );
   }

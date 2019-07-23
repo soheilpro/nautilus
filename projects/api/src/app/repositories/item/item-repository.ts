@@ -18,6 +18,7 @@ export class ItemRepository extends RepositoryBase<IItem, IItemChange, IItemDocu
     update.setOrUnset('kind', change.kind);
     update.setOrUnset('title', change.title);
     update.setOrUnset('description', change.description);
+    update.setOrUnset('priority', change.priority, this.toRef);
     update.setOrUnset('state', change.state, this.toRef);
     update.setOrUnset('tags', change.tags);
     update.setOrUnset('project', change.project, this.toRef);
@@ -35,6 +36,7 @@ export class ItemRepository extends RepositoryBase<IItem, IItemChange, IItemDocu
       type: this.fromRef(document.type),
       title: document.title,
       description: document.description,
+      priority: this.fromRef(document.priority),
       state: this.fromRef(document.state),
       tags: document.tags,
       project: this.fromRef(document.project),
@@ -52,6 +54,7 @@ export class ItemRepository extends RepositoryBase<IItem, IItemChange, IItemDocu
       type: this.toRef(entity.type),
       title: entity.title,
       description: entity.description,
+      priority: this.toRef(entity.priority),
       state: this.toRef(entity.state),
       tags: entity.tags,
       project: this.toRef(entity.project),

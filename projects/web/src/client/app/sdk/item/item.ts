@@ -8,6 +8,7 @@ export class Item extends Entity implements IItem {
   type?: IEntity;
   title?: string;
   description?: string;
+  priority?: IEntity;
   state?: IEntity;
   tags?: string[];
   project?: IEntity;
@@ -26,6 +27,9 @@ export class Item extends Entity implements IItem {
 
     this.title = data.title;
     this.description = data.description;
+
+    if (data.priority)
+      this.priority = new Entity(data.priority);
 
     if (data.state)
       this.state = new Entity(data.state);

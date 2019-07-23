@@ -25,6 +25,7 @@ import { UserRolesPage } from '../user-roles-page';
 import { RefreshCommand, GoToIssuesCommand, GoToMilestonesCommand, GoToUsersCommand, GoToProjectsCommand } from './commands';
 import { GoToUserRolesCommand } from './commands/go-to-user-roles-command';
 import { INotificationController } from '../../framework/notifications';
+import { ItemPriorityController } from '../item-priority-controller';
 
 interface IMainProps {
 }
@@ -106,6 +107,7 @@ export class Main extends React.PureComponent<IMainProps, IMainState> implements
         <UserController />
         <ProjectController />
         <UserRoleController />
+        <ItemPriorityController />
         <ItemStateController />
         <Router history={this.history}>
           <div>{ routes }</div>

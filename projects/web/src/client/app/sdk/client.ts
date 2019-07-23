@@ -1,6 +1,7 @@
 import { IClient } from './iclient';
 import { IItemRelationshipService, ItemRelationshipService } from './item-relationship';
 import { ItemService, IItemService } from './item';
+import { ItemPriorityService, IItemPriorityService } from './item-priority';
 import { ItemStateService, IItemStateService } from './item-state';
 import { ItemTypeService, IItemTypeService } from './item-type';
 import { UserRoleService, IUserRoleService } from './user-role';
@@ -18,6 +19,7 @@ export class Client implements IClient {
 
   itemRelationships: IItemRelationshipService;
   items: IItemService;
+  itemPriorities: IItemPriorityService;
   itemStates: IItemStateService;
   itemTypes: IItemTypeService;
   projects: IProjectService;
@@ -30,6 +32,7 @@ export class Client implements IClient {
 
     this.itemRelationships = new ItemRelationshipService(this);
     this.items = new ItemService(this);
+    this.itemPriorities = new ItemPriorityService(this);
     this.itemStates = new ItemStateService(this);
     this.itemTypes = new ItemTypeService(this);
     this.projects = new ProjectService(this);

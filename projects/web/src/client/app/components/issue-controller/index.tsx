@@ -19,6 +19,8 @@ import { AddEditIssueWindow } from '../add-edit-issue-window';
 import { AssignIssueCommand } from './commands/assign-issue-command';
 import { IMilestoneController } from '../../modules/milestones';
 import { IssueSearchWindow } from '../issue-search-window';
+import { IItemPriorityController } from '../../modules/item-priorities';
+import { SetIssuePriorityCommand } from './commands/set-issue-priority-command';
 
 interface IIssueControllerProps {
 }
@@ -40,6 +42,10 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
 
   private get userController(): IUserController {
     return ServiceManager.Instance.getService<IUserController>('IUserController');
+  }
+
+  private get itemPriorityController(): IItemPriorityController {
+    return ServiceManager.Instance.getService<IItemPriorityController>('IItemPriorityController');
   }
 
   private get itemStateController(): IItemStateController {
@@ -75,6 +81,7 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
       new DuplicateIssueCommand(this, this.contextManager),
       new RepeatUpdateIssueCommand(this, this.contextManager),
       new AssignIssueCommand(this, this.contextManager),
+      new SetIssuePriorityCommand(this, this.contextManager),
       new SetIssueStateCommand(this, this.contextManager),
       new SetIssueMilestoneCommand(this, this.contextManager),
       new ViewIssueCommand(this, this.contextManager),
@@ -163,6 +170,22 @@ export class IssueController extends React.PureComponent<IIssueControllerProps, 
 
     const issueChange: IIssueChange = {
       assignedTo: user,
+    };
+
+    this.updateIssue(issue, issueChange);
+  }
+
+  async setIssuePriority(issue: IIssue): Promise<void> {
+    const priority = await this.itemPriorityController.selectItemPriority('issue');
+
+    if (!priority)
+      return;
+
+    if (entityComparer(priority, issue.priority))
+      return;
+
+    const issueChange: IIssueChange = {
+      priority: priority,
     };
 
     this.updateIssue(issue, issueChange);

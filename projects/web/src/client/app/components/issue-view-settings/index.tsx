@@ -14,6 +14,7 @@ import { IView } from './iview';
 import { View } from './view';
 import { FilterByMilestoneCommand, FilterByProjectCommand, FilterByTypeCommand, FilterByStateCommand, FilterByAssignedToCommand, FilterByCreatedByCommand, ResetViewCommand, SaveViewCommand, LoadViewCommand } from './commands';
 import { Icon } from '../../framework/components/icon';
+import { FilterByPriorityCommand } from './commands/filter-by-priority-command';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -88,6 +89,7 @@ export class IssueViewSettings extends React.PureComponent<IIssueViewSettingsPro
       new FilterByMilestoneCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'milestone')),
       new FilterByProjectCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'project')),
       new FilterByTypeCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'type')),
+      new FilterByPriorityCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'priority')),
       new FilterByStateCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'state')),
       new FilterByAssignedToCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'assignedTo')),
       new FilterByCreatedByCommand(_.partial(this.handleOpenFilterCommandExecute, 'issue', 'createdBy')),

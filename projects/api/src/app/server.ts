@@ -2,9 +2,9 @@ import * as restify from 'restify';
 import * as corsMiddleware from 'restify-cors-middleware';
 import { IDateTimeService } from './services';
 import { IDBConnection, ManagedDB } from './db';
-import { UserManager, UserLogManager, SessionManager, ProjectManager, UserRoleManager, ItemStateManager, ItemTypeManager, ItemManager, ItemRelationshipManager } from './managers';
-import { UserRepository, UserLogRepository, SessionRepository, ProjectRepository, UserRoleRepository, ItemStateRepository, ItemTypeRepository, ItemRepository, ItemRelationshipRepository } from './repositories';
-import { UserRouter, SessionRouter, ProjectRouter, UserRoleRouter, ItemStateRouter, ItemTypeRouter, ItemRouter, ItemRelationshipRouter } from './routers';
+import { UserManager, UserLogManager, SessionManager, ProjectManager, UserRoleManager, ItemStateManager, ItemTypeManager, ItemManager, ItemRelationshipManager, ItemPriorityManager } from './managers';
+import { UserRepository, UserLogRepository, SessionRepository, ProjectRepository, UserRoleRepository, ItemStateRepository, ItemTypeRepository, ItemRepository, ItemRelationshipRepository, ItemPriorityRepository } from './repositories';
+import { UserRouter, SessionRouter, ProjectRouter, UserRoleRouter, ItemStateRouter, ItemTypeRouter, ItemRouter, ItemRelationshipRouter, ItemPriorityRouter } from './routers';
 import { PermissionProvider } from './security';
 import { authenticator } from './plugins';
 
@@ -17,6 +17,7 @@ export class ServerFactory {
     const sessionRepository = new SessionRepository(managedDB);
     const projectRepository = new ProjectRepository(managedDB);
     const userRoleRepository = new UserRoleRepository(managedDB);
+    const itemPriorityRepository = new ItemPriorityRepository(managedDB);
     const itemStateRepository = new ItemStateRepository(managedDB);
     const itemTypeRepository = new ItemTypeRepository(managedDB);
     const itemRepository = new ItemRepository(managedDB);
@@ -27,6 +28,7 @@ export class ServerFactory {
     const sessionManager = new SessionManager(sessionRepository);
     const projectManager = new ProjectManager(projectRepository);
     const userRoleManager = new UserRoleManager(userRoleRepository);
+    const itemPriorityManager = new ItemPriorityManager(itemPriorityRepository);
     const itemStateManager = new ItemStateManager(itemStateRepository);
     const itemTypeManager = new ItemTypeManager(itemTypeRepository);
     const itemManager = new ItemManager(itemRepository);
@@ -37,9 +39,10 @@ export class ServerFactory {
       new SessionRouter(sessionManager, userManager, userLogManager, dateTimeService),
       new UserRoleRouter(userRoleManager, userManager, projectManager, userLogManager, dateTimeService),
       new ProjectRouter(projectManager, userLogManager, dateTimeService),
+      new ItemPriorityRouter(itemPriorityManager, userLogManager, dateTimeService),
       new ItemStateRouter(itemStateManager, userLogManager, dateTimeService),
       new ItemTypeRouter(itemTypeManager, userLogManager, dateTimeService),
-      new ItemRouter(itemManager, userManager, projectManager, itemTypeManager, itemStateManager, itemRelationshipManager, userLogManager, dateTimeService),
+      new ItemRouter(itemManager, userManager, projectManager, itemTypeManager, itemPriorityManager, itemStateManager, itemRelationshipManager, userLogManager, dateTimeService),
       new ItemRelationshipRouter(itemRelationshipManager, itemManager, userLogManager, dateTimeService),
     ];
 

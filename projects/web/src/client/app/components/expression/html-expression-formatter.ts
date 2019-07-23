@@ -82,6 +82,9 @@ export class HTMLExpressionFormatter extends NQL.ExpressionVisitor<string, {}> {
     if (expression.type === 'ItemType')
       return this.application.itemTypes.get(expression.value).title;
 
+    if (expression.type === 'ItemPriority')
+      return this.application.itemPriorities.get(expression.value).title;
+
     if (expression.type === 'ItemState')
       return this.application.itemStates.get(expression.value).title;
 

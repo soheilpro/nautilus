@@ -27,6 +27,10 @@ export class Issue implements IIssue {
     return this.item.description;
   }
 
+  get priority(): IItemState {
+    return this.application.itemPriorities.get(this.item.priority);
+  }
+
   get state(): IItemState {
     return this.application.itemStates.get(this.item.state);
   }

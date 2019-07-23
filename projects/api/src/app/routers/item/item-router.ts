@@ -10,9 +10,10 @@ import { IDateTimeService } from '../../services';
 import { ItemModel, ItemRelationshipModel } from '../../models';
 import { IRequest, IParams } from '../../web';
 import { IRoute } from '../iroute';
+import { IItemPriorityManager } from '../../framework/item-priority';
 
 export class ItemRouter extends RouterBase<IItem, IItemChange> {
-  constructor(itemManager: IItemManager, private userManager: IUserManager, private projectManager: IProjectManager, private itemTypeManager: IItemTypeManager, private itemStateManager: IItemStateManager, private itemRelationshipManager: IItemRelationshipManager, userLogManager: IUserLogManager, dateTimeService: IDateTimeService) {
+  constructor(itemManager: IItemManager, private userManager: IUserManager, private projectManager: IProjectManager, private itemTypeManager: IItemTypeManager, private itemPriorityManager: IItemPriorityManager, private itemStateManager: IItemStateManager, private itemRelationshipManager: IItemRelationshipManager, userLogManager: IUserLogManager, dateTimeService: IDateTimeService) {
     super(itemManager, userLogManager, dateTimeService);
   }
 
@@ -78,6 +79,7 @@ export class ItemRouter extends RouterBase<IItem, IItemChange> {
       type: await params.readEntity('type_id', this.itemTypeManager),
       title: params.readString('title'),
       description: params.readString('description'),
+      priority: await params.readEntity('priority_id', this.itemPriorityManager),
       state: await params.readEntity('state_id', this.itemStateManager),
       tags: params.readStringArray('tags'),
       project: await params.readEntity('project_id', this.projectManager),
@@ -93,6 +95,7 @@ export class ItemRouter extends RouterBase<IItem, IItemChange> {
       type: await params.readEntity('type_id', this.itemTypeManager),
       title: params.readString('title'),
       description: params.readString('description'),
+      priority: await params.readEntity('priority_id', this.itemPriorityManager),
       state: await params.readEntity('state_id', this.itemStateManager),
       tags: params.readStringArray('tags'),
       project: await params.readEntity('project_id', this.projectManager),

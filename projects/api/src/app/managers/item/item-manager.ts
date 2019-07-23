@@ -27,6 +27,11 @@ export class ItemManager extends ManagerBase<IItem, IItemChange> implements IIte
         return { message: 'Invalid type.' };
     }
 
+    if (entity.priority !== undefined) {
+      if (entity.priority === null)
+        return { message: 'Invalid priority.' };
+    }
+
     if (entity.state !== undefined) {
       if (entity.state === null)
         return { message: 'Invalid state.' };

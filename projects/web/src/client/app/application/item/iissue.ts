@@ -7,6 +7,7 @@ export interface IIssue extends IEntity {
   type?: IItemType;
   title?: string;
   description?: string;
+  priority?: IItemState;
   state?: IItemState;
   tags?: string[];
   project?: IProject;

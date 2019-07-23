@@ -89,7 +89,7 @@ export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState
           <TitleField title={this.props.item.title} status={TableRow.stateToStatus[this.props.item.state ? this.props.item.state.key : null]} />
           {
             (!this.props.item.state || this.props.item.state.key !== 'closed') &&
-              <ItemPriorityIndicator className="priority-indicator" itemPriority={null} />
+              <ItemPriorityIndicator className="priority-indicator" itemPriority={this.props.item.priority} />
           }
         </td>
         <td className="table-cell project">
