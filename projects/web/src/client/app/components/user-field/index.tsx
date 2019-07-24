@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { IUser } from '../../application';
+import { Avatar } from '../avatar';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -20,7 +21,12 @@ export class UserField extends React.PureComponent<IUserFieldProps, IUserFieldSt
 
     return (
       <span className={classNames('user-field-component', this.props.className)}>
-        {this.props.user.name}
+        <span className="avatar">
+          <Avatar user={this.props.user} size={15} />
+        </span>
+        <span className="name">
+          {this.props.user.name}
+        </span>
       </span>
     );
   }
