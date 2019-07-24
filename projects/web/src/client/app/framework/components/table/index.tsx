@@ -1,3 +1,4 @@
+import * as _ from 'underscore';
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { KeyCode } from '../../../framework/keyboard';
@@ -5,10 +6,12 @@ import { IItem } from './iitem';
 import { TableHeader } from './table-header';
 import { TableRow } from './table-row';
 import { TableFooter } from './table-footer';
+import { Button } from '../button';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
 
+const PAGE_SIZE = 200;
 const CHUNK_SIZE = 70;
 
 interface IChunk {
@@ -28,6 +31,7 @@ interface ITableProps {
 }
 
 interface ITableState {
+  maxVisibleItems: number;
   chunks?: IChunk[];
   selectedItem?: IItem;
 }
@@ -42,10 +46,12 @@ export class Table extends React.PureComponent<ITableProps, ITableState> {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleItemSelect = this.handleItemSelect.bind(this);
     this.handleItemAction = this.handleItemAction.bind(this);
+    this.handleShowAllItems = this.handleShowAllItems.bind(this);
 
-    const chunks = this.getChunks(props.items);
+    const chunks = this.getChunks(_.first(props.items, PAGE_SIZE));
 
     this.state = {
+      maxVisibleItems: PAGE_SIZE,
       chunks: chunks,
     };
   }
@@ -79,7 +85,8 @@ export class Table extends React.PureComponent<ITableProps, ITableState> {
 
       if (this.props.items !== props.items) {
         this.setState({
-          chunks: this.getChunks(props.items),
+          maxVisibleItems: PAGE_SIZE,
+          chunks: this.getChunks(_.first(props.items, PAGE_SIZE)),
         });
       }
 
@@ -90,13 +97,15 @@ export class Table extends React.PureComponent<ITableProps, ITableState> {
   }
 
   private handleKeyDown(event: React.KeyboardEvent<HTMLTableElement>): void {
-    if (event.which === KeyCode.DownArrow) {
-      const selectedItemIndex = this.props.items.indexOf(this.state.selectedItem);
+    const items = _.first(this.props.items, this.state.maxVisibleItems);
 
-      if (selectedItemIndex < this.props.items.length - 1) {
+    if (event.which === KeyCode.DownArrow) {
+      const selectedItemIndex = items.indexOf(this.state.selectedItem);
+
+      if (selectedItemIndex < items.length - 1) {
         event.preventDefault();
 
-        const selectedItem = !event.metaKey ? this.props.items[selectedItemIndex + 1] : this.props.items[this.props.items.length - 1];
+        const selectedItem = !event.metaKey ? items[selectedItemIndex + 1] : items[items.length - 1];
 
         this.setState({
           selectedItem: selectedItem,
@@ -106,12 +115,12 @@ export class Table extends React.PureComponent<ITableProps, ITableState> {
       }
     }
     else if (event.which === KeyCode.UpArrow) {
-      const selectedItemIndex = this.props.items.indexOf(this.state.selectedItem);
+      const selectedItemIndex = items.indexOf(this.state.selectedItem);
 
       if (selectedItemIndex > 0) {
         event.preventDefault();
 
-        const selectedItem = !event.metaKey ? this.props.items[selectedItemIndex - 1] : this.props.items[0];
+        const selectedItem = !event.metaKey ? items[selectedItemIndex - 1] : items[0];
 
         this.setState({
           selectedItem: selectedItem,
@@ -148,6 +157,15 @@ export class Table extends React.PureComponent<ITableProps, ITableState> {
       this.props.onItemAction(item);
   }
 
+  private handleShowAllItems(): void {
+    const maxVisibleItems = Number.MAX_VALUE;
+
+    this.setState({
+      maxVisibleItems: maxVisibleItems,
+      chunks: this.getChunks(_.first(this.props.items, maxVisibleItems)),
+    });
+  }
+
   private getChunks(items: IItem[]): IChunk[] {
     const totalChunks = Math.ceil(items.length / CHUNK_SIZE);
     const chunks: IChunk[] = [];
@@ -172,32 +190,39 @@ export class Table extends React.PureComponent<ITableProps, ITableState> {
   }
 
   render(): JSX.Element {
+    const items = _.first(this.props.items, this.state.maxVisibleItems);
     const selectedChunk = this.getSelectedChunk(this.state.chunks, this.state.selectedItem);
 
     return (
-      <table className={classNames('table-component', this.props.className)} onKeyDown={this.handleKeyDown} ref={e => this.componentRef = e}>
-        <thead className="table-header">
+      <div className={classNames('table-component', this.props.className)}>
+        <table onKeyDown={this.handleKeyDown} ref={e => this.componentRef = e}>
+          <thead className="table-header">
+            {
+              this.props.Header &&
+                <this.props.Header />
+            }
+          </thead>
           {
-            this.props.Header &&
-              <this.props.Header />
-          }
-        </thead>
-        {
-          this.state.chunks.map((chunk, index) => {
-            const isSelected = (selectedChunk === chunk);
+            this.state.chunks.map((chunk, index) => {
+              const isSelected = (selectedChunk === chunk);
 
-            return (
-              <Chunk index={index} items={chunk.items} selectedItem={isSelected ? this.state.selectedItem : null} Row={this.props.Row} onItemSelect={this.handleItemSelect} onItemAction={this.handleItemAction} ref={e => this.selectedChunk = isSelected ? e : this.selectedChunk} key={index} />
-            );
-          })
-        }
-        <tfoot className="table-footer">
-          {
-            this.props.Footer &&
-              <this.props.Footer items={this.props.items} />
+              return (
+                <Chunk index={index} items={chunk.items} selectedItem={isSelected ? this.state.selectedItem : null} Row={this.props.Row} onItemSelect={this.handleItemSelect} onItemAction={this.handleItemAction} ref={e => this.selectedChunk = isSelected ? e : this.selectedChunk} key={index} />
+              );
+            })
           }
-        </tfoot>
-      </table>
+          <tfoot className="table-footer">
+            {
+              this.props.Footer &&
+                <this.props.Footer items={items} />
+            }
+          </tfoot>
+        </table>
+        {
+          items.length < this.props.items.length &&
+            <Button className="show-all-items-button" type="link" onClick={this.handleShowAllItems}>Show all {this.props.items.length} items</Button>
+        }
+        </div>
     );
   }
 }
