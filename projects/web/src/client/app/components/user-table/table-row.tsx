@@ -58,6 +58,9 @@ export class TableRow extends React.PureComponent<ITableRowProps, ITableRowState
         <td className="table-cell email">
           <TextField text={this.props.item.email} />
         </td>
+        <td className="table-cell state">
+          <TextField text={this.props.item.state} />
+        </td>
       </tr>
     );
   }

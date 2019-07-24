@@ -27,6 +27,7 @@ export class UserService extends ServiceBase<IUser, IUserFilter, IUserChange, IU
       password: entity.password,
       name: entity.name,
       email: entity.email,
+      state: entity.state,
     };
   }
 
@@ -36,6 +37,7 @@ export class UserService extends ServiceBase<IUser, IUserFilter, IUserChange, IU
       password: change.password,
       name: change.name,
       email: change.email,
+      state: change.state,
     };
   }
 

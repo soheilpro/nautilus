@@ -148,7 +148,7 @@ export class UserController extends React.PureComponent<IUserControllerProps, IU
       });
     };
 
-    const users = this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]);
+    const users = this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]).filter(user => user.state === 'enabled');
 
     const window = <UserPaletteWindow users={users} onSelect={handleSelect} />;
     const options = {

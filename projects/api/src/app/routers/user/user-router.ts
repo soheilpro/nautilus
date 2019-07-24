@@ -1,6 +1,6 @@
 import * as errors from 'restify-errors';
 import { RouterBase } from '../router-base';
-import { IUser, IUserManager, IUserChange } from '../../framework/user';
+import { IUser, IUserManager, IUserChange, UserState } from '../../framework/user';
 import { IUserLogManager } from '../../framework/user-log';
 import { IDateTimeService } from '../../services';
 import { UserModel } from '../../models';
@@ -68,6 +68,7 @@ export class UserRouter extends RouterBase<IUser, IUserChange> {
       password: params.readString('password'),
       name: params.readString('name'),
       email: params.readString('email'),
+      state: (params.readString('state') as UserState) || 'enabled',
     };
   }
 
@@ -78,6 +79,7 @@ export class UserRouter extends RouterBase<IUser, IUserChange> {
       password: params.readString('password'),
       name: params.readString('name'),
       email: params.readString('email'),
+      state: params.readString('state'),
     };
   }
 

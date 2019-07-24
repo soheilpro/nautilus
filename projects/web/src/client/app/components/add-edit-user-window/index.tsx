@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { IUser, IUserChange } from '../../application';
+import { IUser, IUserChange, UserState } from '../../application';
 import { Window, WindowHeader, WindowContent, WindowActionBar } from '../../framework/components/window';
 import { IFormError } from '../../framework/forms';
 import { Icon } from '../../framework/components/icon';
 import { Input } from '../../framework/components/input';
 import { Button } from '../../framework/components/button';
+import { UserStateSelect } from '../user-state-select';
 
 require('../../assets/stylesheets/base.less');
 require('./index.less');
@@ -22,6 +23,7 @@ interface IAddEditUserWindowState {
   password?: string;
   name?: string;
   email?: string;
+  state?: UserState;
   errors?: IFormError[];
 }
 
@@ -34,6 +36,7 @@ export class AddEditUserWindow extends React.PureComponent<IAddEditUserWindowPro
     this.handlePasswordInputChange = this.handlePasswordInputChange.bind(this);
     this.handleNameInputChange = this.handleNameInputChange.bind(this);
     this.handleEMailSelectChange = this.handleEMailSelectChange.bind(this);
+    this.handleStateSelectChange = this.handleStateSelectChange.bind(this);
 
     const state: IAddEditUserWindowState = {
       errors: [],
@@ -43,6 +46,7 @@ export class AddEditUserWindow extends React.PureComponent<IAddEditUserWindowPro
       state.username = props.user.username;
       state.name = props.user.name;
       state.email = props.user.email;
+      state.state = props.user.state;
     }
 
     this.state = state;
@@ -75,6 +79,7 @@ export class AddEditUserWindow extends React.PureComponent<IAddEditUserWindowPro
           password: (this.state.password !== this.props.user.password ? this.state.password || '' : undefined),
           name: (this.state.name !== this.props.user.name ? this.state.name || '' : undefined),
           email: (this.state.email !== this.props.user.email ? this.state.email || null : undefined),
+          state: (this.state.state !== this.props.user.state ? this.state.state || null : undefined),
         };
 
         this.props.onUpdate(userChange, this);
@@ -103,6 +108,12 @@ export class AddEditUserWindow extends React.PureComponent<IAddEditUserWindowPro
   private handleEMailSelectChange(value: string): void {
     this.setState({
       email: value,
+    });
+  }
+
+  private handleStateSelectChange(value: UserState): void {
+    this.setState({
+      state: value,
     });
   }
 
@@ -171,6 +182,19 @@ export class AddEditUserWindow extends React.PureComponent<IAddEditUserWindowPro
               <div className="hint">
               </div>
             </div>
+            {
+            this.props.mode === 'edit' &&
+              <div className="field">
+                <div className="label">
+                  State:
+                </div>
+                <div className="value">
+                  <UserStateSelect className="state" state={this.state.state} onChange={this.handleStateSelectChange} />
+                </div>
+                <div className="hint">
+                </div>
+              </div>
+            }
           </form>
         </WindowContent>
         <WindowActionBar>

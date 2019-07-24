@@ -19,6 +19,7 @@ export class TableFooter extends React.PureComponent<ITableFooterProps, ITableFo
         <td className="table-cell"></td>
         <td className="table-cell"></td>
         <td className="table-cell"></td>
+        <td className="table-cell"></td>
       </tr>
     );
   }

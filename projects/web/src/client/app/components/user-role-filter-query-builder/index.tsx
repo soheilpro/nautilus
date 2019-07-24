@@ -34,7 +34,7 @@ export class UserRoleFilterQueryBuilder extends React.PureComponent<IUserRoleFil
 
   componentDidMount(): void {
     this.setState({
-      users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]),
+      users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]).filter(user => user.state === 'enabled'),
       roles: this.application.roles.getAll(),
       projects: this.application.projects.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('name'))]),
     });

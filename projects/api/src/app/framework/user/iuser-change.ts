@@ -6,4 +6,5 @@ export interface IUserChange extends IChange {
   passwordHash?: string;
   name?: string;
   email?: string;
+  state?: string;
 }

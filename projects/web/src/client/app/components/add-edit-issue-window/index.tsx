@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { IProject, IItemState, IItemType, IIssue, IIssueChange, IMilestone, IUser, IApplication, IItemPriority } from '../../application';
+import { IProject, IItemState, IItemType, IIssue, IIssueChange, IMilestone, IUser, IApplication, IItemPriority, entityComparer } from '../../application';
 import { ServiceManager } from '../../services';
 import { Window, WindowHeader, WindowContent, WindowActionBar } from '../../framework/components/window';
 import { Input } from '../../framework/components/input';
@@ -87,7 +87,7 @@ export class AddEditIssueWindow extends React.PureComponent<IAddEditIssueWindowP
         itemTypes: this.application.itemTypes.getAll('issue'),
         itemPriorities: this.application.itemPriorities.getAll('issue'),
         itemStates: this.application.itemStates.getAll('issue'),
-        users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]),
+        users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]).filter(user => user.state === 'enabled' || (this.props.issue && entityComparer(user, this.props.issue.assignedTo))),
         milestones: this.getMilestones(state.project),
       };
     });

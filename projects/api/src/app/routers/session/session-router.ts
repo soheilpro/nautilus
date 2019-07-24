@@ -36,8 +36,11 @@ export class SessionRouter extends RouterBase<ISession, ISessionChange> {
 
     const user = await this.userManager.get(new UserFilter(username));
 
+    if (user.state !== 'enabled')
+      return response.send(new errors.UnauthorizedError());
+
     if (!user || !this.userManager.testPassword(password, user.passwordHash))
-        return response.send(new errors.UnauthorizedError());
+      return response.send(new errors.UnauthorizedError());
 
     const session: ISession = {
       user: user,

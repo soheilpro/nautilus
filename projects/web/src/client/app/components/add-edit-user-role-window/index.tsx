@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as NQL from '../../nql';
-import { IProject, IUser, IUserRole, IUserRoleChange, IApplication } from '../../application';
+import { IProject, IUser, IUserRole, IUserRoleChange, IApplication, entityComparer } from '../../application';
 import { ServiceManager } from '../../services';
 import { Window, WindowHeader, WindowContent, WindowActionBar } from '../../framework/components/window';
 import { IFormError } from '../../framework/forms';
@@ -61,7 +61,7 @@ export class AddEditUserRoleWindow extends React.PureComponent<IAddEditUserRoleW
   componentDidMount(): void {
     this.setState(state => {
       return {
-        users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('name'))]),
+        users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('name'))]).filter(user => user.state === 'enabled' || (this.props.userRole && entityComparer(user, this.props.userRole.user))),
         roles: this.application.roles.getAll(),
         projects: this.application.projects.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('name'))]),
       };

@@ -1,4 +1,5 @@
 import { IEntity } from '../ientity';
+import { UserState } from './user-state';
 
 export interface IUser extends IEntity {
   username?: string;
@@ -6,4 +7,5 @@ export interface IUser extends IEntity {
   passwordHash?: string;
   name?: string;
   email?: string;
+  state?: UserState;
 }

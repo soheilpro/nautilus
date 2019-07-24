@@ -52,6 +52,7 @@ export class UserRepository extends RepositoryBase<IUser, IUserChange, IUserDocu
     update.setOrUnset('passwordHash', change.passwordHash);
     update.setOrUnset('name', change.name);
     update.setOrUnset('email', change.email);
+    update.setOrUnset('state', change.state);
 
     return update;
   }
@@ -63,6 +64,7 @@ export class UserRepository extends RepositoryBase<IUser, IUserChange, IUserDocu
       passwordHash: document.passwordHash,
       name: document.name,
       email: document.email,
+      state: document.state,
     };
   }
 
@@ -73,6 +75,7 @@ export class UserRepository extends RepositoryBase<IUser, IUserChange, IUserDocu
       passwordHash: entity.passwordHash,
       name: entity.name,
       email: entity.email,
+      state: entity.state,
     };
   }
 }

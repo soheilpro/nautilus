@@ -50,7 +50,7 @@ export class IssueFilterQueryBuilder extends React.PureComponent<IIssueFilterQue
       itemTypes: this.application.itemTypes.getAll('issue'),
       itemPriorities: this.application.itemPriorities.getAll('issue'),
       itemStates: this.application.itemStates.getAll('issue'),
-      users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]),
+      users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]).filter(user => user.state === 'enabled'),
       milestones: this.application.items.getAllMilestones(new NQL.ComparisonExpression(new NQL.LocalExpression('state'), new NQL.ConstantExpression(closedMilestoneState, 'ItemState'), 'neq'), [new NQL.SortExpression(new NQL.LocalExpression('fullTitle'))]),
     });
   }

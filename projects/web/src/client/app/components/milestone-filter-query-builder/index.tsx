@@ -36,7 +36,7 @@ export class MilestoneFilterQueryBuilder extends React.PureComponent<IMilestoneF
     this.setState({
       projects: this.application.projects.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('name'))]),
       itemStates: this.application.itemStates.getAll('milestone'),
-      users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]),
+      users: this.application.users.getAll(null, [new NQL.SortExpression(new NQL.LocalExpression('username'))]).filter(user => user.state === 'enabled'),
     });
   }
 

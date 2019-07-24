@@ -66,6 +66,7 @@ export class UserModule extends BaseModule implements IUserModule {
       password: userChange.password,
       name: userChange.name,
       email: userChange.email,
+      state: userChange.state,
     };
 
     const updatedUser = await this.client.users.update(user.id, change);

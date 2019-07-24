@@ -17,6 +17,7 @@ export class TableHeader extends React.PureComponent<ITableHeaderProps, ITableHe
         <td className="table-cell username">Username</td>
         <td className="table-cell name">Name</td>
         <td className="table-cell email">EMail</td>
+        <td className="table-cell state">State</td>
       </tr>
     );
   }
