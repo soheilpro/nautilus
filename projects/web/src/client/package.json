@@ -10,7 +10,7 @@
     "watch": "webpack --watch"
   },
   "dependencies": {
-    "axios": "^0.15.3",
+    "axios": "^0.21.1",
     "blueimp-md5": "^2.7.0",
     "classnames": "^2.2.5",
     "font-awesome": "^4.7.0",
