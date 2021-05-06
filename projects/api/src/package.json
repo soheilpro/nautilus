@@ -22,7 +22,7 @@
     "restify": "^5.2.0",
     "restify-cors-middleware": "^1.0.1",
     "restify-errors": "^5.0.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.0",
