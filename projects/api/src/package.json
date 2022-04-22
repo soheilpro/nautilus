@@ -18,7 +18,7 @@
     "debug": "^2.0.0",
     "mongodb": "^2.2.29",
     "morgan": "^1.8.2",
-    "nconf": "^0.7.2",
+    "nconf": "^0.11.4",
     "restify": "^5.2.0",
     "restify-cors-middleware": "^1.0.1",
     "restify-errors": "^5.0.0",
