@@ -43,18 +43,18 @@
     "buno": "^1.0.0",
     "css-loader": "^0.26.4",
     "extract-text-webpack-plugin": "^2.1.2",
-    "file-loader": "^0.9.0",
+    "file-loader": "^6.2.0",
     "html-loader": "^0.4.5",
-    "html-webpack-plugin": "^2.29.0",
+    "html-webpack-plugin": "^5.5.0",
     "less": "^2.7.2",
-    "less-loader": "^2.2.3",
-    "source-map-loader": "^0.1.6",
+    "less-loader": "^11.1.0",
+    "source-map-loader": "^4.0.1",
     "style-loader": "^0.13.2",
     "stylelint": "^7.11.1",
     "tslint": "^5.8.0",
     "typescript": "^2.4.0",
     "url-loader": "^0.5.9",
-    "webpack": "^2.6.1",
+    "webpack": "^5.74.0",
     "webpack-fail-plugin": "^1.0.6"
   }
 }
